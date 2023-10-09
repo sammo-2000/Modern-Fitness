@@ -4,7 +4,7 @@ const validator = (schema) => (payload) =>
     schema.validate(payload);
 
 const user_account_schema = Joi.object({
-    username: Joi.string().alphanum().required(),
+    title: Joi.string().regex(/^[a-zA-Z0-9_ ]{3,30}$/).required(),
     password: Joi.string().min(5).max(20).required(),
 });
 

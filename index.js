@@ -32,9 +32,11 @@ app.use(express.static('public'));
 // Get routes 
 import profile_router from './routes/profile.js'
 import auth_router from './routes/auth.js'
+import event_router from './routes/event.js'
 
 // Routing
 app.get('/', (req, res) => { res.render('index', { title: 'Home' }) })
 app.use(auth_router)
 app.use('/profile', profile_router)
+app.use('/events', event_router)
 app.use((req, res) => { res.status(404).render('404', { title: '404' }) })
