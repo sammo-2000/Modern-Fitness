@@ -26,3 +26,5 @@ const event_put = async (req, res) => {
 }
 
 export default { event_post, event_put }
+
+

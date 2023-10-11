@@ -12,17 +12,17 @@ const connect = mysql.createPool({
     database: process.env.SQL_DATABASE
 }).promise()
 
-const fetch = async (query, array) => {
+const fetch = async (query, array = []) => {
     const [rows] = await connect.query(query, array)
     return rows[0]
 }
 
-const fetchAll = async (query, array) => {
+const fetchAll = async (query, array = []) => {
     const [rows] = await connect.query(query, array)
     return rows
 }
 
-const insert = async (query, array) => {
+const insert = async (query, array = []) => {
     const [rows] = await connect.query(query, array)
     return rows[0]
 }

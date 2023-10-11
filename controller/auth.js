@@ -1,6 +1,9 @@
 import conn from '../models/Db.js'
 import bcrypt from 'bcrypt'
 import login_schema from '../schema/login_schema.js'
+import User_Model from '../models/user.js'
+
+const User = new User_Model()
 
 const login_post = async (req, res) => {
     const { username, password } = req.body
@@ -13,7 +16,7 @@ const login_post = async (req, res) => {
 
     // Try to login
     try {
-        const data = await conn.fetch('SELECT * FROM `user` WHERE `username` = ?', [username])
+        const data = await User.get_user_by_username(username)
         if (data) {
             bcrypt.compare(password, data.password, (err, result) => {
                 if (err) {
@@ -51,7 +54,7 @@ const signup_post = async (req, res) => {
 
     // Try to create new user 
     try {
-        const data = await conn.fetch('SELECT * FROM `user` WHERE `username` = ?', [username])
+        const data = await User.get_user_by_username(username)
         if (data) {
             // Username already taken
             return res.status(400).json({ type: 'error', message: 'Username already taken' })
