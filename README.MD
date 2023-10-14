@@ -83,8 +83,6 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
 The outcome of the project is a fully functioning web app with the ability for managers, staff and members who have a membership to utilize the system to achieve their goals far more efficiently than they previously had done due to the change from paper management to paperless. An aspiration of this project is creating a user-friendly intuitive interface to complete tasks easier. 
 
 The software will allow Modern Fit to handle the user digitally with less effort as the user will be able to sign up without the help of staff member being always on site. In addition, Modern Fit will be able to display all their services online for potential clients.
@@ -104,14 +102,8 @@ The primary objectives of the project are as follows:
 
 ### Built With
 
-* [![Next][Next.js]][Next-url]
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
+* [![Node][Node.js]][Node-url]
+* [![Tailwind][Tailwindcss.com]][Tailwindcss-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -268,3 +260,7 @@ Use this space to list resources you find helpful and would like to give credit 
 [Bootstrap-url]: https://getbootstrap.com
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
 [JQuery-url]: https://jquery.com 
+[Node.js]: https://img.shields.io/badge/Node-67A050?style=for-the-badge&logo=nodedotjs&logoColor=white
+[Node-url]: https://nodejs.org
+[Tailwindcss.com]: https://img.shields.io/badge/Tailwind-0C111F?style=for-the-badge&logo=tailwind-css&logoColor=62BAF2
+[Tailwindcss-url]: https://tailwindcss.com
