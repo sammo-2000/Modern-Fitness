@@ -1,14 +1,14 @@
 import express from 'express'
 const router = express.Router()
 import auth from '../controller/auth.js'
+import middleware from '../middleware/auth.js'
 
 // Pages
-router.get('/login', (req, res) => { res.render('auth/login', { title: 'Login' }) })
-router.get('/signup', (req, res) => { res.render('auth/signup', { title: 'Signup' }) })
+router.get('/login', middleware.guest, (req, res) => { res.render('auth/login', { title: 'Login', session: req.session }) })
+router.get('/signup', middleware.guest, (req, res) => { res.render('auth/signup', { title: 'Signup', session: req.session }) })
 
 // API
-router.post('/login', auth.login_post)
-router.post('/signup', auth.signup_post)
-router.get('/logout', auth.logout_get)
+router.post('/login', middleware.guest, auth.login_post)
+router.post('/signup', middleware.guest, auth.signup_post)
 
 export default router
