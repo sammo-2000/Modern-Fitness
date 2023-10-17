@@ -26,16 +26,24 @@
                             Home<i class="fa-solid fa-house"></i>
                         </a>
                     </li>
-                    <li>
-                        <a class="nav-link" href="/login">
-                            Login<i class="fa-solid fa-arrow-right-to-bracket"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="/signup">
-                            Sign Up<i class="fa-solid fa-arrow-right-to-bracket"></i>
-                        </a>
-                    </li>
+                    <% if (!session.user_id) { %>
+                        <li class="ml-auto">
+                            <a class="nav-link border-l-transparent" href="/login">
+                                Login<i class="fa-solid fa-arrow-right-to-bracket"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link btn" href="/signup">
+                                Sign Up<i class="fa-solid fa-arrow-right-to-bracket"></i>
+                            </a>
+                        </li>
+                    <% } else { %>
+                        <li class="ml-auto">
+                            <a class="nav-link border-l-transparent text-primary-700 font-bold" href="/profile">
+                                <p class="capitalize"><%= session.first_name %> <%= session.last_name %> </p>
+                            </a>
+                        </li>
+                    <% } %>
                 </ul>
             </nav>
         </div>

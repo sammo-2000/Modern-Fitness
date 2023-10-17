@@ -5,7 +5,11 @@
         <div class="flex gap-2 w-fit m-auto items-center">
             <a class="btn" href="/">Home</a>
             <p class="text-gray-400">-</p>
-            <a class="btn-black" href="/login">Login</a>
+            <% if (!session.user_id) { %>
+                <a class="btn-black" href="/login">Login</a>
+                <% } else { %>
+                    <a class="btn-black" href="/profile">Profile</a>
+                    <% } %>
         </div>
         <img class="max-w-full" src="/img/404.png" alt="person managing digital task">
     </div>
