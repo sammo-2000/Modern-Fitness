@@ -8,7 +8,7 @@ router.get('/login', middleware.guest, (req, res) => { res.render('auth/login', 
 router.get('/signup', middleware.guest, (req, res) => { res.render('auth/signup', { title: 'Signup', session: req.session }) })
 
 // API
-router.post('/login', middleware.guest, auth.login_post)
-router.post('/signup', middleware.guest, auth.signup_post)
+router.post('/api/login', middleware.guest, auth.login_post)
+router.post('/api/signup', middleware.guest, auth.signup_post)
 
 export default router

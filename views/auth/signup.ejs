@@ -47,7 +47,7 @@
                 const email = formEl.querySelector('#email').value
                 const password = formEl.querySelector('#password').value
 
-                const response = await fetch('/signup', {
+                const response = await fetch('/api/signup', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ first_name, last_name, email, password })
