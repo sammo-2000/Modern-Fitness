@@ -17,12 +17,12 @@ class User {
         if (data) {
             this.set_data(data)
         }
-        return data;
+        return data
     }
 
     async access_code_exists(access_code) {
         const data = await conn.fetch('SELECT * FROM `user` WHERE `access_code` = ?', [access_code])
-        return data;
+        return data
     }
 
     async signup(first_name, last_name, email, password, access_code) {
