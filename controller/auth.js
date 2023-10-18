@@ -60,7 +60,7 @@ const signup_post = async (req, res) => {
     try {
         const data = await User.get_user_by_email(email)
         if (data) {
-            // Username already taken
+            // Email already taken
             return res.status(400).json({ type: 'error', message: 'Email already in use' })
         }
 

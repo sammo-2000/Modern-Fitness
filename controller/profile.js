@@ -5,11 +5,9 @@ const User = new User_Model()
 const profile_detail = async (req, res) => {
     try {
         const data = await User.get_user_by_id(req.session.user_id)
-        const status = data ? true : false;
+        const status = data ? 'active' : 'in-active';
 
         const dateObject = new Date(data.created_at);
-
-
 
         res.json({
             email: data.email,

@@ -23,7 +23,6 @@ const member = (req, res, next) => {
     }
 }
 
-
 const logged_on = (req, res, next) => {
     if (req.session.user_id) {
         next()
