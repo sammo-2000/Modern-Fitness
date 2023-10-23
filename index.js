@@ -73,3 +73,4 @@ app.get('/logout', middleware.logged_on, (req, res) => {
 
 // 404
 app.use((req, res) => { res.status(404).render('404', { title: '404', session: req.session }) })
+// app.use((req, res) => { res.status(404).json({ type: 'Not found', message: 'Sorry, could not found the API endpoint' })})

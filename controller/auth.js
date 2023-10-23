@@ -3,6 +3,7 @@ import util from 'util';
 import login_schema from '../schema/login_schema.js'
 import signup_schema from '../schema/signup_schema.js'
 import User_Model from '../models/user.js'
+import _email from '../email/send_mail.js'
 
 const User = new User_Model()
 
@@ -28,6 +29,13 @@ const login_post = async (req, res) => {
                     req.session.first_name = User.first_name;
                     req.session.last_name = User.last_name;
                     req.session.role = User.role;
+                    console.log('send email')
+                    await _email.main(email, "Welcome to " + process.env.APP_NAME, 'welcome', {
+                        first_name: User.first_name,
+                        last_name: User.last_name,
+                        access_code: User.access_code
+                    })
+                    console.log('email sent')
                     return res.status(200).json({ type: 'success', message: 'User logged in successfully' });
                 } else {
                     return res.status(500).json({ type: 'error', message: 'Internal server error' });
