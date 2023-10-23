@@ -22,4 +22,8 @@ const profile_detail = async (req, res) => {
     }
 }
 
-export default { profile_detail }
+const update_profile = async (req, res) => {
+
+}
+
+export default { profile_detail, update_profile }
