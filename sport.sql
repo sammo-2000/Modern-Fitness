@@ -1,10 +1,38 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost
+-- Generation Time: Oct 24, 2023 at 05:59 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.1.17
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
 --
 -- Database: `sport`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `password`
+--
+
+CREATE TABLE `password` (
+  `password_id` int(11) NOT NULL,
+  `email` char(100) NOT NULL,
+  `link` char(255) NOT NULL,
+  `create_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -31,6 +59,12 @@ CREATE TABLE `user` (
 --
 
 --
+-- Indexes for table `password`
+--
+ALTER TABLE `password`
+  ADD PRIMARY KEY (`password_id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -39,6 +73,12 @@ ALTER TABLE `user`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `password`
+--
+ALTER TABLE `password`
+  MODIFY `password_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user`
