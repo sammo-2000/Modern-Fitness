@@ -38,6 +38,11 @@ class User {
         return data;
     }
 
+    async update_password(email, hashed_password) {
+        const query = 'UPDATE `user` SET `password` = ? WHERE `email` = ?'
+        return await conn.insert(query, [hashed_password, email])
+    }
+
 }
 
 export default User
