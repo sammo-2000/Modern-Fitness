@@ -23,30 +23,34 @@ const login_post = async (req, res) => {
     // Try to login
     try {
         const data = await User.get_user_by_email(email);
-        if (data) {
-            const compareAsync = util.promisify(bcrypt.compare);
-            const result = await compareAsync(password, data.password);
 
-            if (result) {
-                if (User.id) {
-                    req.session.user_id = User.id;
-                    req.session.first_name = User.first_name;
-                    req.session.last_name = User.last_name;
-                    req.session.role = User.role;
-                    return res.status(200).json({ type: 'success', message: 'User logged in successfully' });
-                } else {
-                    return res.status(500).json({ type: 'error', message: 'Internal server error' });
-                }
-            } else {
-                // Incorrect password
-                return res.status(400).json({ type: 'error', message: 'Incorrect credentials' });
-            }
-        } else {
+        // Check if user is found
+        if (!User.id) {
+            return res.status(400).json({ type: 'error', message: 'No user found' });
+        }
+
+        if (!data) {
             // Incorrect email
             return res.status(400).json({ type: 'error', message: 'Incorrect credentials' });
         }
+
+        // Check if password is correct
+        const compareAsync = util.promisify(bcrypt.compare);
+        const result = await compareAsync(password, data.password);
+        if (!result) {
+            // Incorrect password
+            return res.status(400).json({ type: 'error', message: 'Incorrect credentials' });
+        }
+
+        // Set sessions
+        req.session.user_id = User.id;
+        req.session.first_name = User.first_name;
+        req.session.last_name = User.last_name;
+        req.session.role = User.role;
+        return res.status(200).json({ type: 'success', message: 'User logged in successfully' });
+
     } catch (error) {
-        console.error('Controller auth:', error);
+        console.error('Controller auth - login_post:', error);
         return res.status(500).json({ type: 'error', message: 'Internal server error' });
     }
 }
@@ -69,24 +73,30 @@ const signup_post = async (req, res) => {
             return res.status(400).json({ type: 'error', message: 'Email already in use' })
         }
 
+        // Generate access code
         const access_code = await get_access_code()
 
+        // Hash password
         const hashAsync = util.promisify(bcrypt.hash);
         const hashed_password = await hashAsync(password, 10)
 
+        // Create new user
         await User.signup(first_name, last_name, email, hashed_password, access_code)
 
+        // Get user details
         await User.get_user_by_email(email)
 
+        // Send email
         await _email.main(email, "Welcome to " + process.env.APP_NAME, 'welcome', {
             first_name: User.first_name,
             last_name: User.last_name,
             access_code: User.access_code
         })
 
+        // Login user
         login_post(req, res)
     } catch (error) {
-        console.error('Controller auth:', error);
+        console.error('Controller auth - signup_post:', error);
         return res.status(500).json({ type: 'error', message: 'Internal server error' })
     }
 
@@ -102,30 +112,38 @@ const password_reset_get_email = async (req, res) => {
     }
 
     try {
+        // Check if email exists
         const data = await User.get_user_by_email(email)
-        if (data) {
-            // Delete old password reset data
-            await Password.delete_old_data()
-            // Check if email already sent
-            const password_data = await Password.get_data_by_email(email)
-            if (password_data) {
-                return res.status(400).json({ type: 'error', message: 'Email already sent' })
-            } else {
-                // Create unique ID for password reset
-                const reset_link = process.env.HTTP + process.env.DOMAIN + ':' + process.env.PORT + '/reset-password/' + crypto.randomBytes(32).toString('hex')
-                // Save it in database
-                await Password.insert_data(email, reset_link)
-                // Send email with link to reset password
-                await _email.main(email, "Reset your password", 'reset_password', {
-                    first_name: data.first_name,
-                    last_name: data.last_name,
-                    reset_link: reset_link
-                })
-                return res.status(200).json({ type: 'success', message: 'Email sent' })
-            }
-        } else {
+
+        // Check if email exists
+        if (!data) {
             return res.status(400).json({ type: 'error', message: 'Email not found' })
         }
+
+        // Delete old password reset links
+        await Password.delete_old_data()
+
+        // Check if email already sent
+        const password_data = await Password.get_data_by_email(email)
+        if (password_data) {
+            return res.status(400).json({ type: 'error', message: 'Email already sent' })
+        }
+
+        // Create unique ID for password reset
+        const reset_link = process.env.HTTP + process.env.DOMAIN + ':' + process.env.PORT + '/reset-password/' + crypto.randomBytes(32).toString('hex')
+
+        // Insert data in database
+        await Password.insert_data(email, reset_link)
+
+        // Send email with link to reset password
+        await _email.main(email, "Reset your password", 'reset_password', {
+            first_name: data.first_name,
+            last_name: data.last_name,
+            reset_link: reset_link
+        })
+
+        // Send JSON
+        return res.status(200).json({ type: 'success', message: 'Email sent' })
     } catch (error) {
         console.error('Controller auth:', error)
         return res.status(500).json({ type: 'error', message: 'Internal server error' })
@@ -179,7 +197,7 @@ const password_reset = async (req, res) => {
         await User.update_password(email, hashed_password)
 
         // Delete link
-        await Password.delete_link(data.id)
+        await Password.delete_link(data.password_id)
 
         // Send JSON
         return res.status(200).json({ type: 'success', message: 'Password updated' })
