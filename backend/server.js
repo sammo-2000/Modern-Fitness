@@ -5,7 +5,6 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 
-
 // Middleware
 app.use(express.json());
 app.use((req, res, next) => {
@@ -15,9 +14,11 @@ app.use((req, res, next) => {
 
 // Import routes
 const profile_router = require('./routes/profile_router');
+const workout_router = require('./routes/workout_router');
 
 // Use routes
 app.use('/api/profile', profile_router);
+app.use('/api/workout', workout_router);
 
 // 404
 app.use((req, res) => {
