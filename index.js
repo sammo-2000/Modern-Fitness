@@ -55,11 +55,13 @@ import middleware from './middleware/auth.js'
 // Get routes 
 import auth_router from './routes/auth.js'
 import profile_router from './routes/profile.js'
+import event_router from './routes/event.js'
 
 // Routing
 app.get('/', (req, res) => { res.render('index', { title: 'Home', session: req.session }) })
 app.use(auth_router)
 app.use(profile_router)
+app.use(event_router)
 
 // Logout
 app.get('/logout', middleware.logged_on, (req, res) => {
