@@ -36,17 +36,31 @@ const get_user = async (req, res) => {
 }
 
 const update_user = async (req, res) => {
-    res.json({
-        success: true,
-        message: 'Update profile'
-    });
+    const { id } = req.params
+    // Check if the ID is valid
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ success: false, message: 'Invalid user ID' });
+    }
+    const user = await User_Model.findOneAndUpdate({ _id: id }, {
+        ...req.body
+    })
+    if (!user) {
+        return res.status(400).json({ success: false, message: 'User not found' });
+    }
+    return res.status(200).json({ success: true, message: 'Get deleted', data: user });
 }
 
 const delete_user = async (req, res) => {
-    res.json({
-        success: true,
-        message: 'Delete profile'
-    });
+    const { id } = req.params
+    // Check if the ID is valid
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ success: false, message: 'Invalid user ID' });
+    }
+    const user = await User_Model.findOneAndDelete({ _id: id })
+    if (!user) {
+        return res.status(400).json({ success: false, message: 'User not found' });
+    }
+    return res.status(200).json({ success: true, message: 'Get deleted', data: user });
 }
 
 module.exports = {
