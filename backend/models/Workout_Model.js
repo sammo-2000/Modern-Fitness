@@ -13,8 +13,13 @@ const Workout_Schema = new Schema({
         required: 'Sorry, image link is required',
         trim: true,
         lowercase: true,
-        unique: true,
     },
+    workout_description: {
+        type: String,
+        required: 'Sorry, workout description is required',
+        trim: true,
+        lowercase: true,
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Workout', Workout_Schema);

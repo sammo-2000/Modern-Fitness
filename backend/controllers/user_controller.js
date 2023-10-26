@@ -40,7 +40,11 @@ const get_user = async (req, res) => {
     const { id } = req.params;
     // Check if the ID is valid
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({ success: false, message: 'Invalid user ID' });
+        return res.status(400).json({
+            success: false, message: {
+                user_id: 'Invalid user ID'
+            }
+        });
     };
     const user = await User_Model.findById(id);
     // Check if the user exists
@@ -54,7 +58,11 @@ const update_user = async (req, res) => {
     const { id } = req.params
     // Check if the ID is valid
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({ success: false, message: 'Invalid user ID' });
+        return res.status(400).json({
+            success: false, message: {
+                user_id: 'Invalid user ID'
+            }
+        });
     };
     const user = await User_Model.findOneAndUpdate({ _id: id }, {
         ...req.body
@@ -69,7 +77,11 @@ const delete_user = async (req, res) => {
     const { id } = req.params
     // Check if the ID is valid
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({ success: false, message: 'Invalid user ID' });
+        return res.status(400).json({
+            success: false, message: {
+                user_id: 'Invalid user ID'
+            }
+        });
     };
     const user = await User_Model.findOneAndDelete({ _id: id })
     if (!user) {

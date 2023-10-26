@@ -5,6 +5,13 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 
+// Accept cross-origin requests from frontend
+app.use(cors({
+    origin: process.env.FRONTEND_FULL_DOMAIN,
+    methods: 'GET,HEAD,PATCH,POST,DELETE',
+    credentials: true
+}));
+
 // Middleware
 app.use(express.json());
 app.use((req, res, next) => {
@@ -15,10 +22,12 @@ app.use((req, res, next) => {
 // Import routes
 const profile_router = require('./routes/profile_router');
 const workout_router = require('./routes/workout_router');
+const tailored_program_router = require('./routes/tailored_program_router');
 
 // Use routes
 app.use('/api/profile', profile_router);
 app.use('/api/workout', workout_router);
+app.use('/api/tailored-program', tailored_program_router);
 
 // 404
 app.use((req, res) => {
