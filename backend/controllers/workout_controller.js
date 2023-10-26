@@ -31,7 +31,11 @@ const get_workout = async (req, res) => {
     const { id } = req.params;
     // Check if the ID is valid
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({ success: false, message: 'Invalid workout ID' });
+        return res.status(400).json({
+            success: false, message: {
+                work_id: 'Invalid work ID'
+            }
+        });
     };
     const workout = await Workout_Model.findById(id);
     // Check if the workout exists
@@ -45,7 +49,11 @@ const update_workout = async (req, res) => {
     const { id } = req.params
     // Check if the ID is valid
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({ success: false, message: 'Invalid workout ID' });
+        return res.status(400).json({
+            success: false, message: {
+                work_id: 'Invalid work ID'
+            }
+        });
     };
     const workout = await Workout_Model.findOneAndUpdate({ _id: id }, {
         ...req.body
@@ -60,7 +68,11 @@ const delete_workout = async (req, res) => {
     const { id } = req.params
     // Check if the ID is valid
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({ success: false, message: 'Invalid workout ID' });
+        return res.status(400).json({
+            success: false, message: {
+                work_id: 'Invalid work ID'
+            }
+        });
     };
     const workout = await Workout_Model.findOneAndDelete({ _id: id })
     if (!workout) {
