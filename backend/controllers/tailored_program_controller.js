@@ -19,6 +19,14 @@ const create_tailored_program = async (req, res) => {
             }
         });
     };
+    // Check if date is valid
+    if (!is_valid_date_format(date)) {
+        return res.status(400).json({
+            success: false, message: {
+                date: 'Invalid date format expecting YYYY-MM-DD'
+            }
+        });
+    };
     try {
         // Create a new tailored program
         const tailored_program = await Tailored_Program_Model.create({ date, user_id });
@@ -87,6 +95,11 @@ const delete_tailored_program = async (req, res) => {
     };
     return res.status(200).json({ success: true, tailored_program });
 };
+
+const is_valid_date_format = (date) => {
+    const dateFormat = /^\d{4}-\d{2}-\d{2}$/;
+    return dateFormat.test(date);
+}
 
 module.exports = {
     get_all_tailored_program,
