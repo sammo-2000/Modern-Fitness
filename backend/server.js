@@ -21,11 +21,13 @@ app.use((req, res, next) => {
 })
 
 // Import routes
+const auth_router = require('./routes/auth_router');
 const profile_router = require('./routes/profile_router');
 const workout_router = require('./routes/workout_router');
 const tailored_program_router = require('./routes/tailored_program_router');
 
 // Use routes
+app.use('/api/auth', auth_router);
 app.use('/api/profile', profile_router);
 app.use('/api/workout', workout_router);
 app.use('/api/tailored-program', tailored_program_router);

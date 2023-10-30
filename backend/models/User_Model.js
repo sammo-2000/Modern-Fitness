@@ -1,10 +1,13 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
+const bcrypt = require('bcrypt');
+
 const Schema = mongoose.Schema;
 
 const User_Schema = new Schema({
     email: {
         type: String,
-        required: 'Email address is required',
+        required: true,
         trim: true,
         lowercase: true,
         unique: true,
@@ -12,19 +15,19 @@ const User_Schema = new Schema({
     },
     password: {
         type: String,
-        required: 'Password is required',
+        required: true,
         trim: true,
         lowercase: true,
     },
     first_name: {
         type: String,
-        required: 'First name is required',
+        required: true,
         trim: true,
         lowercase: true,
     },
     last_name: {
         type: String,
-        required: 'Last name is required',
+        required: true,
         trim: true,
         lowercase: true,
     },
@@ -35,13 +38,11 @@ const User_Schema = new Schema({
     },
     access_code: {
         type: Number,
-        required: true,
         unique: true,
         default: generate_access_code
     },
     role: {
         type: String,
-        required: true,
         default: 'member'
     },
 }, { timestamps: true });

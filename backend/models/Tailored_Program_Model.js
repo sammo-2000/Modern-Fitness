@@ -13,6 +13,10 @@ const Tailored_Program_Schema = new Schema({
         ref: 'User',
         required: 'User ID is required',
     },
+    workouts: {
+        type: Array,
+        required: 'Workouts are required',
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Tailored_Program', Tailored_Program_Schema);

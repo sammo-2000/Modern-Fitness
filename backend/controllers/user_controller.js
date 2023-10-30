@@ -2,7 +2,7 @@ const User_Model = require('../models/User_Model');
 const mongoose = require('mongoose');
 
 const get_all_users = async (req, res) => {
-    const users = await User_Model.find({}).sort({ createdAt: -1 });
+    const users = await User_Model.find({}, { password: 0 }).sort({ createdAt: -1 });
     if (!users) {
         return res.status(400).json({ success: false, message: 'No users found' });
     };
@@ -10,48 +10,26 @@ const get_all_users = async (req, res) => {
 };
 
 const create_user = async (req, res) => {
-    const { email, password, first_name, last_name } = req.body;
-    try {
-        // Create a new user
-        const user = await User_Model.create({ email, password, first_name, last_name });
-        return res.status(200).json({ success: true, user });
-    } catch (error) {
-        // Check for duplicate error
-        if (error.code === 11000) {
-            return res.status(400).json({
-                success: false, message: {
-                    email: "Email already exists"
-                }
-            });
-        };
-        // Check for validation errors
-        return res.status(400).json({
-            success: false, message: {
-                email: error.errors.email ? error.errors.email.message : "",
-                password: error.errors.password ? error.errors.password.message : "",
-                first_name: error.errors.first_name ? error.errors.first_name.message : "",
-                last_name: error.errors.last_name ? error.errors.last_name.message : ""
-            }
-        });
-    };
+    // This endpoint is moved to auth/controller -> signup
+    res.status(400).json({ success: false, message: 'API endpoint not found' });
 };
 
 const get_user = async (req, res) => {
     const { id } = req.params;
-    // Check if the ID is valid
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({
-            success: false, message: {
-                user_id: 'Invalid user ID'
-            }
-        });
-    };
-    const user = await User_Model.findById(id);
-    // Check if the user exists
-    if (!user) {
+    try {
+        // Check if the ID is valid
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            throw Error('Invalid user ID');
+        };
+        const user = await User_Model.findById(id, { password: 0 });
+        // Check if the user exists
+        if (!user) {
+            throw Error('User not found');
+        };
+        return res.status(200).json({ success: true, user });
+    } catch (error) {
         return res.status(400).json({ success: false, message: 'User not found' });
-    };
-    return res.status(200).json({ success: true, user });
+    }
 };
 
 const update_user = async (req, res) => {
