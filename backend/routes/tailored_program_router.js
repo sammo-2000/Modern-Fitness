@@ -1,4 +1,5 @@
 const express = require('express');
+const auth = require('../middleware/auth');
 const router = express.Router();
 const {
     get_all_tailored_program,
@@ -8,10 +9,11 @@ const {
     delete_tailored_program
 } = require('../controllers/tailored_program_controller');
 
+router.use(auth.logged_on);
 router.get('/', get_all_tailored_program)
-router.post('/', create_tailored_program);
+router.post('/', auth.staff, create_tailored_program);
 router.get('/:id', get_tailored_program);
-router.patch('/:id', update_tailored_program);
-router.delete('/:id', delete_tailored_program);
+router.patch('/:id', auth.staff, update_tailored_program);
+router.delete('/:id', auth.staff, delete_tailored_program);
 
 module.exports = router;
