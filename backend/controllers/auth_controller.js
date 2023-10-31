@@ -6,9 +6,14 @@ const validator = require('validator');
 const login = async (req, res) => {
     const { email, password } = req.body;
     try {
-        // Check if email and password are provided
-        if (!email || !password) {
-            throw Error('Missing required fields');
+        // Check if email is provided
+        if (!email) {
+            throw Error('Email is required');
+        }
+
+        // Check if password is provided
+        if (!password) {
+            throw Error('Password is required');
         }
 
         // Check if email is valid
@@ -17,7 +22,7 @@ const login = async (req, res) => {
             throw Error('Incorrect credentials');
         }
 
-        // Check if password is valid
+        // Check if password is correct
         const match = await bcrypt.compare(password, user.password);
         if (!match) {
             throw Error('Incorrect credentials');
@@ -36,9 +41,24 @@ const login = async (req, res) => {
 const signup = async (req, res) => {
     const { email, password, first_name, last_name } = req.body;
     try {
-        // Check if email, password, first_name, last_name are provided
-        if (!email || !password || !first_name || !last_name) {
-            throw Error('Missing required fields');
+        // Check if email is provided
+        if (!email) {
+            throw Error('Email is required');
+        }
+
+        // Check if password is provided
+        if (!password) {
+            throw Error('Password is required');
+        }
+
+        // Check if first_name is provided
+        if (!first_name) {
+            throw Error('First Name is required');
+        }
+
+        // Check if last_name is provided
+        if (!last_name) {
+            throw Error('Last Name is required');
         }
 
         // Check if email is valid
@@ -47,11 +67,8 @@ const signup = async (req, res) => {
         }
 
         // Check if password is strong
-        if (!validator.isStrongPassword(password, {
-            minSymbols: 0,
-            minUppercase: 0,
-        })) {
-            throw Error('Password is too weak');
+        if (!validator.isStrongPassword(password)) {
+            throw Error('Password is too weak - must be at least 8 characters long and contain at least 1 lowercase, 1 uppercase, 1 number and 1 symbol');
         }
 
         // Check if email already exists

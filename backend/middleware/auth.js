@@ -20,14 +20,14 @@ const logged_on = async (req, res, next) => {
 
 const staff = async (req, res, next) => {
     if (req._user.role !== 'trainer' && req._user.role !== 'manager') {
-        return res.status(401).json({ error: 'You must be an staff to access this resource' });
+        return res.status(401).json({ error: 'You must be a staff to access this resource' });
     }
     next();
 }
 
 const manager = async (req, res, next) => {
     if (req._user.role !== 'manager') {
-        return res.status(401).json({ error: 'You must be an manager to access this resource' });
+        return res.status(401).json({ error: 'You must be a manager to access this resource' });
     }
     next();
 }

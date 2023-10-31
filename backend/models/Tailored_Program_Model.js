@@ -12,10 +12,14 @@ const Tailored_Program_Schema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: 'User ID is required',
+        trim: true,
+        lowercase: true,
     },
     workouts: {
         type: Array,
         required: 'Workouts are required',
+        trim: true,
+        lowercase: true,
     }
 }, { timestamps: true });
 
