@@ -147,5 +147,5 @@ Overall, the software will make managing the gym much easier as it will be acces
 [Node-url]: https://nodejs.org/
 [Tailwindcss.com]: https://img.shields.io/badge/Tailwind-444444?style=for-the-badge&logo=tailwindcss&logoColor=62baf2
 [Tailwindcss-url]: https://tailwindcss.com/
-[Next.com]: https://nextjs.org/
-[Next-url]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
+[Next-url]: https://nextjs.org/
+[Next.com]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
