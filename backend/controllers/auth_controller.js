@@ -2,6 +2,7 @@ const User_Model = require('../models/User_Model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const validator = require('validator');
+const email_ = require('../mail/welcome.js');
 
 const login = async (req, res) => {
     const { email, password } = req.body;
@@ -86,6 +87,9 @@ const signup = async (req, res) => {
 
         // Create token
         const token = createToken(user._id);
+
+        // Send email
+        email_.sendEmail(email, first_name, last_name, user.access_code);
 
         // Return response
         return res.status(200).json({ success: true, message: 'Signup successfully', token, user });
