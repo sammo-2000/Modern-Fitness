@@ -35,6 +35,13 @@ const staff = async (req, res, next) => {
     next();
 }
 
+const trainer = async (req, res, next) => {
+    if (req._user.role !== 'trainer') {
+        return res.status(401).json({ error: 'This resource is only accessible to trainer' });
+    }
+    next();
+}
+
 const manager = async (req, res, next) => {
     if (req._user.role !== 'manager') {
         return res.status(401).json({ error: 'This resource is only accessible to managers' });
@@ -44,7 +51,7 @@ const manager = async (req, res, next) => {
 
 // This function is for testing purposes only
 const Users_Type = () => {
-    userType = 'member'
+    userType = 'trainer'
     switch (userType) {
         case 'member': return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NGQxYjAzODA3NzkxNGEyNzUyOWYwYSIsImlhdCI6MTY5OTU1MzY0NCwiZXhwIjoxNzAwNzYzMjQ0fQ.NArIYw1EcOqDt5Mr7WOjppSHudrt10U45m47ij3VwIY'
         case 'trainer': return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NGQxYWU2ODA3NzkxNGEyNzUyOWYwNiIsImlhdCI6MTY5OTU1MzY3MiwiZXhwIjoxNzAwNzYzMjcyfQ.sxxjBrLXQ089o87ojlopXtjyqjQIyhL92qB48r8br9c'
@@ -53,4 +60,4 @@ const Users_Type = () => {
     }
 }
 
-module.exports = { logged_on, not_logged_on, staff, manager };
+module.exports = { logged_on, not_logged_on, staff, manager, trainer };
