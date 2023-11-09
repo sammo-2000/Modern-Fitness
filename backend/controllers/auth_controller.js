@@ -75,6 +75,16 @@ const signup = async (req, res) => {
             throw Error('Date of birth is required')
         }
 
+        // Check if first name is valid
+        if (!validator.isAlpha(first_name)) {
+            throw Error('First name must contain only letters');
+        }
+
+        // Check if last name is valid
+        if (!validator.isAlpha(last_name)) {
+            throw Error('Last name must contain only letters');
+        }
+
         // Check if email is valid
         if (!validator.isEmail(email)) {
             throw Error('Invalid email address');
