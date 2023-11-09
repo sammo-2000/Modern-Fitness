@@ -19,15 +19,6 @@ const logged_on = async (req, res, next) => {
     }
 }
 
-const not_logged_on = async (req, res, next) => {
-    // const { authorization } = req.headers;
-    const authorization = Users_Type();
-    if (authorization) {
-        return res.status(401).json({ error: 'This resource is only accessible to non-logged-in users' });
-    }
-    next();
-}
-
 const staff = async (req, res, next) => {
     if (req._user.role !== 'trainer' && req._user.role !== 'manager') {
         return res.status(401).json({ error: 'This resource is only accessible to staff members' });
@@ -60,4 +51,4 @@ const Users_Type = () => {
     }
 }
 
-module.exports = { logged_on, not_logged_on, staff, manager, trainer };
+module.exports = { logged_on, staff, manager, trainer };
