@@ -28,7 +28,7 @@ const tailored_program_router = require('./routes/tailored_program_router');
 
 // Use routes
 app.use('/api/auth', auth_router);
-app.use('/api/user', user_router);
+app.use('/api/', user_router);
 app.use('/api/workout', workout_router);
 app.use('/api/tailored-program', tailored_program_router);
 
