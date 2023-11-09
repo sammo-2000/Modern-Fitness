@@ -2,14 +2,14 @@ const User_Model = require('../models/User_Model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const validator = require('validator');
-const email_ = require('../mail/welcome.js');
+const send_email = require('../mail/welcome');
 
 const login = async (req, res) => {
-    const { email, password } = req.body;
+    const { User_identifier, password } = req.body;
     try {
         // Check if email is provided
-        if (!email) {
-            throw Error('Email is required');
+        if (!User_identifier) {
+            throw Error('User Identifier is required');
         }
 
         // Check if password is provided
@@ -18,9 +18,12 @@ const login = async (req, res) => {
         }
 
         // Check if email is valid
-        const user = await User_Model.findOne({ email });
+        let user = await User_Model.findOne({ email: User_identifier });
         if (!user) {
-            throw Error('Incorrect credentials');
+            user = await User_Model.findOne({ access_code: User_identifier });
+            if (!user) {
+                throw Error('Incorrect credentials');
+            }
         }
 
         // Check if password is correct
@@ -109,7 +112,7 @@ const signup = async (req, res) => {
         const token = createToken(user._id);
 
         // Send email
-        email_.sendEmail(email, first_name, last_name, user.access_code);
+        send_email.sendEmail(email, first_name, last_name, user.access_code);
 
         // Return response
         return res.status(200).json({ success: true, message: 'Signup successfully', token, user });
@@ -119,7 +122,7 @@ const signup = async (req, res) => {
 }
 
 const createToken = (id) => {
-    return jwt.sign({ id }, process.env.SECRET_TOKEN, { expiresIn: '7d' })
+    return jwt.sign({ id }, process.env.SECRET_TOKEN, { expiresIn: '14d' })
 }
 
 module.exports = {
