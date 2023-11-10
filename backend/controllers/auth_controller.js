@@ -2,14 +2,14 @@ const User_Model = require('../models/User_Model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const validator = require('validator');
-const email_ = require('../mail/welcome.js');
+const send_email = require('../mail/welcome');
 
 const login = async (req, res) => {
-    const { email, password } = req.body;
+    const { User_identifier, password } = req.body;
     try {
         // Check if email is provided
-        if (!email) {
-            throw Error('Email is required');
+        if (!User_identifier) {
+            throw Error('User Identifier is required');
         }
 
         // Check if password is provided
@@ -18,9 +18,12 @@ const login = async (req, res) => {
         }
 
         // Check if email is valid
-        const user = await User_Model.findOne({ email });
+        let user = await User_Model.findOne({ email: User_identifier });
         if (!user) {
-            throw Error('Incorrect credentials');
+            user = await User_Model.findOne({ access_code: User_identifier });
+            if (!user) {
+                throw Error('Incorrect credentials');
+            }
         }
 
         // Check if password is correct
@@ -40,7 +43,7 @@ const login = async (req, res) => {
 }
 
 const signup = async (req, res) => {
-    const { email, password, first_name, last_name } = req.body;
+    const { email, password, first_name, last_name, gender, dob } = req.body;
     try {
         // Check if email is provided
         if (!email) {
@@ -62,6 +65,26 @@ const signup = async (req, res) => {
             throw Error('Last Name is required');
         }
 
+        // Check if gender is provided
+        if (!gender) {
+            throw Error('Gender is required')
+        }
+
+        // Check if dob is provided
+        if (!dob) {
+            throw Error('Date of birth is required')
+        }
+
+        // Check if first name is valid
+        if (!validator.isAlpha(first_name)) {
+            throw Error('First name must contain only letters');
+        }
+
+        // Check if last name is valid
+        if (!validator.isAlpha(last_name)) {
+            throw Error('Last name must contain only letters');
+        }
+
         // Check if email is valid
         if (!validator.isEmail(email)) {
             throw Error('Invalid email address');
@@ -70,6 +93,16 @@ const signup = async (req, res) => {
         // Check if password is strong
         if (!validator.isStrongPassword(password)) {
             throw Error('Password is too weak - must be at least 8 characters long and contain at least 1 lowercase, 1 uppercase, 1 number and 1 symbol');
+        }
+
+        // Check gender is male/female or other
+        if (gender !== 'male' && gender !== 'female' && gender !== 'other') {
+            throw Error('Gender invalid');
+        }
+
+        // Check if dob is valid
+        if (!validator.isDate(dob)) {
+            throw Error('Invalid date of birth, YYYY-MM-DD format required');
         }
 
         // Check if email already exists
@@ -83,13 +116,13 @@ const signup = async (req, res) => {
         const hash = await bcrypt.hash(password, salt);
 
         // Create user
-        const user = await User_Model.create({ email, password: hash, first_name, last_name });
+        const user = await User_Model.create({ email, password: hash, first_name, last_name, gender, dob });
 
         // Create token
         const token = createToken(user._id);
 
         // Send email
-        email_.sendEmail(email, first_name, last_name, user.access_code);
+        send_email.sendEmail(email, first_name, last_name, user.access_code);
 
         // Return response
         return res.status(200).json({ success: true, message: 'Signup successfully', token, user });
@@ -99,7 +132,7 @@ const signup = async (req, res) => {
 }
 
 const createToken = (id) => {
-    return jwt.sign({ id }, process.env.SECRET_TOKEN, { expiresIn: '7d' })
+    return jwt.sign({ id }, process.env.SECRET_TOKEN, { expiresIn: '14d' })
 }
 
 module.exports = {

@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 // Accept cross-origin requests from frontend
 app.use(cors({
     origin: process.env.FRONTEND_FULL_DOMAIN,
-    methods: 'GET,HEAD,PATCH,POST,DELETE',
+    methods: 'GET,PATCH,POST,DELETE',
     credentials: true
 }));
 
@@ -22,15 +22,11 @@ app.use((req, res, next) => {
 
 // Import routes
 const auth_router = require('./routes/auth_router');
-const profile_router = require('./routes/profile_router');
-const workout_router = require('./routes/workout_router');
-const tailored_program_router = require('./routes/tailored_program_router');
+const user_router = require('./routes/user_router');
 
 // Use routes
 app.use('/api/auth', auth_router);
-app.use('/api/profile', profile_router);
-app.use('/api/workout', workout_router);
-app.use('/api/tailored-program', tailored_program_router);
+app.use('/api/', user_router);
 
 // 404
 app.use((req, res) => {

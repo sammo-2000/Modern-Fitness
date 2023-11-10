@@ -1,49 +1,21 @@
 const mongoose = require('mongoose');
-const validator = require('validator');
-const bcrypt = require('bcrypt');
 
 const Schema = mongoose.Schema;
 
 const User_Schema = new Schema({
-    email: {
-        type: String,
-        required: true,
-        trim: true,
-        lowercase: true,
-        unique: true,
-        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
-    },
-    password: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-    first_name: {
-        type: String,
-        required: true,
-        trim: true,
-        lowercase: true,
-    },
-    last_name: {
-        type: String,
-        required: true,
-        trim: true,
-        lowercase: true,
-    },
-    status: {
-        type: String,
-        required: true,
-        default: 'active'
-    },
-    access_code: {
-        type: Number,
-        unique: true,
-        default: generate_access_code
-    },
-    role: {
-        type: String,
-        default: 'member'
-    },
+    email: { type: String, required: true, trim: true, unique: true },
+    password: { type: String, required: true, trim: true },
+    first_name: { type: String, required: true, trim: true },
+    last_name: { type: String, required: true, trim: true },
+    gender: { type: String, required: true, trim: true },
+    dob: { type: String, required: true, trim: true },
+    status: { type: String, required: true, trim: true, default: 'active' },
+    access_code: { type: String, required: true, trim: true, unique: true, default: generate_access_code },
+    role: { type: String, required: true, trim: true, default: 'member' },
+    goal: { type: String, required: false, trim: true },
+    note: { type: String, required: false, trim: true },
+    height: { type: String, required: false, trim: true },
+    weight: { type: String, required: false, trim: true },
 }, { timestamps: true });
 
 function generate_access_code() {

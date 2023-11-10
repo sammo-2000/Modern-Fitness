@@ -1,77 +1,110 @@
 const User_Model = require('../models/User_Model');
 const mongoose = require('mongoose');
+const validator = require('validator');
 
 const get_all_users = async (req, res) => {
-    const users = await User_Model.find({}, { password: 0 }).sort({ createdAt: -1 });
-    if (!users) {
+    const { name } = req.params;
+    let users = null;
+    if (name) {
+        // Get users by name
+        users = await User_Model.find({ first_name: { $regex: name, $options: 'i' } }, { password: 0 }).sort({ createdAt: -1 }).limit(20);
+    } else {
+        // Get all users if no name given
+        users = await User_Model.find({}, { password: 0 }).sort({ createdAt: -1 });
+    }
+    if (!users)
         return res.status(400).json({ success: false, message: 'No users found' });
-    };
     return res.status(200).json({ success: true, users });
 };
 
-const create_user = async (req, res) => {
-    // This endpoint is moved to auth/controller -> signup
-    res.status(400).json({ success: false, message: 'API endpoint not found' });
-};
-
-const get_user = async (req, res) => {
+const get_single_user = async (req, res) => {
     const { id } = req.params;
     try {
-        // Check if the ID is valid
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            throw Error('Invalid user ID');
-        };
-        const user = await User_Model.findById(id, { password: 0 });
-        // Check if the user exists
-        if (!user) {
-            throw Error('User not found');
-        };
-        return res.status(200).json({ success: true, user });
+        if (!id) {
+            // Own request
+            const user = await User_Model.findById(req._user._id, { password: 0 });
+            res.status(200).json({ success: true, user });
+        } else if (id && req._user.role !== 'member') {
+            if (!mongoose.Types.ObjectId.isValid(id)) {
+                // Staff request
+                throw Error('Invalid user ID');
+            };
+            const user = await User_Model.findById(id, { password: 0 });
+            if (!user) {
+                throw Error('User not found');
+            };
+            res.status(200).json({ success: true, user });
+        } else {
+            res.status(401).json({ success: false, message: 'You are not authorized to view this user' });
+        }
     } catch (error) {
-        return res.status(400).json({ success: false, message: 'User not found' });
+        return res.status(400).json({ success: false, message: error ? error : 'User not found' });
     }
-};
+}
 
-const update_user = async (req, res) => {
-    const { id } = req.params
-    // Check if the ID is valid
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({
-            success: false, message: {
-                user_id: 'Invalid user ID'
-            }
-        });
-    };
-    const user = await User_Model.findOneAndUpdate({ _id: id }, {
-        ...req.body
-    });
-    if (!user) {
-        return res.status(400).json({ success: false, message: 'User not found' });
-    };
-    return res.status(200).json({ success: true, user });
-};
+const edit_user = async (req, res) => {
+    const { id } = req.params;
+    const { email, goal, note, height, weight } = req.body;
+    try {
+        if (!id) {
+            // Own request
 
-const delete_user = async (req, res) => {
-    const { id } = req.params
-    // Check if the ID is valid
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({
-            success: false, message: {
-                user_id: 'Invalid user ID'
+            // Check if the email is valid
+            if (email && !validator.isEmail(email)) {
+                throw Error('Invalid email');
+            };
+
+            // Check if the goal is valid
+            if (goal && !/^[a-zA-Z0-9\s]*$/.test(goal)) {
+                throw Error('Goal must only contain letters and numbers');
+            };
+
+            // Check if the height is valid
+            if (height && !validator.isNumeric(height)) {
+                throw Error('Height must only contain numbers');
+            };
+
+            // Check if the weight is valid
+            if (weight && !validator.isNumeric(weight)) {
+                throw Error('Weight must only contain numbers');
+            };
+
+            // Update user
+            const user = await User_Model.findOneAndUpdate({ _id: req._user._id }, {
+                ...req.body
+            });
+            return res.status(200).json({ success: true, user });
+        } else if (id && req._user.role === 'trainer') {
+            // Trainer request
+
+            // Check if the ID is valid
+            if (!mongoose.Types.ObjectId.isValid(id)) {
+                throw Error('Invalid user ID');
             }
-        });
-    };
-    const user = await User_Model.findOneAndDelete({ _id: id })
-    if (!user) {
-        return res.status(400).json({ success: false, message: 'User not found' });
-    };
-    return res.status(200).json({ success: true, user });
-};
+
+            // Check if note is provided
+            if (!note) {
+                throw Error('Note is required');
+            };
+
+            // Check if the note is valid
+            if (note && !/^[a-zA-Z0-9\s]*$/.test(note)) {
+                throw Error('Note must only contain letters and numbers');
+            };
+
+            // Update user
+            const user = await User_Model.findOneAndUpdate({ _id: id }, { note });
+            return res.status(200).json({ success: true, user });
+        } else {
+            res.status(401).json({ success: false, message: 'You are not authorized to edit this user' });
+        }
+    } catch (error) {
+        return res.status(400).json({ success: false, message: error.message });
+    }
+}
 
 module.exports = {
     get_all_users,
-    create_user,
-    get_user,
-    update_user,
-    delete_user
+    get_single_user,
+    edit_user
 };
