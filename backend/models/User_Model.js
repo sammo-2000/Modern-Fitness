@@ -12,10 +12,10 @@ const User_Schema = new Schema({
     status: { type: String, required: true, trim: true, default: 'active' },
     access_code: { type: String, required: true, trim: true, unique: true, default: generate_access_code },
     role: { type: String, required: true, trim: true, default: 'member' },
-    goal: { type: String, required: false, trim: true },
-    note: { type: String, required: false, trim: true },
-    height: { type: String, required: false, trim: true },
-    weight: { type: String, required: false, trim: true },
+    goal: { type: String, required: false, trim: true, default: null },
+    note: { type: String, required: false, trim: true, default: null },
+    height: { type: String, required: false, trim: true, default: null },
+    weight: { type: String, required: false, trim: true, default: null },
 }, { timestamps: true });
 
 function generate_access_code() {

@@ -23,10 +23,12 @@ app.use((req, res, next) => {
 // Import routes
 const auth_router = require('./routes/auth_router');
 const user_router = require('./routes/user_router');
+const program_router = require('./routes/program_router');
 
 // Use routes
 app.use('/api/auth', auth_router);
 app.use('/api/', user_router);
+app.use('/api/', program_router);
 
 // 404
 app.use((req, res) => {

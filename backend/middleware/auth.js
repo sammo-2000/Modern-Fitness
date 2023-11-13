@@ -15,27 +15,27 @@ const logged_on = async (req, res, next) => {
         req._user = await User_Model.findById(id).select('_id role');
         next();
     } catch (error) {
-        return res.status(401).json({ error: error.message });
+        return res.status(401).json({ success: false, error: error.message });
     }
 }
 
 const staff = async (req, res, next) => {
     if (req._user.role !== 'trainer' && req._user.role !== 'manager') {
-        return res.status(401).json({ error: 'This resource is only accessible to staff members' });
+        return res.status(401).json({ success: false, error: 'This resource is only accessible to staff members' });
     }
     next();
 }
 
 const trainer = async (req, res, next) => {
     if (req._user.role !== 'trainer') {
-        return res.status(401).json({ error: 'This resource is only accessible to trainer' });
+        return res.status(401).json({ success: false, error: 'This resource is only accessible to trainer' });
     }
     next();
 }
 
 const manager = async (req, res, next) => {
     if (req._user.role !== 'manager') {
-        return res.status(401).json({ error: 'This resource is only accessible to managers' });
+        return res.status(401).json({ success: false, error: 'This resource is only accessible to managers' });
     }
     next();
 }

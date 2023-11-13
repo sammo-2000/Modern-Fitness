@@ -25,14 +25,13 @@ const get_single_user = async (req, res) => {
             const user = await User_Model.findById(req._user._id, { password: 0 });
             res.status(200).json({ success: true, user });
         } else if (id && req._user.role !== 'member') {
-            if (!mongoose.Types.ObjectId.isValid(id)) {
-                // Staff request
+            if (!mongoose.Types.ObjectId.isValid(id))
                 throw Error('Invalid user ID');
-            };
+
             const user = await User_Model.findById(id, { password: 0 });
-            if (!user) {
+            if (!user)
                 throw Error('User not found');
-            };
+
             res.status(200).json({ success: true, user });
         } else {
             res.status(401).json({ success: false, message: 'You are not authorized to view this user' });
@@ -50,50 +49,47 @@ const edit_user = async (req, res) => {
             // Own request
 
             // Check if the email is valid
-            if (email && !validator.isEmail(email)) {
+            if (email && !validator.isEmail(email))
                 throw Error('Invalid email');
-            };
 
             // Check if the goal is valid
-            if (goal && !/^[a-zA-Z0-9\s]*$/.test(goal)) {
+            if (goal && !/^[a-zA-Z0-9\s]*$/.test(goal))
                 throw Error('Goal must only contain letters and numbers');
-            };
 
             // Check if the height is valid
-            if (height && !validator.isNumeric(height)) {
+            if (height && !validator.isNumeric(height))
                 throw Error('Height must only contain numbers');
-            };
 
             // Check if the weight is valid
-            if (weight && !validator.isNumeric(weight)) {
+            if (weight && !validator.isNumeric(weight))
                 throw Error('Weight must only contain numbers');
-            };
+
+            const allowed_fields = {};
+            if (email) allowed_fields.email = email;
+            if (goal) allowed_fields.goal = goal;
+            if (height) allowed_fields.height = height;
+            if (weight) allowed_fields.weight = weight;
 
             // Update user
-            const user = await User_Model.findOneAndUpdate({ _id: req._user._id }, {
-                ...req.body
-            });
+            const user = await User_Model.findOneAndUpdate({ _id: req._user._id }, allowed_fields, { new: true });
             return res.status(200).json({ success: true, user });
         } else if (id && req._user.role === 'trainer') {
             // Trainer request
 
             // Check if the ID is valid
-            if (!mongoose.Types.ObjectId.isValid(id)) {
+            if (!mongoose.Types.ObjectId.isValid(id))
                 throw Error('Invalid user ID');
-            }
 
             // Check if note is provided
-            if (!note) {
+            if (!note)
                 throw Error('Note is required');
-            };
 
             // Check if the note is valid
-            if (note && !/^[a-zA-Z0-9\s]*$/.test(note)) {
+            if (note && !/^[a-zA-Z0-9\s]*$/.test(note))
                 throw Error('Note must only contain letters and numbers');
-            };
 
             // Update user
-            const user = await User_Model.findOneAndUpdate({ _id: id }, { note });
+            const user = await User_Model.findOneAndUpdate({ _id: id }, { note }, { new: true });
             return res.status(200).json({ success: true, user });
         } else {
             res.status(401).json({ success: false, message: 'You are not authorized to edit this user' });
@@ -103,8 +99,34 @@ const edit_user = async (req, res) => {
     }
 }
 
+const delele_user = async (req, res) => {
+    const { id } = req.params;
+    if (!id) {
+        // Own request
+
+        // Verify user password
+
+        // Delete user
+
+        // TODO
+    } else {
+        // Manager request
+
+        // Check if the ID is valid
+
+        // Verify manager password
+
+        // Verify user name
+
+        // Delete user
+
+        // TODO
+    }
+}
+
 module.exports = {
     get_all_users,
     get_single_user,
-    edit_user
+    edit_user,
+    delele_user
 };

@@ -8,14 +8,12 @@ const login = async (req, res) => {
     const { User_identifier, password } = req.body;
     try {
         // Check if email is provided
-        if (!User_identifier) {
+        if (!User_identifier)
             throw Error('User Identifier is required');
-        }
 
         // Check if password is provided
-        if (!password) {
+        if (!password)
             throw Error('Password is required');
-        }
 
         // Check if email is valid
         let user = await User_Model.findOne({ email: User_identifier });
@@ -28,9 +26,8 @@ const login = async (req, res) => {
 
         // Check if password is correct
         const match = await bcrypt.compare(password, user.password);
-        if (!match) {
+        if (!match) 
             throw Error('Incorrect credentials');
-        }
 
         // Create token
         const token = createToken(user._id);
@@ -46,70 +43,57 @@ const signup = async (req, res) => {
     const { email, password, first_name, last_name, gender, dob } = req.body;
     try {
         // Check if email is provided
-        if (!email) {
+        if (!email)
             throw Error('Email is required');
-        }
 
         // Check if password is provided
-        if (!password) {
+        if (!password)
             throw Error('Password is required');
-        }
 
         // Check if first_name is provided
-        if (!first_name) {
+        if (!first_name)
             throw Error('First Name is required');
-        }
 
         // Check if last_name is provided
-        if (!last_name) {
+        if (!last_name)
             throw Error('Last Name is required');
-        }
 
         // Check if gender is provided
-        if (!gender) {
+        if (!gender)
             throw Error('Gender is required')
-        }
 
         // Check if dob is provided
-        if (!dob) {
+        if (!dob)
             throw Error('Date of birth is required')
-        }
 
         // Check if first name is valid
-        if (!validator.isAlpha(first_name)) {
+        if (!validator.isAlpha(first_name))
             throw Error('First name must contain only letters');
-        }
 
         // Check if last name is valid
-        if (!validator.isAlpha(last_name)) {
+        if (!validator.isAlpha(last_name))
             throw Error('Last name must contain only letters');
-        }
 
         // Check if email is valid
-        if (!validator.isEmail(email)) {
+        if (!validator.isEmail(email))
             throw Error('Invalid email address');
-        }
 
         // Check if password is strong
-        if (!validator.isStrongPassword(password)) {
+        if (!validator.isStrongPassword(password))
             throw Error('Password is too weak - must be at least 8 characters long and contain at least 1 lowercase, 1 uppercase, 1 number and 1 symbol');
-        }
 
         // Check gender is male/female or other
-        if (gender !== 'male' && gender !== 'female' && gender !== 'other') {
+        if (gender !== 'male' && gender !== 'female' && gender !== 'other')
             throw Error('Gender invalid');
-        }
 
         // Check if dob is valid
-        if (!validator.isDate(dob)) {
+        if (!validator.isDate(dob))
             throw Error('Invalid date of birth, YYYY-MM-DD format required');
-        }
 
         // Check if email already exists
         const exists = await User_Model.findOne({ email });
-        if (exists) {
+        if (exists)
             throw Error('Email address already exists');
-        }
 
         // Create hash password
         const salt = await bcrypt.genSalt(10);
