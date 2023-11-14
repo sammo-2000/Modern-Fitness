@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 export default function NavBar() {
   return (
@@ -6,8 +7,18 @@ export default function NavBar() {
       <h1 className="text-3xl">ModernFit</h1>
       <div className="text-xl">
         {/* Links to pages */}
-        <h2 className="border-b-2">Link</h2>
-        <h2 className="border-b-2">Link</h2>
+        <Link
+          href="/"
+          className="block w-full border-b-2 px-2 py-4 hover:bg-accent hover:text-white"
+        >
+          Home
+        </Link>
+        <Link
+          href="/members"
+          className="block w-full border-b-2 px-2 py-4 hover:bg-accent hover:text-white"
+        >
+          Member
+        </Link>
       </div>
     </nav>
   );
