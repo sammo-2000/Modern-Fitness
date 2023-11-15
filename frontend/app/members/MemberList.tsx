@@ -24,11 +24,12 @@ export default function MemberList() {
 
   return (
     <>
-      <div className="flex w-full items-center rounded bg-gray-100 p-2">
+      <div className="flex w-full items-center rounded border bg-gray-100 p-2 focus-within:border-accent">
         <FaSearch />
         <input
           className="ml-2 w-full bg-gray-100 outline-none"
-          type="text"
+          id="searchbar"
+          type="search"
           placeholder="Search for Member..."
           value={input}
           onChange={(e) => {
@@ -40,7 +41,7 @@ export default function MemberList() {
         {members.map((member: any) => (
           <li
             key={member._id}
-            className="mx-2 my-6 flex items-center justify-between rounded p-4 shadow"
+            className="my-6 flex items-center justify-between rounded p-4 shadow"
           >
             <div>
               <h3 className="text-lg">
@@ -55,7 +56,7 @@ export default function MemberList() {
             </div>
             <Link
               href=""
-              className="self-end rounded bg-accent px-4 py-2 text-white"
+              className="self-end rounded-xl bg-blue-500 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700"
             >
               View Member
             </Link>
