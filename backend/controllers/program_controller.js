@@ -2,6 +2,7 @@ const Program_Model = require('../models/Program_Model');
 const User_Model = require('../models/User_Model');
 const mongoose = require('mongoose');
 const validator = require('validator');
+const send_email = require('../mail/program');
 
 const get_all_programs = async (req, res) => {
     const { user_id } = req.params;
@@ -92,66 +93,80 @@ const get_program = async (req, res) => {
 }
 
 const create_program = async (req, res) => {
-    // Get user_id, date & workout array from request body
     const { user_id, date, workout } = req.body;
     try {
-        // Check if user_id is valid
-        if (!mongoose.Types.ObjectId.isValid(user_id))
-            throw Error('Invalid user ID');
-
-        // Check if user_id is a member
-        const user = await User_Model.findById(user_id);
-        if (!user)
-            throw Error('User not found');
-
-        // Check if date is valid
-        if (!validator.isDate(date))
-            throw Error('Invalid date format must be YYYY-MM-DD');
-
-        // Check if workout is valid
-        if (!Array.isArray(workout))
-            throw Error('Workout is required');
-
-        if (workout.length == 0)
-            throw Error('Workout is required');
-
-        workout.forEach(element => {
-            if (!element.name)
-                throw Error('Workout name is required');
-
-            if (!element.load)
-                throw Error('Workout load is required');
-
-            if (!element.reps)
-                throw Error('Workout reps is required');
-        });
+        // Validate program
+        await validate_program(user_id, date, workout);
 
         // Create a new program
         const program = await Program_Model.create({ user_id, date, workout });
 
-        // Check if program was created
-        if (!program)
-            throw Error('Program could not be created');
-        return res.status(200).json({ success: true, program });
+        // Send email
+        send_email.sendEmail(user);
 
-        // Create a new program
+        return res.status(200).json({ success: true, program });
     } catch (error) {
         return res.status(400).json({ success: false, message: error.message });
     }
 }
 
 const update_program = async (req, res) => {
+    const { user_id, date, workout } = req.body;
+    const { id } = req.params;
 
+    try {
+        // Validate program
+        await validate_program(user_id, date, workout);
+
+        // Validate program_id
+        if (!mongoose.Types.ObjectId.isValid(id))
+            return res.status(400).json({ success: false, message: "Invalid program ID" });
+
+        // Create a new program
+        const program = await Program_Model.findOneAndUpdate({ _id: id }, { user_id, date, workout }, { new: true });
+
+        return res.status(200).json({ success: true, program });
+    } catch (error) {
+        return res.status(400).json({ success: false, message: error.message });
+    }
 }
 
-const delete_program = async (req, res) => {
+const validate_program = async (user_id, date, workout) => {
+    // Check if user_id is valid
+    if (!mongoose.Types.ObjectId.isValid(user_id))
+        throw Error('Invalid user ID');
 
+    // Check if user_id is a member
+    const user = await User_Model.findById(user_id);
+    if (!user)
+        throw Error('User not found');
+
+    // Check if date is valid
+    if (!validator.isDate(date))
+        throw Error('Invalid date format must be YYYY-MM-DD');
+
+    // Check if workout is valid
+    if (!Array.isArray(workout))
+        throw Error('Workout is required');
+
+    if (workout.length == 0)
+        throw Error('Workout is required');
+
+    workout.forEach(element => {
+        if (!element.name)
+            throw Error('Workout name is required');
+
+        if (!element.load)
+            throw Error('Workout load is required');
+
+        if (!element.reps)
+            throw Error('Workout reps is required');
+    });
 }
 
 module.exports = {
     get_all_programs,
     get_program,
     create_program,
-    update_program,
-    delete_program
+    update_program
 }
