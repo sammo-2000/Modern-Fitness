@@ -7,9 +7,9 @@ import { BsPersonFill } from "react-icons/bs";
 import Image from "next/image";
 import mainImg from "public/main-gym-img.jpg";
 
-export default function NavBar() {
+export default function SideBar() {
   return (
-    <div className="w-full bg-gray-800 text-white md:fixed md:h-screen md:w-64 md:overflow-y-auto">
+    <div className="hide w-full bg-gray-800 text-white md:fixed md:h-screen md:w-64 md:overflow-y-auto">
       <div className=" border-b-1 mb-2 border border-x-0 border-t-0 border-gray-700 p-4 ">
         <div className="mb-8 ml-1 mt-4">
           <CgGym className=" h-10 w-10 rounded-md bg-blue-700" />
@@ -20,35 +20,56 @@ export default function NavBar() {
         </div>
       </div>
       <div className="border-b-1 border border-x-0 border-t-0 border-gray-700 pb-20">
-        <ul className="mx-4 py-3  text-sm font-semibold text-gray-400 ">
-          <li className=" my-2 mb-3  flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white ">
+        <div className="mx-4 py-3  text-sm font-semibold text-gray-400 ">
+          <Link
+            href="\"
+            className=" my-2 mb-3  flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+          >
             <AiFillHome className=" ml-2 h-auto w-5 " /> Home
-          </li>
-          <li className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white ">
+          </Link>
+          <Link
+            href=""
+            className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+          >
             <GiProgression className=" ml-2 h-auto w-5" />
             Progress
-          </li>
-          <li className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white ">
+          </Link>
+          <Link
+            href="profile"
+            className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+          >
             <BsPersonFill className=" ml-2 h-auto w-5" />
             Account
-          </li>
-          <li className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white ">
+          </Link>
+          <Link
+            href=""
+            className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+          >
             <AiFillHome className=" ml-2 h-auto w-5" />
             Settings
-          </li>
-          <li className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white ">
+          </Link>
+          <Link
+            href="registration"
+            className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+          >
             <AiFillHome className=" ml-2 h-auto w-5" />
             Register
-          </li>
-          <li className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white ">
+          </Link>
+          <Link
+            href="signIn"
+            className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+          >
             <AiFillHome className=" ml-2 h-auto w-5" />
             Login
-          </li>
-          <li className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white ">
+          </Link>
+          <Link
+            href=""
+            className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+          >
             <AiFillHome className=" ml-2 h-auto w-5" />
             New Routine
-          </li>
-        </ul>
+          </Link>
+        </div>
       </div>
       <div className=" bg-gray-800  py-5">
         <h2 className=" mb-1 px-3 text-sm font-medium">
