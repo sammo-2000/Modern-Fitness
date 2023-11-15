@@ -38,11 +38,25 @@ export default function MemberList() {
       </div>
       <ul>
         {members.map((member: any) => (
-          <li key={member._id} className="mx-2 my-6 rounded p-4 shadow">
-            <h3>{member.first_name + " " + member.last_name}</h3>
-            <p>Age: {calculateAge(member.dob)}</p>
-            <p>Status: {member.status}</p>
-            <Link href="" className="bg-primary">
+          <li
+            key={member._id}
+            className="mx-2 my-6 flex items-center justify-between rounded p-4 shadow"
+          >
+            <div>
+              <h3 className="text-lg">
+                {member.first_name + " " + member.last_name}
+              </h3>
+              <p>
+                <strong>Age:</strong> {calculateAge(member.dob)}
+              </p>
+              <p>
+                <strong>Status:</strong> {member.status}
+              </p>
+            </div>
+            <Link
+              href=""
+              className="self-end rounded bg-accent px-4 py-2 text-white"
+            >
               View Member
             </Link>
           </li>
