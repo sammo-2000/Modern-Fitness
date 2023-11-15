@@ -14,7 +14,5 @@ router.get('/program/:user_id/:program_id', middleware.trainer, Program.get_prog
 router.post('/program', middleware.trainer, Program.create_program)
 // Update program
 router.patch('/program/:id', middleware.trainer, Program.update_program)
-// Delete program
-router.delete('/program/:id', middleware.trainer, Program.delete_program)
 
 module.exports = router;

@@ -26,7 +26,7 @@ const login = async (req, res) => {
 
         // Check if password is correct
         const match = await bcrypt.compare(password, user.password);
-        if (!match) 
+        if (!match)
             throw Error('Incorrect credentials');
 
         // Create token
