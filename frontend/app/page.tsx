@@ -1,12 +1,4 @@
-<<<<<<< Updated upstream
-=======
 
-
-
-
-import React from 'react'
-
->>>>>>> Stashed changes
 export default function Home() {
   return (
     <main>
