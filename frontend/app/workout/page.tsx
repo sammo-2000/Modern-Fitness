@@ -7,8 +7,7 @@ export default function Workout() {
     <div className= "  bg-gray-300 min-h-screen">
        <WorkoutForm />
        <div className= "min-h-screen bg-gray-300">
-   
-        
+      
        
       </div>
      
