@@ -52,9 +52,15 @@ const get_program = async (req, res) => {
         // Get the program
         const program = await Program_Model.findById(program_id);
 
+        console.log(program.user_id, req._user.id);
+
         // Check if program exists
         if (!program)
-            return res.status(400).json({ success: false, message: "Program not found" });
+            return res.status(400).json({ success: false, message: 'Program not found' });
+
+        // Check if program belongs to user
+        if (program.user_id !== req._user.id && req._user.role !== 'trainer')
+            return res.status(401).json({ success: false, message: 'Unauthorized to view this program' });
 
         // Return the program
         return res.status(200).json({ success: true, program });
@@ -86,7 +92,52 @@ const get_program = async (req, res) => {
 }
 
 const create_program = async (req, res) => {
+    // Get user_id, date & workout array from request body
+    const { user_id, date, workout } = req.body;
+    try {
+        // Check if user_id is valid
+        if (!mongoose.Types.ObjectId.isValid(user_id))
+            throw Error('Invalid user ID');
 
+        // Check if user_id is a member
+        const user = await User_Model.findById(user_id);
+        if (!user)
+            throw Error('User not found');
+
+        // Check if date is valid
+        if (!validator.isDate(date))
+            throw Error('Invalid date format must be YYYY-MM-DD');
+
+        // Check if workout is valid
+        if (!Array.isArray(workout))
+            throw Error('Workout is required');
+
+        if (workout.length == 0)
+            throw Error('Workout is required');
+
+        workout.forEach(element => {
+            if (!element.name)
+                throw Error('Workout name is required');
+
+            if (!element.load)
+                throw Error('Workout load is required');
+
+            if (!element.reps)
+                throw Error('Workout reps is required');
+        });
+
+        // Create a new program
+        const program = await Program_Model.create({ user_id, date, workout });
+
+        // Check if program was created
+        if (!program)
+            throw Error('Program could not be created');
+        return res.status(200).json({ success: true, program });
+
+        // Create a new program
+    } catch (error) {
+        return res.status(400).json({ success: false, message: error.message });
+    }
 }
 
 const update_program = async (req, res) => {
