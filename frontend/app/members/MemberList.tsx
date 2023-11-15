@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 
@@ -37,10 +38,13 @@ export default function MemberList() {
       </div>
       <ul>
         {members.map((member: any) => (
-          <li key={member._id}>
+          <li key={member._id} className="mx-2 my-6 rounded p-4 shadow">
             <h3>{member.first_name + " " + member.last_name}</h3>
             <p>Age: {calculateAge(member.dob)}</p>
             <p>Status: {member.status}</p>
+            <Link href="" className="bg-primary">
+              View Member
+            </Link>
           </li>
         ))}
       </ul>
