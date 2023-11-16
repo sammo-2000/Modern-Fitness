@@ -19,10 +19,8 @@ export default function Footer() {
       </div>
 
       <div>
-        {" "}
         <div className=" flex flex-row justify-center px-2 pt-10">
           <p className=" mr-4 flex flex-row gap-1 pb-3 text-xs  font-normal text-white">
-            {" "}
             <IoLocationSharp className=" h-4 w-4 font-medium" /> United Kingdom
           </p>
           <p className=" flex flex-row gap-1 text-xs font-semibold text-white ">

@@ -9,7 +9,7 @@ import mainImg from "public/main-gym-img.jpg";
 
 export default function SideBar() {
   return (
-    <div className="hide w-full bg-gray-800 text-white md:fixed md:h-screen md:w-64 md:overflow-y-auto">
+    <div className="hide-scrollbar sticky w-full bg-gray-800 text-white md:fixed md:h-screen md:w-64 md:overflow-y-auto">
       <div className=" border-b-1 mb-2 border border-x-0 border-t-0 border-gray-700 p-4 ">
         <div className="mb-8 ml-1 mt-4">
           <CgGym className=" h-10 w-10 rounded-md bg-blue-700" />
