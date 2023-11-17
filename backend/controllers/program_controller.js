@@ -96,7 +96,7 @@ const create_program = async (req, res) => {
     const { user_id, date, workout } = req.body;
     try {
         // Validate program
-        await validate_program(user_id, date, workout);
+        const user = await validate_program(user_id, date, workout);
 
         // Create a new program
         const program = await Program_Model.create({ user_id, date, workout });
@@ -162,6 +162,8 @@ const validate_program = async (user_id, date, workout) => {
         if (!element.reps)
             throw Error('Workout reps is required');
     });
+
+    return user;
 }
 
 module.exports = {
