@@ -8,7 +8,7 @@ import picture from "public/profile.png";
 function Header() {
   return (
     <div>
-      <div className=" flex justify-between border border-y-0 border-neutral-700 px-4 py-3  text-gray-700">
+      <div className=" flex justify-between px-4 py-3 text-gray-700 shadow">
         <div>
           <GoSearch className="h-5 w-5 " />
         </div>
