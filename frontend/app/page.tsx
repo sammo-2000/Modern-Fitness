@@ -18,7 +18,7 @@ export default function Home() {
         />
 
         <div className="absolute mx-auto text-gray-100">
-          <h1 className=" mb-12 bg-gradient-to-r  from-gray-900 via-gray-800  to-white bg-clip-text font-serif text-8xl font-extrabold text-transparent">
+          <h1 className="mb-12 bg-gradient-to-r from-gray-900  via-gray-800 to-white  bg-clip-text font-serif text-4xl font-extrabold text-transparent md:text-8xl">
             Discover Your Potential
           </h1>
           <p className="mx-auto mb-20 max-w-max rounded-full bg-black bg-opacity-70 px-4 py-2 text-center font-mono text-3xl font-bold">
