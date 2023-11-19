@@ -9,8 +9,8 @@ export default function Footer() {
   return (
     // footer styling for desktop or tablet
     <div className=" border border-y-0 border-neutral-700  bg-gray-800">
-      <div className=" text-bold mb-8 justify-between py-6 pt-14 text-xs">
-        <div className=" float-right mb-10 mr-16 flex gap-4 px-4 md:flex-wrap md:justify-end">
+      <div className="text-bold justify-between py-6 text-xs">
+        <div className="mr-16 flex gap-4 px-4 md:flex-wrap md:justify-end">
           <BsTwitter className=" h-8 w-8 rounded-full bg-neutral-100 p-1  text-blue-600 hover:bg-neutral-300" />
           <TfiYoutube className=" h-8 w-8 rounded-full bg-neutral-100 p-1  text-red-600 hover:bg-neutral-300" />{" "}
           <FaFacebookF className=" h-8 w-8  rounded-full bg-neutral-100 p-1  text-blue-600 hover:bg-neutral-300" />
@@ -19,8 +19,8 @@ export default function Footer() {
       </div>
 
       <div>
-        <div className=" flex flex-row justify-center px-2 pt-10">
-          <p className=" mr-4 flex flex-row gap-1 pb-3 text-xs  font-normal text-white">
+        <div className=" mx-auto flex flex-row justify-center gap-4 px-2 pt-10">
+          <p className=" flex flex-row gap-1 pb-3 text-xs  font-normal text-white">
             <IoLocationSharp className=" h-4 w-4 font-medium" /> United Kingdom
           </p>
           <p className=" flex flex-row gap-1 text-xs font-semibold text-white ">

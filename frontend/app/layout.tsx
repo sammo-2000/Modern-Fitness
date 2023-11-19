@@ -21,10 +21,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <Header />
         <SideBar />
-        <div className="lg:ml-64">
-          <Header />
-          {children}
+        {/* The flex below is for keeping the footer at the bottom */}
+        <div className="flex min-h-screen flex-col lg:ml-64">
+          <div className="flex-1">{children}</div>
           <Footer />
         </div>
       </body>

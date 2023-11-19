@@ -24,10 +24,10 @@ export default function MemberList() {
 
   return (
     <>
-      <div className="flex w-full items-center rounded border bg-gray-100 p-2 focus-within:border-accent">
+      <div className="flex w-full items-center rounded-full border bg-gray-100 px-4 py-0.5 focus-within:border-blue-500">
         <FaSearch />
         <input
-          className="ml-2 w-full bg-gray-100 outline-none"
+          className="ml-2 w-full border-none bg-gray-100 outline-none focus:ring-0"
           id="searchbar"
           type="search"
           placeholder="Search for Member..."
