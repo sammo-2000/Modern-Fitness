@@ -24,20 +24,22 @@ export default function MemberList() {
 
   return (
     <>
-      <div className="flex w-full items-center rounded-full border bg-gray-100 px-4 py-0.5 focus-within:border-blue-500">
-        <FaSearch />
-        <input
-          className="ml-2 w-full border-none bg-gray-100 outline-none focus:ring-0"
-          id="searchbar"
-          type="search"
-          placeholder="Search for Member..."
-          value={input}
-          onChange={(e) => {
-            setInput(e.target.value);
-          }}
-        />
+      <div className="sticky top-11 border-b border-gray-100 bg-white p-4">
+        <div className="flex w-full items-center rounded-full border bg-gray-100 px-4 py-0.5 focus-within:border-blue-500">
+          <FaSearch />
+          <input
+            className="ml-2 w-full border-none bg-gray-100 outline-none focus:ring-0"
+            id="searchbar"
+            type="search"
+            placeholder="Search for Member..."
+            value={input}
+            onChange={(e) => {
+              setInput(e.target.value);
+            }}
+          />
+        </div>
       </div>
-      <ul>
+      <ul className="px-4">
         {members.map((member: any) => (
           <li
             key={member._id}
@@ -58,7 +60,7 @@ export default function MemberList() {
               href=""
               className="self-end rounded-xl bg-blue-500 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700"
             >
-              View Member
+              View
             </Link>
           </li>
         ))}
