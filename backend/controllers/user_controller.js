@@ -1,4 +1,5 @@
 const User_Model = require('../models/User_Model');
+const Program_Model = require('../models/Program_Model');
 const mongoose = require('mongoose');
 const validator = require('validator');
 
@@ -6,11 +7,25 @@ const get_all_users = async (req, res) => {
     const { name } = req.params;
     let users = null;
     if (name) {
-        // Get users by name
-        users = await User_Model.find({ first_name: { $regex: name, $options: 'i' } }, { password: 0 }).sort({ createdAt: -1 }).limit(20);
+        // Get users by first name
+        users_list = await User_Model.find({ first_name: { $regex: name, $options: 'i' } }, { password: 0 }).sort({ createdAt: -1 }).limit(20);
+        users = await Promise.all(users_list.map(async (user) => {
+            const has_program = await has_custom_program(user._id);
+            return {
+                ...user.toObject(),
+                has_program: has_program
+            }
+        }))
     } else {
         // Get all users if no name given
-        users = await User_Model.find({}, { password: 0 }).sort({ createdAt: -1 });
+        users_list = await User_Model.find({}, { password: 0 }).sort({ createdAt: -1 }).limit(20);
+        users = await Promise.all(users_list.map(async (user) => {
+            const has_program = await has_custom_program(user._id);
+            return {
+                ...user.toObject(),
+                has_program: has_program
+            }
+        }))
     }
     if (!users)
         return res.status(400).json({ success: false, message: 'No users found' });
@@ -123,6 +138,13 @@ const delele_user = async (req, res) => {
         // TODO
     }
 }
+
+const has_custom_program = async (user_id) => {
+    const has_program = await Program_Model.exists({ user_id });
+    if (has_program)
+        return true;
+    return false;
+};
 
 module.exports = {
     get_all_users,
