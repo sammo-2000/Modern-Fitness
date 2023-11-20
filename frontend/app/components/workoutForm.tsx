@@ -2,6 +2,11 @@
 import { FormEvent, useState } from "react";
 import { Datepicker } from 'flowbite-react';
 import { useProgramContext } from "../hooks/useProgramContext";
+interface Workout {
+  name: string;
+  load: string;
+  reps: string;
+}
 
 export const WorkoutForm = ({user_id}: {user_id:any}) => {
   const { dispatch } = useProgramContext()
@@ -11,17 +16,37 @@ export const WorkoutForm = ({user_id}: {user_id:any}) => {
   const [Reps, SetReps] = useState("");
   const [DateTime, SetDate] = useState(new Date());
   const [error, setError] = useState(null);
+  const [workoutsList, setWorkoutsList] = useState<Workout[]>([]);
+  
+  
+  const clearsForm = () => {
+    SetName("");
+    SetLoad("");
+    SetReps("");
+    SetDate(new Date());
+  };
+  const addsToList = () => {
+    const workout: Workout = {
+      name: Name,
+      load: Load,
+      reps: Reps,
+    };
+    setWorkoutsList((prevList) => [...prevList, workout]);
+    
+    clearsForm();
+  };
 
   const SubmitWorkoutForm = async (event: FormEvent<HTMLFormElement>)=>   {
     console.log("saving form")
     event.preventDefault();
-    // const WorkoutJSON = { Type, Load, Reps, Date };
     
     
+    if (workoutsList.length > 0) {
+
     const WorkoutJSON = 
     { 
       user_id: user_id, 
-      workout: [{name:Name, load:Load, reps:Reps }],
+      workout: workoutsList,
       date: DateTime.toISOString().split('T')[0]
 
     }
@@ -38,16 +63,14 @@ export const WorkoutForm = ({user_id}: {user_id:any}) => {
       setError(responseJSON.message)
     }
     else{
-      setError(null)
-      SetName("")
-      SetLoad("")
-      SetReps("")
-      SetDate(new Date())
+      clearsForm();
+      setWorkoutsList([]);
       console.log("Workout has been added: ", responseJSON.program)
       dispatch({type: 'CREATE_PROGRAM', payload: responseJSON.program})
     }
 
   }
+};
 
 
   return (
@@ -128,6 +151,7 @@ export const WorkoutForm = ({user_id}: {user_id:any}) => {
           <button
             className="mb-2 me-2 rounded-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gradient-to-br focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800"
             type="button"
+            onClick={addsToList}
           >
             Add
           </button>
@@ -135,7 +159,7 @@ export const WorkoutForm = ({user_id}: {user_id:any}) => {
         <div className="flex items-center justify-between">
           {/* Button css from: https://flowbite.com/docs/components/buttons/ */}
           <button
-            className="mb-2 me-2 rounded-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gradient-to-br focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800"
+            className = "text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
             type="submit"
           >
             Save
