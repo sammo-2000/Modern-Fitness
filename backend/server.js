@@ -5,6 +5,10 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 
+// Check environment variables are set
+const check_env = require('./check_env.js');
+check_env();
+
 // Accept cross-origin requests from frontend
 app.use(
   cors({
