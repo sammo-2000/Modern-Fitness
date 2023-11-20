@@ -27,8 +27,11 @@ const get_all_users = async (req, res) => {
             }
         }))
     }
-    if (!users)
+    if (!users) {
+        console.log('❌ No users found');
         return res.status(400).json({ success: false, message: 'No users found' });
+    }
+    console.log('✅ Get all users successfully');
     return res.status(200).json({ success: true, users });
 };
 
@@ -38,6 +41,7 @@ const get_single_user = async (req, res) => {
         if (!id) {
             // Own request
             const user = await User_Model.findById(req._user._id, { password: 0 });
+            console.log('✅ Get own user successfully');
             res.status(200).json({ success: true, user });
         } else if (id && req._user.role !== 'member') {
             if (!mongoose.Types.ObjectId.isValid(id))
@@ -46,12 +50,14 @@ const get_single_user = async (req, res) => {
             const user = await User_Model.findById(id, { password: 0 });
             if (!user)
                 throw Error('User not found');
-
+            console.log('✅ Get single user successfully');
             res.status(200).json({ success: true, user });
         } else {
+            console.log('❌ You are not authorized to view this user');
             res.status(401).json({ success: false, message: 'You are not authorized to view this user' });
         }
     } catch (error) {
+        console.log('❌ Get single user failed');
         return res.status(400).json({ success: false, message: error ? error : 'User not found' });
     }
 }
@@ -87,6 +93,7 @@ const edit_user = async (req, res) => {
 
             // Update user
             const user = await User_Model.findOneAndUpdate({ _id: req._user._id }, allowed_fields, { new: true });
+            console.log('✅ Edit own user successfully');
             return res.status(200).json({ success: true, user });
         } else if (id && req._user.role === 'trainer') {
             // Trainer request
@@ -105,11 +112,14 @@ const edit_user = async (req, res) => {
 
             // Update user
             const user = await User_Model.findOneAndUpdate({ _id: id }, { note }, { new: true });
+            console.log('✅ Edit user successfully');
             return res.status(200).json({ success: true, user });
         } else {
+            console.log('❌ You are not authorized to edit this user');
             res.status(401).json({ success: false, message: 'You are not authorized to edit this user' });
         }
     } catch (error) {
+        console.log('❌ Edit user failed');
         return res.status(400).json({ success: false, message: error.message });
     }
 }
