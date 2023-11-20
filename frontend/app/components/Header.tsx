@@ -4,14 +4,15 @@ import { IoNotificationsSharp } from "react-icons/io5";
 import { BsPeopleFill } from "react-icons/bs";
 import Image from "next/image";
 import picture from "public/profile.png";
+import Link from "next/link";
 
 function Header() {
   return (
     <div>
       <div className=" flex justify-between px-4 py-3 text-gray-700 shadow">
-        <div>
+        <Link href="/members">
           <GoSearch className="h-5 w-5 " />
-        </div>
+        </Link>
 
         <div className=" flex gap-6 ">
           <BsPeopleFill className="h-5 w-5 " />

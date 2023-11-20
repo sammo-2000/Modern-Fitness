@@ -1,6 +1,5 @@
 require("dotenv").config();
 const cors = require("cors");
-
 // Create express app
 const express = require("express");
 const app = express();
@@ -23,14 +22,14 @@ app.use((req, res, next) => {
 });
 
 // Import routes
-const auth_router = require('./routes/auth_router');
-const user_router = require('./routes/user_router');
-const program_router = require('./routes/program_router');
+const auth_router = require("./routes/auth_router");
+const user_router = require("./routes/user_router");
+const program_router = require("./routes/program_router");
 
 // Use routes
-app.use('/api/auth', auth_router);
-app.use('/api/', user_router);
-app.use('/api/', program_router);
+app.use("/api/auth", auth_router);
+app.use("/api/", user_router);
+app.use("/api/", program_router);
 
 // 404
 app.use((req, res) => {
