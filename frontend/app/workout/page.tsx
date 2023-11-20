@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import WorkoutForm from '../components/workoutForm';
 import WorkoutStats from '../components/workoutStats';
+import { useProgramContext } from "../hooks/useProgramContext";
 interface Workout {
   name: string;
   load: number;
@@ -25,7 +26,8 @@ interface WorkoutStatsProps {
 export const WorkoutPage = ({user_id}: {user_id:any}) => {
   // this needs to be removed once pages are integrated
   user_id = "654d1b038077914a27529f0a"
-  const [ProgramResponse, SetProgramResponse ]  = useState<ProgramAPIResponse |null >(null)
+  const {programs, dispatch} = useProgramContext()
+  
   useEffect(() => {
     const fetchPrograms = async () => {
       const response = await fetch('http://localhost:3001/api/programs/' + user_id)
@@ -34,7 +36,7 @@ export const WorkoutPage = ({user_id}: {user_id:any}) => {
 
       if (response.ok) {
         console.log(json)
-        SetProgramResponse(json)
+        dispatch({type: "SET_PROGRAM", payload: json.programs})
       }
     }
 
@@ -46,7 +48,7 @@ export const WorkoutPage = ({user_id}: {user_id:any}) => {
        <WorkoutForm user_id={user_id} />
        <div className= "min-h-screen bg-gray-300">
       
-       {ProgramResponse && ProgramResponse.programs.map(program => (
+       {programs && programs.map((program: { workout: Workout[]; date: Date; }) => (
   program.workout && program.workout.map(workout => (
     <WorkoutStats key={workout.id} date = {program.date} workout={workout} />
   ))

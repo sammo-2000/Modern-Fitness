@@ -1,8 +1,11 @@
 "use client";
 import { FormEvent, useState } from "react";
 import { Datepicker } from 'flowbite-react';
+import { useProgramContext } from "../hooks/useProgramContext";
 
 export const WorkoutForm = ({user_id}: {user_id:any}) => {
+  const { dispatch } = useProgramContext()
+
   const [Name, SetName] = useState("");
   const [Load, SetLoad] = useState("");
   const [Reps, SetReps] = useState("");
@@ -41,6 +44,7 @@ export const WorkoutForm = ({user_id}: {user_id:any}) => {
       SetReps("")
       SetDate(new Date())
       console.log("Workout has been added: ", responseJSON.program)
+      dispatch({type: 'CREATE_PROGRAM', payload: responseJSON.program})
     }
 
   }
@@ -123,9 +127,18 @@ export const WorkoutForm = ({user_id}: {user_id:any}) => {
           {/* Button css from: https://flowbite.com/docs/components/buttons/ */}
           <button
             className="mb-2 me-2 rounded-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gradient-to-br focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800"
-            type="submit"
+            type="button"
           >
             Add
+          </button>
+          </div>
+        <div className="flex items-center justify-between">
+          {/* Button css from: https://flowbite.com/docs/components/buttons/ */}
+          <button
+            className="mb-2 me-2 rounded-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gradient-to-br focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800"
+            type="submit"
+          >
+            Save
           </button>
           {error && <div className="dark:text-red-400">{error}</div>}
         </div>

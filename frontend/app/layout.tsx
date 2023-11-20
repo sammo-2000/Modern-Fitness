@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { ProgramsContextProvider } from "./context/programContext";
 
 //components
 import SideBar from "./components/SideBar";
@@ -19,6 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
+    <ProgramsContextProvider>
     <html lang="en">
       <body className={inter.className}>
         <SideBar />
@@ -31,5 +33,6 @@ export default function RootLayout({
         </div>
       </body>
     </html>
+    </ProgramsContextProvider>
   );
 }
