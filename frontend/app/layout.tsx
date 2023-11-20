@@ -22,9 +22,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <SideBar />
-        <div className="lg:ml-64">
+
+        {/* The flex below is for keeping the footer at the bottom */}
+        <div className="flex min-h-screen flex-col lg:ml-64">
           <Header />
-          {children}
+          <div className="flex-1">{children}</div>
           <Footer />
         </div>
       </body>
