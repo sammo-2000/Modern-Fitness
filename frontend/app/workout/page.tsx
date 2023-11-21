@@ -48,11 +48,14 @@ export const WorkoutPage = ({user_id}: {user_id:any}) => {
        <WorkoutForm user_id={user_id} />
        <div className= "min-h-screen bg-gray-300">
       
-       {programs && programs.map((program: { workout: Workout[]; date: Date; }) => (
-  program.workout && program.workout.map(workout => (
-    <WorkoutStats key={workout.id} date = {program.date} workout={workout} />
+       {programs &&
+  programs.map((program: { workout: Workout[]; date: Date; }, programIndex: number) => (
+    program.workout &&
+    program.workout.map((workout: Workout, workoutIndex: number) => (
+      <WorkoutStats key={`${program.date}-${programIndex}-${workout.id}-${workoutIndex}`} date={program.date} workout={workout} />
+    ))
   ))
-))}
+}
         
       </div>
      

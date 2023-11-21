@@ -25,6 +25,11 @@ export const WorkoutForm = ({user_id}: {user_id:any}) => {
     SetReps("");
     SetDate(new Date());
   };
+  const clearWorkoutForm = () => {
+    SetName("");
+    SetLoad("");
+    SetReps("");
+  };
   const addsToList = () => {
     const workout: Workout = {
       name: Name,
@@ -33,7 +38,7 @@ export const WorkoutForm = ({user_id}: {user_id:any}) => {
     };
     setWorkoutsList((prevList) => [...prevList, workout]);
     
-    clearsForm();
+    clearWorkoutForm();
   };
   const deleteWorkout = (index: number, event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
