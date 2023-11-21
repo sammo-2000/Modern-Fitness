@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { ProgramsContextProvider } from "./context/programContext";
 
 //components
 import SideBar from "./components/SideBar";
@@ -19,16 +20,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
+    <ProgramsContextProvider>
     <html lang="en">
       <body className={inter.className}>
-        <Header />
         <SideBar />
+
         {/* The flex below is for keeping the footer at the bottom */}
         <div className="flex min-h-screen flex-col lg:ml-64">
+          <Header />
           <div className="flex-1">{children}</div>
           <Footer />
         </div>
       </body>
     </html>
+    </ProgramsContextProvider>
   );
 }

@@ -1,16 +1,27 @@
 "use client";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { FaSearch } from "react-icons/fa";
 
 async function getMembers(input: string) {
   try {
     const res = await fetch(
-      process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN + "/api/users/" + input,
+      `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/users/${input}`,
     );
-    return res.json();
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch members");
+    }
+
+    const data = await res.json();
+
+    if (!data || !data.users) {
+      throw new Error("Invalid data format or empty response");
+    }
+
+    return data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    return { users: [] }; // Return empty array or handle error accordingly
   }
 }
 
@@ -23,23 +34,20 @@ export default function MemberList() {
   }, [input]);
 
   return (
-    <>
-      <div className="sticky top-11 border-b border-gray-100 bg-white p-4">
-        <div className="flex w-full items-center rounded-full border bg-gray-100 px-4 py-0.5 focus-within:border-blue-500">
-          <FaSearch />
-          <input
-            className="ml-2 w-full border-none bg-gray-100 outline-none focus:ring-0"
-            id="searchbar"
-            type="search"
-            placeholder="Search for Member..."
-            value={input}
-            onChange={(e) => {
-              setInput(e.target.value);
-            }}
-          />
-        </div>
+    <div className="h-screen">
+      <div className="mt-3  flex w-full items-center p-2 ">
+        <input
+          className="ml-2 h-14 w-full rounded-lg bg-gray-100 outline-none focus:ring-2 focus:ring-blue-400"
+          id="searchbar"
+          type="search"
+          placeholder="Search for Member..."
+          value={input}
+          onChange={(e) => {
+            setInput(e.target.value);
+          }}
+        />
       </div>
-      <ul className="px-4">
+      <ul>
         {members.map((member: any) => (
           <li
             key={member._id}
@@ -57,15 +65,16 @@ export default function MemberList() {
               </p>
             </div>
             <Link
-              href=""
+              href={`/members/${member._id}`}
               className="self-end rounded-xl bg-blue-500 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700"
             >
-              View
+              View Member
             </Link>
           </li>
         ))}
+        {members.length === 0 && <p className="">Member Not Found </p>}
       </ul>
-    </>
+    </div>
   );
 }
 

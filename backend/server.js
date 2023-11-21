@@ -1,10 +1,13 @@
 require("dotenv").config();
 const cors = require("cors");
-
 // Create express app
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+
+// Check environment variables are set
+const check_env = require('./check_env.js');
+check_env();
 
 // Accept cross-origin requests from frontend
 app.use(
@@ -18,19 +21,19 @@ app.use(
 // Middleware
 app.use(express.json());
 app.use((req, res, next) => {
-  console.log(req.path, req.method, req.body);
+  console.log("✅ " + req.path, req.method, req.body);
   next();
 });
 
 // Import routes
-const auth_router = require('./routes/auth_router');
-const user_router = require('./routes/user_router');
-const program_router = require('./routes/program_router');
+const auth_router = require("./routes/auth_router");
+const user_router = require("./routes/user_router");
+const program_router = require("./routes/program_router");
 
 // Use routes
-app.use('/api/auth', auth_router);
-app.use('/api/', user_router);
-app.use('/api/', program_router);
+app.use("/api/auth", auth_router);
+app.use("/api/", user_router);
+app.use("/api/", program_router);
 
 // 404
 app.use((req, res) => {
@@ -44,11 +47,11 @@ app.use((req, res) => {
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    console.log("Connected to database");
+    console.log("✅ Connected to database");
     // Listen to request
     app.listen(process.env.PORT, process.env.DOMAIN, () => {
       console.log(
-        `Server started on ${process.env.DOMAIN}:${process.env.PORT}`
+        `✅ Server started on ${process.env.DOMAIN}:${process.env.PORT}`
       );
     });
   })

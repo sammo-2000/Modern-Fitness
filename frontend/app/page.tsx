@@ -21,7 +21,7 @@ export default function Home() {
           <h1 className="mb-12 bg-gradient-to-r from-gray-900  via-gray-800 to-white  bg-clip-text font-serif text-4xl font-extrabold text-transparent md:text-8xl">
             Discover Your Potential
           </h1>
-          <p className="mx-auto mb-20 max-w-max rounded-full bg-black bg-opacity-70 px-4 py-2 text-center font-mono text-3xl font-bold">
+          <p className="mx-auto mb-20 max-w-max rounded-full bg-black bg-opacity-60 px-4 py-2 text-center font-mono text-3xl font-bold">
             Begin Your Journey Today
           </p>
           <Link
@@ -88,7 +88,7 @@ export default function Home() {
         width={1300}
         height={700}
         alt="homepage img"
-        className="mx-auto mb-8 max-h-80 object-cover"
+        className="mx-auto mb-8 object-cover lg:h-[600px]"
       />
       <div className="mb-16 text-center">
         <h2 className="mx-auto mt-16 font-mono text-3xl font-extrabold">

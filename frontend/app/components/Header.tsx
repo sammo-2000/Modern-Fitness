@@ -4,6 +4,7 @@ import { IoNotificationsSharp } from "react-icons/io5";
 import { BsPeopleFill } from "react-icons/bs";
 import Image from "next/image";
 import picture from "public/profile.png";
+import Link from "next/link";
 
 function Header() {
   return (
@@ -12,7 +13,7 @@ function Header() {
         <GoSearch className="h-5 w-5" />
       </div>
 
-      <div className=" flex gap-6 ">
+      <div className="flex gap-6 ">
         <BsPeopleFill className="h-5 w-5 " />
         <IoNotificationsSharp className="h-5 w-5 " />
         <Image
@@ -20,7 +21,7 @@ function Header() {
           width={100}
           height={100}
           alt="Profile Image"
-          className="h-6 w-6  rounded-full"
+          className="h-6 w-6 rounded-full"
         />
       </div>
     </header>

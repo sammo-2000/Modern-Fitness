@@ -33,8 +33,10 @@ const login = async (req, res) => {
         const token = createToken(user._id);
 
         // Return response
+        console.log('✅ Login successfully');
         return res.status(200).json({ success: true, message: 'Login successfully', token, user });
     } catch (error) {
+        console.log('❌ Login failed');
         return res.status(400).json({ success: false, message: error.message });
     };
 }
@@ -109,8 +111,10 @@ const signup = async (req, res) => {
         send_email.sendEmail(email, first_name, last_name, user.access_code);
 
         // Return response
+        console.log('✅ Signup successfully');
         return res.status(200).json({ success: true, message: 'Signup successfully', token, user });
     } catch (error) {
+        console.log('❌ Signup failed');
         return res.status(400).json({ success: false, message: error.message });
     };
 }
