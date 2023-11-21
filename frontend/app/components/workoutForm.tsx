@@ -35,7 +35,13 @@ export const WorkoutForm = ({user_id}: {user_id:any}) => {
     
     clearsForm();
   };
-
+  const deleteWorkout = (index: number, event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+  
+    const updatingList = [...workoutsList];
+    updatingList.splice(index, 1);
+    setWorkoutsList(updatingList);
+  };
   const SubmitWorkoutForm = async (event: FormEvent<HTMLFormElement>)=>   {
     console.log("saving form")
     event.preventDefault();
@@ -83,7 +89,7 @@ export const WorkoutForm = ({user_id}: {user_id:any}) => {
         >
           <header className="flex items-center justify-center text-5xl font-bold text-blue-700">
             {" "}
-            Tailored Workouts
+            Tailored Programs
           </header>
         </div>
       </div>
@@ -96,7 +102,7 @@ export const WorkoutForm = ({user_id}: {user_id:any}) => {
             Type of Exercise
           </label>
           <input
-            className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none sm:w-1/2 md:w-1/3"
+            className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none  md:w-1/2"
             type="text"
             onChange={(e) => SetName(e.target.value)}
             value={Name}
@@ -108,7 +114,7 @@ export const WorkoutForm = ({user_id}: {user_id:any}) => {
             Load (in kg)
           </label>
           <input
-            className="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-900 shadow focus:outline-none sm:w-1/2 md:w-1/3"
+            className="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-900 shadow focus:outline-none  md:w-1/2"
             type="number"
             onChange={(e) => SetLoad(e.target.value)}
             value={Load}
@@ -120,7 +126,7 @@ export const WorkoutForm = ({user_id}: {user_id:any}) => {
             Reps
           </label>
           <input
-            className="border-black-700 focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-900 shadow focus:outline-none sm:w-1/2 md:w-1/3"
+            className="border-black-700 focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-900 shadow focus:outline-none  md:w-1/2"
             type="number"
             onChange={(e) => SetReps(e.target.value)}
             value={Reps}
@@ -133,19 +139,30 @@ export const WorkoutForm = ({user_id}: {user_id:any}) => {
         <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
       </svg>
   </div>
-  < Datepicker onSelectedDateChanged={(date) =>  SetDate(date)} autoHide= {true} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select End date">
+  <Datepicker onSelectedDateChanged={(date) => { console.log(date); SetDate(date);} }autoHide= {true} className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select End date">
     </Datepicker>
 </div>
         <div className="mb-6 flex items-center">
-          <label className="mb-2 block w-1/2 text-sm font-bold text-gray-700">
-            Goals
-          </label>
+          
           <textarea
-            className="focus:shadow-outline mb-3 w-1/2 rounded border px-3 py-2 leading-tight text-gray-900 focus:outline-none"
-            rows={6}
+            className="focus:shadow-outline mb-3 w-1/3 sm:w-1/2 rounded border px-3 py-2 leading-tight text-gray-900 focus:outline-none resize-none"
+            rows={10}
            
           />
         </div>
+        {/* https://www.creative-tim.com/learning-lab/tailwind-starter-kit/documentation/css/buttons/small/filled */}
+        {workoutsList.map((workout, index) => (
+  <li key={index} className="mb-2">
+    {`${workout.name} - ${workout.load}kg - ${workout.reps} reps `}
+    <button 
+      type="button" 
+      className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 ml-2 "
+      onClick={(event) => deleteWorkout(index, event)}
+    >
+      Remove
+    </button>
+  </li>
+))}
         <div className="flex items-center justify-between">
           {/* Button css from: https://flowbite.com/docs/components/buttons/ */}
           <button
