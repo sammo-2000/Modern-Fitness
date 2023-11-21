@@ -7,9 +7,9 @@ import picture from "public/profile.png";
 
 function Header() {
   return (
-    <div className="sticky top-0 z-10 flex justify-between bg-white px-4 py-3 text-gray-700 shadow">
-      <div>
-        <GoSearch className="h-5 w-5 " />
+    <header className="sticky top-0 z-10 flex items-center justify-between bg-white px-4 py-3 text-gray-700 shadow">
+      <div className="ml-10 lg:ml-0">
+        <GoSearch className="h-5 w-5" />
       </div>
 
       <div className=" flex gap-6 ">
@@ -23,7 +23,7 @@ function Header() {
           className="h-6 w-6  rounded-full"
         />
       </div>
-    </div>
+    </header>
   );
 }
 
