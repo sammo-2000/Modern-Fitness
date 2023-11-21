@@ -5,3 +5,7 @@
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+.height-screen {
+  max-height: calc(100vh - 3rem);
+}

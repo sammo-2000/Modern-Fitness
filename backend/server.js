@@ -21,7 +21,7 @@ app.use(
 // Middleware
 app.use(express.json());
 app.use((req, res, next) => {
-  console.log(req.path, req.method, req.body);
+  console.log("✅ " + req.path, req.method, req.body);
   next();
 });
 
@@ -47,11 +47,11 @@ app.use((req, res) => {
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    console.log("Connected to database");
+    console.log("✅ Connected to database");
     // Listen to request
     app.listen(process.env.PORT, process.env.DOMAIN, () => {
       console.log(
-        `Server started on ${process.env.DOMAIN}:${process.env.PORT}`
+        `✅ Server started on ${process.env.DOMAIN}:${process.env.PORT}`
       );
     });
   })

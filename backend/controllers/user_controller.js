@@ -1,4 +1,5 @@
 const User_Model = require('../models/User_Model');
+const Program_Model = require('../models/Program_Model');
 const mongoose = require('mongoose');
 const validator = require('validator');
 
@@ -6,14 +7,31 @@ const get_all_users = async (req, res) => {
     const { name } = req.params;
     let users = null;
     if (name) {
-        // Get users by name
-        users = await User_Model.find({ first_name: { $regex: name, $options: 'i' } }, { password: 0 }).sort({ createdAt: -1 }).limit(20);
+        // Get users by first name
+        users_list = await User_Model.find({ first_name: { $regex: name, $options: 'i' } }, { password: 0 }).sort({ createdAt: -1 }).limit(20);
+        users = await Promise.all(users_list.map(async (user) => {
+            const has_program = await has_custom_program(user._id);
+            return {
+                ...user.toObject(),
+                has_program: has_program
+            }
+        }))
     } else {
         // Get all users if no name given
-        users = await User_Model.find({}, { password: 0 }).sort({ createdAt: -1 });
+        users_list = await User_Model.find({}, { password: 0 }).sort({ createdAt: -1 }).limit(20);
+        users = await Promise.all(users_list.map(async (user) => {
+            const has_program = await has_custom_program(user._id);
+            return {
+                ...user.toObject(),
+                has_program: has_program
+            }
+        }))
     }
-    if (!users)
+    if (!users) {
+        console.log('❌ No users found');
         return res.status(400).json({ success: false, message: 'No users found' });
+    }
+    console.log('✅ Get all users successfully');
     return res.status(200).json({ success: true, users });
 };
 
@@ -23,6 +41,7 @@ const get_single_user = async (req, res) => {
         if (!id) {
             // Own request
             const user = await User_Model.findById(req._user._id, { password: 0 });
+            console.log('✅ Get own user successfully');
             res.status(200).json({ success: true, user });
         } else if (id && req._user.role !== 'member') {
             if (!mongoose.Types.ObjectId.isValid(id))
@@ -31,12 +50,14 @@ const get_single_user = async (req, res) => {
             const user = await User_Model.findById(id, { password: 0 });
             if (!user)
                 throw Error('User not found');
-
+            console.log('✅ Get single user successfully');
             res.status(200).json({ success: true, user });
         } else {
+            console.log('❌ You are not authorized to view this user');
             res.status(401).json({ success: false, message: 'You are not authorized to view this user' });
         }
     } catch (error) {
+        console.log('❌ Get single user failed');
         return res.status(400).json({ success: false, message: error ? error : 'User not found' });
     }
 }
@@ -72,6 +93,7 @@ const edit_user = async (req, res) => {
 
             // Update user
             const user = await User_Model.findOneAndUpdate({ _id: req._user._id }, allowed_fields, { new: true });
+            console.log('✅ Edit own user successfully');
             return res.status(200).json({ success: true, user });
         } else if (id && req._user.role === 'trainer') {
             // Trainer request
@@ -90,11 +112,14 @@ const edit_user = async (req, res) => {
 
             // Update user
             const user = await User_Model.findOneAndUpdate({ _id: id }, { note }, { new: true });
+            console.log('✅ Edit user successfully');
             return res.status(200).json({ success: true, user });
         } else {
+            console.log('❌ You are not authorized to edit this user');
             res.status(401).json({ success: false, message: 'You are not authorized to edit this user' });
         }
     } catch (error) {
+        console.log('❌ Edit user failed');
         return res.status(400).json({ success: false, message: error.message });
     }
 }
@@ -123,6 +148,13 @@ const delele_user = async (req, res) => {
         // TODO
     }
 }
+
+const has_custom_program = async (user_id) => {
+    const has_program = await Program_Model.exists({ user_id });
+    if (has_program)
+        return true;
+    return false;
+};
 
 module.exports = {
     get_all_users,
