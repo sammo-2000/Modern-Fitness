@@ -75,6 +75,7 @@ Overall, the software will make managing the gym much easier as it will be acces
 
 * [![Node][Node.js]][Node-url]
 * [![Tailwind][Tailwindcss.com]][Tailwindcss-url]
+* [![Next JS][Next.com]][Next-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -106,15 +107,25 @@ Overall, the software will make managing the gym much easier as it will be acces
     ```sh
     git clone https://github.com/sammo-2000/modernFit
     ```
-2. Install NPM packages
+2. Install NPM packages for backend
     ```sh
+    cd modernFit/backend
     npm i
     ```
-3. Add `.env` file in the same format as `.env_example`, just using the values you wish to use locally
-4. Run local server
+3. Install NPM packages for frontend
+  ```
+    cd ../frontend
+    npm i
+  ```
+4. Add `.env` file in the same format as `.env_example`, just using the values you wish to use locally, this must be done for backend and frontend
+5. Run local server for backend [Must be inside backend folder]
     ```sh
     nodemon server
     ```
+6. Run local server for frontend [Must be inside frontend folder]
+  ```sh
+    npm run dev
+  ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -136,3 +147,5 @@ Overall, the software will make managing the gym much easier as it will be acces
 [Node-url]: https://nodejs.org/
 [Tailwindcss.com]: https://img.shields.io/badge/Tailwind-444444?style=for-the-badge&logo=tailwindcss&logoColor=62baf2
 [Tailwindcss-url]: https://tailwindcss.com/
+[Next-url]: https://nextjs.org/
+[Next.com]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
