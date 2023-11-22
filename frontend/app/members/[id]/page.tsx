@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-
+import Link from "next/link";
 interface Params {
   id: any;
 }
@@ -46,6 +46,12 @@ export default async function MemberDetails({ params }: { params: Params }) {
         <p>{member.status}</p>
         <p>{member.role}</p>
       </div>
+      <Link
+        href="/workout"
+        className="mt-6 self-end rounded-xl bg-blue-500 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700"
+      >
+        Create Program
+      </Link>
     </main>
   );
 }

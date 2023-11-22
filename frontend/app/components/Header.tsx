@@ -9,9 +9,9 @@ import Link from "next/link";
 function Header() {
   return (
     <header className="sticky top-0 z-10 flex items-center justify-between bg-white px-4 py-3 text-gray-700 shadow">
-      <div className="ml-10 lg:ml-0">
+      <Link href="members" className="ml-10 lg:ml-0">
         <GoSearch className="h-5 w-5" />
-      </div>
+      </Link>
 
       <div className="flex gap-6 ">
         <BsPeopleFill className="h-5 w-5 " />

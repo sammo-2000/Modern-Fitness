@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { useFetchedData } from "../context/MemberIdContext";
 
 async function getMembers(input: string) {
   try {
@@ -36,7 +37,7 @@ interface Member {
 export default function MemberList() {
   const [input, setInput] = useState("");
   const [members, setMembers] = useState<Member[]>([]);
-
+  const { handleViewMember } = useFetchedData();
   useEffect(() => {
     getMembers(input).then((res) => setMembers(res.users));
   }, [input]);
@@ -55,6 +56,7 @@ export default function MemberList() {
           }}
         />
       </div>
+
       <ul>
         {members.map((member: Member) => (
           <li
@@ -72,11 +74,14 @@ export default function MemberList() {
                 <strong>Status:</strong> {member.status}
               </p>
             </div>
-            <Link
-              href={`/members/${member._id}`}
-              className="self-end rounded-xl bg-blue-500 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700"
-            >
-              View Member
+            <Link href={`/members/${member._id}`} passHref>
+              <Link
+                href={`/members/${member._id}`}
+                className="self-end rounded-xl bg-blue-500 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700"
+                onClick={() => handleViewMember(member._id)}
+              >
+                View Member
+              </Link>
             </Link>
           </li>
         ))}
