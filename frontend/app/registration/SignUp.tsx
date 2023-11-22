@@ -1,12 +1,23 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
+
 export default function SignUp() {
+  const [firstname, setFirstName] = useState('')
+  const [lastname, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [dob, setDob] = useState('')
+  const [gender, setGender] = useState('')
+  const router = useRouter()
   const [SignUpForm, setSignUpForm] = useState({
-    FirstName: "",
-    LastName: "",
-    Email: "",
-    Password: "",
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
+    dob:"",
+    gender:"",
     isCheck: false,
   });
   const [errorMessage, setErrorMessage] = useState("");
@@ -17,27 +28,54 @@ export default function SignUp() {
       [name]: type === "checkbox" ? checked : value,
     }));
   }
-  function handleSubmission(event: any) {
-    event.preventDefault();
+  const handleSubmission = async(e: any) => {
+    e.preventDefault();
+    try{
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({firstname, lastname, email, password, dob, gender})
+      })
+      if(res.status === 400){
+        setErrorMessage("This email has already been registered")
+      }if(res.status === 200){
+        setErrorMessage("")
+        router.push('/signin')
+      }
+    }
+    catch(errorMessage){
+      setErrorMessage("Error, something is wrong")
+      console.log(errorMessage)
+    }
+    // fetch('http://localhost:3001/api/auth/signup', {
+    //   method: 'POST',
+    //   headers: {'Content-Type': 'application/json'},
+    //   body: JSON.stringify({firstname, lastname, email, password, dob, gender})
+    // })
 
-    if (!SignUpForm.FirstName) {
+
+    if (!SignUpForm.firstname) {
       setErrorMessage("Enter your firstname");
-    } else if (SignUpForm.LastName === "") {
+    } else if (SignUpForm.lastname === "") {
       setErrorMessage("Enter your lastname");
-    } else if (SignUpForm.Email === "") {
+    } else if (SignUpForm.email === "") {
       setErrorMessage("Enter your email address");
-    } else if (SignUpForm.Password === "") {
+    } else if (SignUpForm.password === "") {
       setErrorMessage("Enter your Password");
-    } else if (SignUpForm.isCheck === false) {
+    } else if(SignUpForm.dob === ""){
+      setErrorMessage("Include you date of birth")
+    }else if (SignUpForm.isCheck === false) {
       setErrorMessage("Please select checkbox");
-    } else {
+    } else if(SignUpForm.gender === "Gender"){
+      setErrorMessage("Please choose between the last three options")
+    }else {
       console.log(SignUpForm);
       setErrorMessage("");
     }
   }
 
   return (
-    <div className=" flex h-screen items-center justify-center">
+    <div className=" flex h-screen items-center justify-center mb-11">
       <div className=" w-[550px] p-3">
         <div className="mb-12">
           <h1 className="text-2xl font-bold">Register</h1>
@@ -56,7 +94,7 @@ export default function SignUp() {
                   id="FirstName"
                   type="text"
                   onChange={handleChange}
-                  name="FirstName"
+                  name="firstname"
                   placeholder="Firstname"
                   className="mr-2  h-[65px]  w-1/2 rounded-xl border  border-gray-300 p-2 focus:border-2 focus:border-blue-500 focus:outline-none"
                 />
@@ -64,7 +102,7 @@ export default function SignUp() {
                   id="LastName"
                   type="text"
                   onChange={handleChange}
-                  name="LastName"
+                  name="lastname"
                   placeholder="Lastname"
                   className=" h-[65px] w-1/2  rounded-xl border border-gray-300  p-2 focus:border-2 focus:border-blue-500 focus:outline-none "
                 />
@@ -73,7 +111,7 @@ export default function SignUp() {
                 id="email"
                 type="email"
                 onChange={handleChange}
-                name="Email"
+                name="email"
                 placeholder="Email"
                 className="mb-6  h-[65px] w-full rounded-xl border border-gray-300 bg-blue-50 p-3 focus:border-2 focus:border-blue-500 focus:outline-none"
               />
@@ -82,10 +120,37 @@ export default function SignUp() {
                 id="password"
                 type="password"
                 onChange={handleChange}
-                name="Password"
+                name="password"
                 placeholder="Password"
                 className="mb-6 h-[65px] w-full rounded-xl border border-gray-300 bg-blue-50 p-3 focus:border-2 focus:border-blue-500 focus:outline-none"
               />
+
+              <input
+                id="dob"
+                type="date"
+                onChange={handleChange}
+                name="dob"
+                placeholder="Date of birth"
+                className="mb-6 h-[65px] w-full rounded-xl border border-gray-300 bg-blue-50 p-3 focus:border-2 focus:border-blue-500 focus:outline-none"
+              />
+
+              <select name="gender" 
+              id="gender"
+              className="mb-6 h-[65px] w-full rounded-xl border border-gray-300 bg-blue-50 p-3 focus:border-2 focus:border-blue-500 focus:outline-none">
+                <option value="gender" 
+                >
+                  Gender
+                </option>
+                <option value="gender">
+                  Male
+                </option>
+                <option value="gender">
+                  Female
+                </option>
+                <option value="gender">
+                  Other
+                </option>
+              </select>
 
               <input
                 id="consent"
