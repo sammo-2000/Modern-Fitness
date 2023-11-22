@@ -43,9 +43,9 @@ export default function SignUp() {
         router.push('/signin')
       }
     }
-    catch(errorMessage){
+    catch(error){
       setErrorMessage("Error, something is wrong")
-      console.log(errorMessage)
+      console.log(error)
     }
     // fetch('http://localhost:3001/api/auth/signup', {
     //   method: 'POST',

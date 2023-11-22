@@ -1,15 +1,17 @@
 "use client";
+import axios from 'axios';
 import React, { useState } from "react";
+import { useRouter } from 'next/navigation';
 import Link from "next/link";
 import Head from "next/head";
 export default function Login() {
   const [SignInForm, setSignInForm] = useState({
-    FirstName: "",
-    LastName: "",
-    Email: "",
-    Password: "",
-    isCheck: false,
+    email: "",
+    password: "",
   });
+  const router = useRouter();
+  const [email, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState("");
   function handleChange(event: any) {
     const { name, value, type, checked } = event.target;
@@ -18,12 +20,33 @@ export default function Login() {
       [name]: type === "checkbox" ? checked : value,
     }));
   }
-  function handleSubmission(event: any) {
+  const handleSubmission = async (event: any) => {
     event.preventDefault();
 
-    if (SignInForm.Email === "") {
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+
+    })
+
+    if(res.status === 400){
+      setErrorMessage("Login not successfull")
+    }if(res.status === 200){
+      setErrorMessage("")
+      router.push('/')
+    }
+    
+    }
+    catch(error){
+      console.error('Error during login:', error);
+    }
+    if (SignInForm.email === "") {
       setErrorMessage("Enter your email address");
-    } else if (SignInForm.Password === "") {
+    } else if (SignInForm.password === "") {
       setErrorMessage("Enter your Password");
     } else {
       console.log(SignInForm);
@@ -49,7 +72,7 @@ export default function Login() {
               id="email"
               type="email"
               onChange={handleChange}
-              name="Email"
+              name="email"
               placeholder="Email Address or Access Pin"
               className="mb-6 h-[65px] w-full rounded-xl border border-gray-300 p-3 focus:border-2 focus:border-blue-500 focus:outline-none"
             />
@@ -58,7 +81,7 @@ export default function Login() {
               id="password"
               type="password"
               onChange={handleChange}
-              name="Password"
+              name="password"
               placeholder="Password"
               className="h-[65px] w-full rounded-xl border border-gray-300 bg-blue-50 p-3 focus:border-2 focus:border-blue-500 focus:outline-none"
             />
