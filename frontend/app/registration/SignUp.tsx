@@ -31,7 +31,7 @@ export default function SignUp() {
   const handleSubmission = async(e: any) => {
     e.preventDefault();
     try{
-      const res = await fetch('/api/auth/signup', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/auth/signup`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({firstname, lastname, email, password, dob, gender})
