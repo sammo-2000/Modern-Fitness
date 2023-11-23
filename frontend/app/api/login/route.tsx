@@ -5,13 +5,11 @@ export async function POST(req: Request) {
     const { token, user } = await req.json();
     cookies().set("token", token, {
       secure: true,
-      httpOnly: true,
       expires: new Date(Date.now() + 60 * 60 * 24 * 14 * 1000),
     });
 
     cookies().set("role", user.role, {
       secure: true,
-      httpOnly: true,
       expires: new Date(Date.now() + 60 * 60 * 24 * 14 * 1000),
     });
 
