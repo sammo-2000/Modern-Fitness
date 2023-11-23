@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function SignUp() {
@@ -55,8 +54,20 @@ export default function SignUp() {
 
         if (!data.success) return setError(data.message);
 
+        // Set cookie on the server side, for extra security
+        const cookiesResponse = await fetch(`/api/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token: data.token, user: data.user }),
+        });
+        const cookiesData = await cookiesResponse.json();
+
+        if (!cookiesData.success) return setError(cookiesData.message);
+
         setSuccess(data.message);
-        window.location.replace("/login");
+        window.location.replace("/");
       } catch (error: any) {
         setError(error.message);
       }

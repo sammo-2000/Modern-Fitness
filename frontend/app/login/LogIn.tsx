@@ -25,15 +25,31 @@ export default function Login() {
     setSuccess("");
 
     try {
-      const response = await fetch(`/login`, {
+      console.log("FIRST API CALL");
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ User_identifier: userIdentifier, password }),
+        },
+      );
+      const data = await response.json();
+      if (!data.success) return setError(data.message);
+
+      // Set cookie on the server side, for extra security
+      const cookiesResponse = await fetch(`/api/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ User_identifier: userIdentifier, password }),
+        body: JSON.stringify({ token: data.token, user: data.user }),
       });
-      const data = await response.json();
-      if (data.success) return setError(data.error);
+      const cookiesData = await cookiesResponse.json();
+
+      if (!cookiesData.success) return setError(cookiesData.message);
 
       setSuccess(data.message);
       window.location.replace("/");
