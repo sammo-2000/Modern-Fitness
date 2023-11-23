@@ -78,7 +78,7 @@ export default function SideBar() {
               Register
             </Link>
             <Link
-              href="signIn"
+              href="login"
               className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
             >
               <AiFillHome className=" ml-2 h-auto w-5" />
