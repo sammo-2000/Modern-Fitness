@@ -7,5 +7,9 @@
 }
 
 .height-screen {
-  max-height: calc(100vh - 3rem);
+  height: calc(100vh - 3rem);
+}
+
+.min-height-screen {
+  min-height: calc(100vh - 3rem);
 }

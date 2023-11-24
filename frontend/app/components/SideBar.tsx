@@ -9,13 +9,6 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import Image from "next/image";
 import mainImg from "public/main-gym-img.jpg";
 
-const toggleSidebar = () => {
-  const sidebar = document.getElementById("sidebar");
-  sidebar?.classList.toggle("-translate-x-[100%]");
-  // sidebar?.classList.toggle("height-screen");
-  const homeLink = document.getElementById("home-link");
-};
-
 export default function SideBar() {
   const [role, setRole] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
@@ -39,14 +32,6 @@ export default function SideBar() {
   });
   return (
     <>
-      <button
-        className="fixed left-4 top-[0.875rem] z-20 bg-white lg:hidden"
-        aria-controls="sidebar"
-        onClick={toggleSidebar}
-      >
-        <span className="sr-only">Open sidebar</span>
-        <RxHamburgerMenu className="h-5 w-5" />
-      </button>
       <div
         id="sidebar"
         className="height-screen hide-scrollbar fixed z-20 w-full -translate-x-[100%] overflow-y-auto bg-gray-800 text-white transition-transform lg:fixed lg:w-64 lg:translate-x-0 lg:overflow-y-auto"
@@ -56,16 +41,18 @@ export default function SideBar() {
             <CgGym className=" h-10 w-10 rounded-md bg-blue-700" />
           </div>
           <div className=" mb-4  rounded-lg bg-slate-700 px-3 py-3 leading-6">
-            <h1 className=" font-semibold">Modern</h1>
-            <p className=" text-sm font-normal text-gray-300">Fitness Gym</p>
+            <h1 className=" font-semibold">ModernFit</h1>
+            <p className=" text-sm font-normal text-gray-300">
+              The Personalised Gym
+            </p>
           </div>
         </div>
-        <div className="border-b-1 border border-x-0 border-t-0 border-gray-700 pb-20">
+        <div className="border-b-1 border border-x-0 border-t-0 border-gray-700">
           <div className="mx-4 py-3  text-sm font-semibold text-gray-400 ">
             <Link
               href="\"
-              id="home-link"
               className=" my-2 mb-3  flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+              onClick={closeSidebar}
             >
               <AiFillHome className=" ml-2 h-auto w-5 " /> Home
             </Link>
@@ -74,6 +61,7 @@ export default function SideBar() {
                 <Link
                   href=""
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                  onClick={closeSidebar}
                 >
                   <GiProgression className=" ml-2 h-auto w-5" />
                   Progress
@@ -81,6 +69,7 @@ export default function SideBar() {
                 <Link
                   href="profile"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                  onClick={closeSidebar}
                 >
                   <BsPersonFill className=" ml-2 h-auto w-5" />
                   Account
@@ -88,6 +77,7 @@ export default function SideBar() {
                 <Link
                   href=""
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                  onClick={closeSidebar}
                 >
                   <AiFillHome className=" ml-2 h-auto w-5" />
                   Settings
@@ -95,6 +85,7 @@ export default function SideBar() {
                 <Link
                   href=""
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                  onClick={closeSidebar}
                 >
                   <AiFillHome className=" ml-2 h-auto w-5" />
                   New Routine
@@ -105,6 +96,7 @@ export default function SideBar() {
                 <Link
                   href="registration"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                  onClick={closeSidebar}
                 >
                   <AiFillHome className=" ml-2 h-auto w-5" />
                   Register
@@ -112,6 +104,7 @@ export default function SideBar() {
                 <Link
                   href="login"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                  onClick={closeSidebar}
                 >
                   <AiFillHome className=" ml-2 h-auto w-5" />
                   Login
@@ -137,6 +130,7 @@ export default function SideBar() {
           <Link
             href=""
             className="mx-2 flex justify-center rounded-lg bg-blue-500 px-3 py-2 text-sm font-bold text-white hover:bg-blue-600"
+            onClick={closeSidebar}
           >
             Check It Out
           </Link>
@@ -145,3 +139,8 @@ export default function SideBar() {
     </>
   );
 }
+
+const closeSidebar = () => {
+  const sidebar = document.getElementById("sidebar");
+  sidebar?.classList.add("-translate-x-[100%]");
+};

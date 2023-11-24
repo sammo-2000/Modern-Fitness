@@ -5,15 +5,19 @@ import { BsPeopleFill } from "react-icons/bs";
 import Image from "next/image";
 import picture from "public/profile.png";
 import Link from "next/link";
+import Hamburger from "./Hamburger";
 
-function Header() {
+export default function Header() {
   return (
     <header className="sticky top-0 z-10 flex items-center justify-between bg-white px-4 py-3 text-gray-700 shadow">
-      <Link href="members" className="ml-10 lg:ml-0">
-        <GoSearch className="h-5 w-5" />
-      </Link>
+      <div className="flex items-center gap-6">
+        <Hamburger />
+        <Link href="members">
+          <GoSearch className="h-5 w-5" />
+        </Link>
+      </div>
 
-      <div className="flex gap-6 ">
+      <div className="flex items-center gap-6">
         <BsPeopleFill className="h-5 w-5 " />
         <IoNotificationsSharp className="h-5 w-5 " />
         <Image
@@ -27,5 +31,3 @@ function Header() {
     </header>
   );
 }
-
-export default Header;
