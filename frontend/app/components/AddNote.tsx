@@ -4,7 +4,7 @@ import { useFetchedData } from "../context/MemberIdContext";
 
 function AddNote() {
   const { MemberId } = useFetchedData();
-  //it works on mine
+
   const [note, setNote] = useState("");
   const [message, setMessage] = useState("");
 
