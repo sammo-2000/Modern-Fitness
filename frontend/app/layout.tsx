@@ -27,8 +27,10 @@ export default function RootLayout({
             <Header />
             <SideBar />
             {/* The flex below is for keeping the footer at the bottom */}
-            <div className="flex min-h-screen flex-col lg:ml-64">
-              <div className="flex-1">{children}</div>
+            <div className="min-height-screen flex flex-col lg:ml-64">
+              <div className="flex flex-1 flex-col items-center justify-center">
+                {children}
+              </div>
               <Footer />
             </div>
           </body>

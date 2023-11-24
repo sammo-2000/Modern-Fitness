@@ -43,8 +43,8 @@ export default function MemberList() {
   }, [input]);
 
   return (
-    <div>
-      <div className="mt-3  flex w-full items-center p-2 ">
+    <div className="w-full flex-1">
+      <div className="mt-3 flex w-full items-center p-2 ">
         <input
           className="ml-2 h-14 w-full rounded-lg bg-gray-100 outline-none focus:ring-2 focus:ring-blue-400"
           id="searchbar"
@@ -56,7 +56,6 @@ export default function MemberList() {
           }}
         />
       </div>
-
       <ul>
         {members.map((member: Member) => (
           <li
@@ -85,7 +84,9 @@ export default function MemberList() {
             </Link>
           </li>
         ))}
-        {members.length === 0 && <p className="">Member Not Found </p>}
+        {members.length === 0 && (
+          <p className="p-4">No matching users "{input}"</p>
+        )}
       </ul>
     </div>
   );

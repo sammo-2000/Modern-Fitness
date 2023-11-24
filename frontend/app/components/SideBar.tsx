@@ -49,8 +49,8 @@ export default function SideBar() {
           <div className="mx-4 py-3  text-sm font-semibold text-gray-400 ">
             <Link
               href="\"
-              id="home-link"
               className=" my-2 mb-3  flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+              onClick={closeSidebar}
             >
               <AiFillHome className=" ml-2 h-auto w-5 " /> Home
             </Link>
@@ -59,6 +59,7 @@ export default function SideBar() {
                 <Link
                   href=""
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                  onClick={closeSidebar}
                 >
                   <GiProgression className=" ml-2 h-auto w-5" />
                   Progress
@@ -66,6 +67,7 @@ export default function SideBar() {
                 <Link
                   href="profile"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                  onClick={closeSidebar}
                 >
                   <BsPersonFill className=" ml-2 h-auto w-5" />
                   Account
@@ -73,6 +75,7 @@ export default function SideBar() {
                 <Link
                   href=""
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                  onClick={closeSidebar}
                 >
                   <AiFillHome className=" ml-2 h-auto w-5" />
                   Settings
@@ -80,6 +83,7 @@ export default function SideBar() {
                 <Link
                   href=""
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                  onClick={closeSidebar}
                 >
                   <AiFillHome className=" ml-2 h-auto w-5" />
                   New Routine
@@ -90,6 +94,7 @@ export default function SideBar() {
                 <Link
                   href="registration"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                  onClick={closeSidebar}
                 >
                   <AiFillHome className=" ml-2 h-auto w-5" />
                   Register
@@ -97,6 +102,7 @@ export default function SideBar() {
                 <Link
                   href="login"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                  onClick={closeSidebar}
                 >
                   <AiFillHome className=" ml-2 h-auto w-5" />
                   Login
@@ -122,6 +128,7 @@ export default function SideBar() {
           <Link
             href=""
             className="mx-2 flex justify-center rounded-lg bg-blue-500 px-3 py-2 text-sm font-bold text-white hover:bg-blue-600"
+            onClick={closeSidebar}
           >
             Check It Out
           </Link>
@@ -130,3 +137,8 @@ export default function SideBar() {
     </>
   );
 }
+
+const closeSidebar = () => {
+  const sidebar = document.getElementById("sidebar");
+  sidebar?.classList.add("-translate-x-[100%]");
+};

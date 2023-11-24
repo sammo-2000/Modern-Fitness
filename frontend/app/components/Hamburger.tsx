@@ -18,5 +18,4 @@ export default function Hamburger() {
 const toggleSidebar = () => {
   const sidebar = document.getElementById("sidebar");
   sidebar?.classList.toggle("-translate-x-[100%]");
-  const homeLink = document.getElementById("home-link");
 };
