@@ -9,13 +9,6 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import Image from "next/image";
 import mainImg from "public/main-gym-img.jpg";
 
-const toggleSidebar = () => {
-  const sidebar = document.getElementById("sidebar");
-  sidebar?.classList.toggle("-translate-x-[100%]");
-  // sidebar?.classList.toggle("height-screen");
-  const homeLink = document.getElementById("home-link");
-};
-
 export default function SideBar() {
   const [role, setRole] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
@@ -39,14 +32,6 @@ export default function SideBar() {
   });
   return (
     <>
-      <button
-        className="fixed left-4 top-[0.875rem] z-20 bg-white lg:hidden"
-        aria-controls="sidebar"
-        onClick={toggleSidebar}
-      >
-        <span className="sr-only">Open sidebar</span>
-        <RxHamburgerMenu className="h-5 w-5" />
-      </button>
       <div
         id="sidebar"
         className="height-screen hide-scrollbar fixed z-20 w-full -translate-x-[100%] overflow-y-auto bg-gray-800 text-white transition-transform lg:fixed lg:w-64 lg:translate-x-0 lg:overflow-y-auto"
