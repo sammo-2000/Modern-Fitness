@@ -1,7 +1,6 @@
 "use client";
-import axios from 'axios';
 import React, { useState } from "react";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Head from "next/head";
 export default function Login() {
@@ -10,8 +9,8 @@ export default function Login() {
     password: "",
   });
   const router = useRouter();
-  const [email, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   function handleChange(event: any) {
     const { name, value, type, checked } = event.target;
@@ -24,25 +23,23 @@ export default function Login() {
     event.preventDefault();
 
     try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password }),
+      });
 
-    })
-
-    if(res.status === 400){
-      setErrorMessage("Login not successfull")
-    }if(res.status === 200){
-      setErrorMessage("")
-      router.push('/')
-    }
-    
-    }
-    catch(error){
-      console.error('Error during login:', error);
+      if (res.status === 400) {
+        setErrorMessage("Login not successfull");
+      }
+      if (res.status === 200) {
+        setErrorMessage("");
+        router.push("/");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
     }
     if (SignInForm.email === "") {
       setErrorMessage("Enter your email address");
@@ -52,7 +49,7 @@ export default function Login() {
       console.log(SignInForm);
       setErrorMessage("");
     }
-  }
+  };
 
   return (
     <div className=" flex h-screen items-center justify-center">
