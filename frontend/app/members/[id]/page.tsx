@@ -32,14 +32,11 @@ export default async function MemberDetails({ params }: { params: Params }) {
   }
 
   return (
-    <main className=" h-screen">
-      <nav>
-        <h2 className=" mb-2 text-lg font-bold">Member Details</h2>
-      </nav>
+    <div className="w-full flex-1 p-3">
+      <h2 className=" mb-2 text-lg font-bold">
+        {member.first_name + " " + member.last_name}
+      </h2>
       <div className="ml-4">
-        <h3 className="text-lg">
-          {member.first_name + " " + member.last_name}
-        </h3>
         <p>{member.gender}</p>
         <p>{member.dob}</p>
         <p>{member.email}</p>
@@ -52,6 +49,6 @@ export default async function MemberDetails({ params }: { params: Params }) {
       >
         Create Program
       </Link>
-    </main>
+    </div>
   );
 }

@@ -41,8 +41,10 @@ export default function SideBar() {
             <CgGym className=" h-10 w-10 rounded-md bg-blue-700" />
           </div>
           <div className=" mb-4  rounded-lg bg-slate-700 px-3 py-3 leading-6">
-            <h1 className=" font-semibold">Modern</h1>
-            <p className=" text-sm font-normal text-gray-300">Fitness Gym</p>
+            <h1 className=" font-semibold">ModernFit</h1>
+            <p className=" text-sm font-normal text-gray-300">
+              The Personalised Gym
+            </p>
           </div>
         </div>
         <div className="border-b-1 border border-x-0 border-t-0 border-gray-700">

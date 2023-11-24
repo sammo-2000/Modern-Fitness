@@ -59,7 +59,7 @@ export default function Login() {
   };
 
   return (
-    <div className="mx-auto mb-11 max-w-[550px] p-3">
+    <div className="mx-auto mb-6 max-w-[550px] p-3">
       <div className="mb-12">
         <h1 className="mb-2 text-3xl font-semibold">Login</h1>
         <p>
