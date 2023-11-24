@@ -12,7 +12,6 @@ function AddNote() {
     event.preventDefault();
 
     try {
-      console.log("This is my id" + MemberId);
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/user/${MemberId}`,
         {
