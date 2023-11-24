@@ -42,11 +42,11 @@ const manager = async (req, res, next) => {
 
 // This function is for testing purposes only
 const Users_Type = () => {
-    userType = 'trainer'
+    userType = 'manager'
     switch (userType) {
-        case 'member': return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NGQxYjAzODA3NzkxNGEyNzUyOWYwYSIsImlhdCI6MTY5OTU1MzY0NCwiZXhwIjoxNzAwNzYzMjQ0fQ.NArIYw1EcOqDt5Mr7WOjppSHudrt10U45m47ij3VwIY'
-        case 'trainer': return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NGQxYWU2ODA3NzkxNGEyNzUyOWYwNiIsImlhdCI6MTY5OTU1MzY3MiwiZXhwIjoxNzAwNzYzMjcyfQ.sxxjBrLXQ089o87ojlopXtjyqjQIyhL92qB48r8br9c'
-        case 'manager': return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NGQxYWE4ODA3NzkxNGEyNzUyOWYwMyIsImlhdCI6MTY5OTU1MzYwOSwiZXhwIjoxNzAwNzYzMjA5fQ.5iGvDwpCTUyfyt6jkc4sr0ogqTqTKV4Yxj3LZoAdaWs'
+        case 'member': return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWJiNmNkNTIxNDhjY2I4OGFmOGFmMyIsImlhdCI6MTcwMDc2Nzk2NSwiZXhwIjoxNzAxOTc3NTY1fQ.JFMbrG96O67u7VBv88uSN40Ao4_KwiPVoEECP6QVnRg'
+        case 'trainer': return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NGQxYWU2ODA3NzkxNGEyNzUyOWYwNiIsImlhdCI6MTcwMDc2Nzg5MiwiZXhwIjoxNzAxOTc3NDkyfQ.aPhZG256C4r_uw8BLR8Zszx0JPXNPXaMeJBl4HWJros'
+        case 'manager': return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NGQxYWE4ODA3NzkxNGEyNzUyOWYwMyIsImlhdCI6MTcwMDc2Nzg3MywiZXhwIjoxNzAxOTc3NDczfQ._clgp0duj00S3tC9ysIDM9uXzwD_5JktGhB4mLMHhYU'
         default: return null
     }
 }

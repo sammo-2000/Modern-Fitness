@@ -16,6 +16,7 @@ const User_Schema = new Schema({
     note: { type: String, required: false, trim: true, default: null },
     height: { type: String, required: false, trim: true, default: null },
     weight: { type: String, required: false, trim: true, default: null },
+    vegan: { type: Boolean, required: false, trim: true, default: false },
 }, { timestamps: true });
 
 function generate_access_code() {
