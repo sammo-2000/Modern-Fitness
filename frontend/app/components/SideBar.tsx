@@ -10,26 +10,6 @@ import Image from "next/image";
 import mainImg from "public/main-gym-img.jpg";
 
 export default function SideBar() {
-  const [role, setRole] = useState<string | null>(null);
-  const [token, setToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    const getCookie = (name: string) => {
-      const cookies = document.cookie.split("; ");
-      for (let i = 0; i < cookies.length; i++) {
-        let cookie = cookies[i].trim();
-        if (cookie.startsWith(name + "=")) {
-          return cookie.substring(name.length + 1);
-        }
-      }
-      return null;
-    };
-
-    const token = getCookie("token");
-    const role = getCookie("role");
-    setRole(role);
-    setRole(token);
-  });
   return (
     <>
       <div
@@ -56,61 +36,54 @@ export default function SideBar() {
             >
               <AiFillHome className=" ml-2 h-auto w-5 " /> Home
             </Link>
-            {role ? (
-              <>
-                <Link
-                  href=""
-                  className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                  onClick={closeSidebar}
-                >
-                  <GiProgression className=" ml-2 h-auto w-5" />
-                  Progress
-                </Link>
-                <Link
-                  href="profile"
-                  className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                  onClick={closeSidebar}
-                >
-                  <BsPersonFill className=" ml-2 h-auto w-5" />
-                  Account
-                </Link>
-                <Link
-                  href=""
-                  className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                  onClick={closeSidebar}
-                >
-                  <AiFillHome className=" ml-2 h-auto w-5" />
-                  Settings
-                </Link>
-                <Link
-                  href=""
-                  className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                  onClick={closeSidebar}
-                >
-                  <AiFillHome className=" ml-2 h-auto w-5" />
-                  New Routine
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link
-                  href="registration"
-                  className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                  onClick={closeSidebar}
-                >
-                  <AiFillHome className=" ml-2 h-auto w-5" />
-                  Register
-                </Link>
-                <Link
-                  href="login"
-                  className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                  onClick={closeSidebar}
-                >
-                  <AiFillHome className=" ml-2 h-auto w-5" />
-                  Login
-                </Link>
-              </>
-            )}
+            <Link
+              href=""
+              className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+              onClick={closeSidebar}
+            >
+              <GiProgression className=" ml-2 h-auto w-5" />
+              Progress
+            </Link>
+            <Link
+              href="profile"
+              className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+              onClick={closeSidebar}
+            >
+              <BsPersonFill className=" ml-2 h-auto w-5" />
+              Account
+            </Link>
+            <Link
+              href=""
+              className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+              onClick={closeSidebar}
+            >
+              <AiFillHome className=" ml-2 h-auto w-5" />
+              Settings
+            </Link>
+            <Link
+              href=""
+              className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+              onClick={closeSidebar}
+            >
+              <AiFillHome className=" ml-2 h-auto w-5" />
+              New Routine
+            </Link>
+            <Link
+              href="registration"
+              className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+              onClick={closeSidebar}
+            >
+              <AiFillHome className=" ml-2 h-auto w-5" />
+              Register
+            </Link>
+            <Link
+              href="login"
+              className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+              onClick={closeSidebar}
+            >
+              <AiFillHome className=" ml-2 h-auto w-5" />
+              Login
+            </Link>
           </div>
         </div>
         <div className=" bg-gray-800  py-5">
