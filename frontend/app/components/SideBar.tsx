@@ -45,7 +45,7 @@ export default function SideBar() {
             <p className=" text-sm font-normal text-gray-300">Fitness Gym</p>
           </div>
         </div>
-        <div className="border-b-1 border border-x-0 border-t-0 border-gray-700 pb-20">
+        <div className="border-b-1 border border-x-0 border-t-0 border-gray-700">
           <div className="mx-4 py-3  text-sm font-semibold text-gray-400 ">
             <Link
               href="\"
