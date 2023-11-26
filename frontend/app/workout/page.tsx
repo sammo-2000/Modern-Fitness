@@ -45,9 +45,9 @@ export const WorkoutPage = ({ user_id }: { user_id: any }) => {
   }, []);
 
   return (
-    <div className="  min-h-screen bg-gray-300">
+    <div className="w-full flex-1">
       <WorkoutForm user_id={MemberId} />
-      <div className="min-h-screen bg-gray-300">
+      <div className="">
         {programs &&
           programs.map(
             (
