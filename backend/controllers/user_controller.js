@@ -64,7 +64,7 @@ const get_single_user = async (req, res) => {
 
 const edit_user = async (req, res) => {
     const { id } = req.params;
-    const { email, goal, note, height, weight, vegan } = req.body;
+    const { email, goal, note, height, weight, vegan, allergy } = req.body;
     try {
         if (!id) {
             // Own request
@@ -89,12 +89,17 @@ const edit_user = async (req, res) => {
             if (vegan && !validator.isBoolean(vegan))
                 throw Error('Vegan must be a boolean');
 
+            // Check if the allergy is valid
+            if (allergy && !/^[a-zA-Z\s]*$/.test(allergy))
+                throw Error('Allergy must only contain letters');
+
             const allowed_fields = {};
             if (email) allowed_fields.email = email;
             if (goal) allowed_fields.goal = goal;
             if (height) allowed_fields.height = height;
             if (weight) allowed_fields.weight = weight;
             if (vegan) allowed_fields.vegan = vegan;
+            if (allergy) allowed_fields.allergy = allergy;
 
             // Update user
             const user = await User_Model.findOneAndUpdate({ _id: req._user._id }, allowed_fields, { new: true });
