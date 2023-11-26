@@ -12,7 +12,7 @@ export default function Header() {
     <header className="sticky top-0 z-10 flex items-center justify-between bg-white px-4 py-3 text-gray-700 shadow">
       <div className="flex items-center gap-6">
         <Hamburger />
-        <Link href="members">
+        <Link href="/members">
           <GoSearch className="h-5 w-5" />
         </Link>
       </div>

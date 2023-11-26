@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+
+import AddNote from "@/app/components/AddNote";
 interface Params {
   id: any;
 }
@@ -43,9 +45,10 @@ export default async function MemberDetails({ params }: { params: Params }) {
         <p>{member.status}</p>
         <p>{member.role}</p>
       </div>
+      <AddNote />
       <Link
         href="/workout"
-        className="mt-6 self-end rounded-xl bg-blue-500 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700"
+        className="mt-6 self-end rounded-xl  px-4 py-2 text-sm font-bold text-blue-500 underline"
       >
         Create Program
       </Link>

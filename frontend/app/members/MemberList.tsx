@@ -73,14 +73,13 @@ export default function MemberList() {
                 <strong>Status:</strong> {member.status}
               </p>
             </div>
-            <Link href={`/members/${member._id}`} passHref>
-              <Link
-                href={`/members/${member._id}`}
-                className="self-end rounded-xl bg-blue-500 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700"
-                onClick={() => handleViewMember(member._id)}
-              >
-                View Member
-              </Link>
+
+            <Link
+              href={`/members/${member._id}`}
+              className="self-end rounded-xl bg-blue-500 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700"
+              onClick={() => handleViewMember(member._id)}
+            >
+              View Member
             </Link>
           </li>
         ))}

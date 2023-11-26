@@ -51,7 +51,7 @@ const manager = async (req, res, next) => {
 
 // This function is for testing purposes only
 const Users_Type = () => {
-  userType = "member";
+  userType = "trainer";
   switch (userType) {
     case "member":
       return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWJiNmNkNTIxNDhjY2I4OGFmOGFmMyIsImlhdCI6MTcwMDc2Nzk2NSwiZXhwIjoxNzAxOTc3NTY1fQ.JFMbrG96O67u7VBv88uSN40Ao4_KwiPVoEECP6QVnRg";
