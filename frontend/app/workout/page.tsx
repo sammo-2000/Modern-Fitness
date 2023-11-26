@@ -30,7 +30,7 @@ export const WorkoutPage = ({ user_id }: { user_id: any }) => {
   useEffect(() => {
     const fetchPrograms = async () => {
       const response = await fetch(
-        "http://localhost:4000/api/programs/" + MemberId,
+        process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN + "/api/programs/" + MemberId,
       );
 
       const json = await response.json();
@@ -67,5 +67,5 @@ export const WorkoutPage = ({ user_id }: { user_id: any }) => {
     </div>
   );
 };
-// workout={workout}/>
+
 export default WorkoutPage;

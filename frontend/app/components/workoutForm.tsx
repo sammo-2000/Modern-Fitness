@@ -60,7 +60,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
         date: DateTime.toISOString().split("T")[0],
       };
       console.log(JSON.stringify(WorkoutJSON));
-      const APIresponse = await fetch("http://localhost:4000/api/program", {
+      const APIresponse = await fetch(process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN + "/api/program", {
         method: "POST",
         body: JSON.stringify(WorkoutJSON),
         headers: {
