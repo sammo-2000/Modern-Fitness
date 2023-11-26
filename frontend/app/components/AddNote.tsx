@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFetchedData } from "../context/MemberIdContext";
 
 function AddNote() {
@@ -38,18 +38,16 @@ function AddNote() {
   };
 
   return (
-    <form onSubmit={handleSubmission} className="ml-10 w-[400px]">
-      <div>
-        <textarea
-          placeholder="Add note..."
-          onChange={(e) => setNote(e.target.value)}
-          className="w-full rounded-xl"
-          value={note}
-        />
-      </div>
+    <form onSubmit={handleSubmission} className="mx-4 flex flex-col">
+      <textarea
+        placeholder="Add note..."
+        onChange={(e) => setNote(e.target.value)}
+        className="block w-full rounded-xl"
+        value={note}
+      />
       <button
         type="submit"
-        className="mt-6 self-end rounded-xl bg-blue-500 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700"
+        className="mb-2 mt-6 self-end rounded-xl bg-blue-500 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700"
       >
         Add Note
       </button>

@@ -2,6 +2,7 @@
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { useFetchedData } from "../context/MemberIdContext";
+import { calculateAge } from "../utils/age";
 
 async function getMembers(input: string) {
   try {
@@ -89,15 +90,4 @@ export default function MemberList() {
       </ul>
     </div>
   );
-}
-
-function calculateAge(dobString: string): number {
-  const today = new Date();
-  const dob = new Date(dobString);
-  let age = today.getFullYear() - dob.getFullYear();
-  const month = today.getMonth() - dob.getMonth();
-  if (month < 0 || (month === 0 && today.getDate() < dob.getDate())) {
-    age--;
-  }
-  return age;
 }

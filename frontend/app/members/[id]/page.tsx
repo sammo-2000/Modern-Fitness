@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { calculateAge } from "@/app/utils/age";
 
 import AddNote from "@/app/components/AddNote";
 interface Params {
@@ -35,20 +36,34 @@ export default async function MemberDetails({ params }: { params: Params }) {
 
   return (
     <div className="w-full flex-1 p-3">
-      <h2 className=" mb-2 text-lg font-bold">
+      <h2 className=" mx-2 mb-3 text-xl font-bold">
         {member.first_name + " " + member.last_name}
       </h2>
-      <div className="ml-4">
-        <p>{member.gender}</p>
-        <p>{member.dob}</p>
-        <p>{member.email}</p>
-        <p>{member.status}</p>
-        <p>{member.role}</p>
+      <div className="mx-4 mb-6 overflow-x-auto rounded-xl px-4 py-2 shadow">
+        <p>
+          <strong>Gender:</strong> {member.gender}
+        </p>
+        <p>
+          <strong>Date of Birth:</strong>{" "}
+          {new Date(member.dob).toLocaleDateString()}
+        </p>
+        <p>
+          <strong>Age:</strong> {calculateAge(member.dob)}
+        </p>
+        <p>
+          <strong>Email:</strong> {member.email}
+        </p>
+        <p>
+          <strong>Status:</strong> {member.status}
+        </p>
+        <p>
+          <strong>Role:</strong> {member.role}
+        </p>
       </div>
       <AddNote />
       <Link
         href="/workout"
-        className="mt-6 self-end rounded-xl  px-4 py-2 text-sm font-bold text-blue-500 underline"
+        className="mt-6 self-end rounded-xl px-4 py-2 text-sm font-bold text-blue-500 underline"
       >
         Create Program
       </Link>
