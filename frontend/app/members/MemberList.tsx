@@ -44,8 +44,8 @@ export default function MemberList() {
   }, [input]);
 
   return (
-    <div className="w-full flex-1">
-      <div className="mt-3 flex w-full items-center p-2 ">
+    <div className="mb-3 w-full flex-1">
+      <div className="my-3 flex w-full items-center p-2 ">
         <input
           className="ml-2 h-14 w-full rounded-lg bg-gray-100 outline-none focus:ring-2 focus:ring-blue-400"
           id="searchbar"
@@ -61,7 +61,7 @@ export default function MemberList() {
         {members.map((member: Member) => (
           <li
             key={member._id}
-            className="my-6 flex items-center justify-between rounded p-4 shadow"
+            className="flex items-center justify-between p-4 shadow"
           >
             <div>
               <h3 className="text-lg">
