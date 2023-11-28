@@ -4,7 +4,7 @@ import picture from "public/profile.png";
 
 function PhotoUpload(props: any) {
   return (
-    <div className="bg-white p-4   shadow-md ">
+    <div className="w-full min-w-[18.75rem] grow bg-white p-4 shadow-md lg:w-auto">
       <div className=" flex flex-col items-center">
         <Image
           src={picture}
