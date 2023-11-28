@@ -61,7 +61,7 @@ export default function Login() {
   return (
     <div className="mx-auto mb-6 max-w-[550px] p-3">
       <div className="mb-12">
-        <h1 className="mb-2 text-3xl font-semibold">Login</h1>
+        <h1 className="mb-2 text-2xl font-bold">Login</h1>
         <p>
           Don&apos;t have an account? &nbsp;
           <Link href="registration" className="text-blue-500 hover:underline">
