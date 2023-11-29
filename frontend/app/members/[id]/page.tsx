@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { calculateAge } from "@/app/utils/age";
+import { capitalizeFirstLetter } from "@/app/utils/capitalize";
 
 import AddNote from "@/app/components/AddNote";
 interface Params {
@@ -37,11 +38,13 @@ export default async function MemberDetails({ params }: { params: Params }) {
   return (
     <div className="w-full flex-1 p-3">
       <h2 className=" mx-2 mb-3 text-xl font-bold">
-        {member.first_name + " " + member.last_name}
+        {capitalizeFirstLetter(member.first_name) +
+          " " +
+          capitalizeFirstLetter(member.last_name)}
       </h2>
       <div className="mx-4 mb-6 overflow-x-auto rounded-xl px-4 py-2 shadow">
         <p>
-          <strong>Gender:</strong> {member.gender}
+          <strong>Gender:</strong> {capitalizeFirstLetter(member.gender)}
         </p>
         <p>
           <strong>Date of Birth:</strong>{" "}
@@ -54,15 +57,15 @@ export default async function MemberDetails({ params }: { params: Params }) {
           <strong>Email:</strong> {member.email}
         </p>
         <p>
-          <strong>Status:</strong> {member.status}
+          <strong>Status:</strong> {capitalizeFirstLetter(member.status)}
         </p>
         <p>
-          <strong>Role:</strong> {member.role}
+          <strong>Role:</strong> {capitalizeFirstLetter(member.role)}
         </p>
       </div>
       <AddNote />
       <Link
-        href="/workout"
+        href="workout"
         className="mt-6 self-end rounded-xl px-4 py-2 text-sm font-bold text-blue-500 underline"
       >
         Create Program
