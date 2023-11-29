@@ -4,6 +4,7 @@ import { calculateAge } from "@/app/utils/age";
 import { capitalizeFirstLetter } from "@/app/utils/capitalize";
 
 import AddNote from "@/app/components/AddNote";
+import GetPrograms from "@/app/components/GetProgram";
 interface Params {
   id: any;
 }
@@ -64,6 +65,7 @@ export default async function MemberDetails({ params }: { params: Params }) {
         </p>
       </div>
       <AddNote />
+      <GetPrograms/>
       <Link
         href="workout"
         className="mt-6 self-end rounded-xl px-4 py-2 text-sm font-bold text-blue-500 underline"
