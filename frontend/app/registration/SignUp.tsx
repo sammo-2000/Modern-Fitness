@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
-
+import { useRouter } from "next/navigation";
 export default function SignUp() {
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
@@ -12,12 +12,11 @@ export default function SignUp() {
   const [checked, setChecked] = useState();
 
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-
+  const router = useRouter();
   const handleSubmission = async (event: any) => {
     event.preventDefault();
     setError("");
-    setSuccess("");
+
     try {
       // Check all fields are filled
 
@@ -48,26 +47,34 @@ export default function SignUp() {
             }),
           },
         );
-        const data = await response.json();
+        if (!response.ok) {
+          const data = await response.json();
+          setError(data.message);
+        }
+        // const data = await response.json();
+        // console.log(data);
 
-        console.log(data);
-
-        if (!data.success) return setError(data.message);
+        // if (!data.success) {
+        //   return setError(data.message);
+        //}
+        else {
+          router.refresh();
+          router.push("/");
+        }
 
         // Set cookie on the server side, for extra security
-        const cookiesResponse = await fetch(`/api/login`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ token: data.token, user: data.user }),
-        });
-        const cookiesData = await cookiesResponse.json();
+        // const cookiesResponse = await fetch(`/api/login`, {
+        //   method: "POST",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        //   body: JSON.stringify({ token: data.token, user: data.user }),
+        // });
+        // const cookiesData = await cookiesResponse.json();
 
-        if (!cookiesData.success) return setError(cookiesData.message);
+        // if (!cookiesData.success) return setError(cookiesData.message);
 
-        setSuccess(data.message);
-        window.location.replace("/");
+        // window.location.replace("/");
       } catch (error: any) {
         setError(error.message);
       }
@@ -78,7 +85,7 @@ export default function SignUp() {
 
   const handleChange = (event: any) => {
     setError("");
-    setSuccess("");
+
     const { name, value } = event.target;
     switch (name) {
       case "firstname":
@@ -186,16 +193,12 @@ export default function SignUp() {
               I consent to sharing my information
             </label>
           </div>
-          {error ? (
+          {error && (
             <div className="mb-6 rounded-lg bg-red-100 px-5 py-2 text-red-600">
               {error}
             </div>
-          ) : null}
-          {success ? (
-            <div className="mb-6 rounded-lg bg-green-100 px-5 py-2 text-green-600">
-              {success}
-            </div>
-          ) : null}
+          )}
+
           <button
             type="submit"
             className=" w-full rounded-lg bg-blue-500 px-3 py-5 text-white hover:bg-blue-600"

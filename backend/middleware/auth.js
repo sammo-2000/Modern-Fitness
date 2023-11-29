@@ -4,13 +4,14 @@ const User_Model = require("../models/User_Model");
 const logged_on = async (req, res, next) => {
   try {
     // This should be turned off for testing
-    // const { authorization } = req.headers;
-    // if (!authorization) {
-    //     throw Error('You must send an authorization header');
-    // }
+    const { authorization } = req.headers;
+    if (!authorization) {
+      throw Error('You must send an authorization header');
+    }
     // const token = authorization.split(' ')[1];
+    const token = authorization;
 
-    const token = Users_Type();
+    // const token = Users_Type();
     const { id } = jwt.verify(token, process.env.SECRET_TOKEN);
     req._user = await User_Model.findById(id).select("_id role");
     next();

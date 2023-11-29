@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { useFetchedData } from "../context/MemberIdContext";
 
+import GetCookie from "../utils/getCookie";
+const Token = GetCookie("token") || "";
+
 function AddNote() {
   const { MemberId } = useFetchedData();
 
@@ -19,9 +22,11 @@ function AddNote() {
           body: JSON.stringify({ note }),
           headers: {
             "Content-Type": "application/json",
+            authorization: Token,
           },
         },
       );
+
       if (res.ok) {
         // Content successfully updated
         setMessage("Note added successfully");

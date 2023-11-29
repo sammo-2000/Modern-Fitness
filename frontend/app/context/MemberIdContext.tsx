@@ -33,7 +33,6 @@ interface FetchedDataProviderProps {
 
 export function FetchDataProvider({ children }: FetchedDataProviderProps) {
   const [MemberId, setMemberId] = useState<string>("");
-  const [MemberNote, setMemberNote] = useState<string>("");
   // Function to handle setting MemberId
   const handleViewMember = (id: string) => {
     setMemberId(id);

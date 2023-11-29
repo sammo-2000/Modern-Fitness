@@ -3,6 +3,9 @@ import Link from "next/link";
 import { calculateAge } from "@/app/utils/age";
 import { capitalizeFirstLetter } from "@/app/utils/capitalize";
 
+import GetCookie from "../../utils/getCookie";
+const Token = GetCookie("token") || "";
+
 import AddNote from "@/app/components/AddNote";
 import GetPrograms from "@/app/components/GetProgram";
 interface Params {
@@ -14,8 +17,8 @@ export async function generateStaticParams() {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/users`,
     {
-      next: {
-        revalidate: 0,
+      headers: {
+        authorization: Token,
       },
     },
   );

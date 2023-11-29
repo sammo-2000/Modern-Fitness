@@ -1,6 +1,7 @@
-"use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import options from "@/app/api/auth/[...nextauth]/Options";
+import { getServerSession } from "next-auth";
 import { CgGym } from "react-icons/cg";
 import { GiProgression } from "react-icons/gi";
 import { AiFillHome } from "react-icons/ai";
@@ -8,28 +9,22 @@ import { BsPersonFill } from "react-icons/bs";
 import { RxHamburgerMenu } from "react-icons/rx";
 import Image from "next/image";
 import mainImg from "public/main-gym-img.jpg";
+import { GetServerSidePropsContext } from "next";
+import SidebarLink from "./SidebarLink";
+interface SessionType {
+  user: {
+    name: string;
+    // other properties...
+  };
+}
 
-export default function SideBar() {
-  const [role, setRole] = useState<string | null>(null);
-  const [token, setToken] = useState<string | null>(null);
+interface SideBarProps {
+  session: SessionType | any; // Define the type as SessionType or any
+}
 
-  useEffect(() => {
-    const getCookie = (name: string) => {
-      const cookies = document.cookie.split("; ");
-      for (let i = 0; i < cookies.length; i++) {
-        let cookie = cookies[i].trim();
-        if (cookie.startsWith(name + "=")) {
-          return cookie.substring(name.length + 1);
-        }
-      }
-      return null;
-    };
+export default async function SideBar() {
+  const session = await getServerSession();
 
-    const token = getCookie("token");
-    const role = getCookie("role");
-    setRole(role);
-    setRole(token);
-  });
   return (
     <>
       <div
@@ -49,66 +44,74 @@ export default function SideBar() {
         </div>
         <div className="border-b-1 border border-x-0 border-t-0 border-gray-700">
           <div className="mx-4 py-3  text-sm font-semibold text-gray-400 ">
-            <Link
+            <SidebarLink
               href="\"
               className=" my-2 mb-3  flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-              onClick={closeSidebar}
+              // onClick={closeSidebar}
             >
               <AiFillHome className=" ml-2 h-auto w-5 " /> Home
-            </Link>
-            {role ? (
+            </SidebarLink>
+            {session ? (
               <>
-                <Link
+                <SidebarLink
                   href=""
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                  onClick={closeSidebar}
+                  // onClick={closeSidebar}
                 >
                   <GiProgression className=" ml-2 h-auto w-5" />
                   Progress
-                </Link>
-                <Link
+                </SidebarLink>
+                <SidebarLink
                   href="/profile"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                  onClick={closeSidebar}
+                  // onClick={closeSidebar}
                 >
                   <BsPersonFill className=" ml-2 h-auto w-5" />
                   Account
-                </Link>
-                <Link
+                </SidebarLink>
+                <SidebarLink
                   href=""
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                  onClick={closeSidebar}
+                  // onClick={closeSidebar}
                 >
                   <AiFillHome className=" ml-2 h-auto w-5" />
                   Settings
-                </Link>
-                <Link
+                </SidebarLink>
+                <SidebarLink
                   href=""
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                  onClick={closeSidebar}
+                  // onClick={closeSidebar}
                 >
                   <AiFillHome className=" ml-2 h-auto w-5" />
                   New Routine
-                </Link>
+                </SidebarLink>
+                <SidebarLink
+                  href="/api/auth/signout?callbackUrl=/"
+                  className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                  // onClick={closeSidebar}
+                >
+                  <AiFillHome className=" ml-2 h-auto w-5" />
+                  SignOut
+                </SidebarLink>
               </>
             ) : (
               <>
-                <Link
-                  href="/registration"
+                <SidebarLink
+                  href="registration"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                  onClick={closeSidebar}
+                  // onClick={closeSidebar}
                 >
                   <AiFillHome className=" ml-2 h-auto w-5" />
                   Register
-                </Link>
-                <Link
-                  href="/login"
+                </SidebarLink>
+                <SidebarLink
+                  href="/api/auth/signin"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                  onClick={closeSidebar}
+                  //  onClick={closeSidebar}
                 >
                   <AiFillHome className=" ml-2 h-auto w-5" />
                   Login
-                </Link>
+                </SidebarLink>
               </>
             )}
           </div>
@@ -130,7 +133,7 @@ export default function SideBar() {
           <Link
             href=""
             className="mx-2 flex justify-center rounded-lg bg-blue-500 px-3 py-2 text-sm font-bold text-white hover:bg-blue-600"
-            onClick={closeSidebar}
+            //  onClick={closeSidebar}
           >
             Check It Out
           </Link>
@@ -140,7 +143,7 @@ export default function SideBar() {
   );
 }
 
-const closeSidebar = () => {
-  const sidebar = document.getElementById("sidebar");
-  sidebar?.classList.add("-translate-x-[100%]");
-};
+// const closeSidebar = () => {
+//   const sidebar = document.getElementById("sidebar");
+//   sidebar?.classList.add("-translate-x-[100%]");
+// };
