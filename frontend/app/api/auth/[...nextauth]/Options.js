@@ -109,8 +109,8 @@ const options = {
           data.user.password = "";
 
           console.log(data.token);
-          cookies().set("token", data.token);
-          cookies().set("role", data.user.role);
+          cookies().set("token", data.token, { expires: Date.now() + 60 * 60 * 24 * 7 * 1000 });
+          cookies().set("role", data.user.role, { expires: Date.now() + 60 * 60 * 24 * 7 * 1000 });
 
           return data.user;
         } catch (error) {
