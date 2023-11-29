@@ -3,8 +3,6 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { cookies } from "next/headers";
 //import User from "../../../../../backend/models/User_Model";
-import User from "@/app/models/User";
-import bcrypt from "bcrypt";
 const options = {
   providers: [
     GitHubProvider({
@@ -90,8 +88,9 @@ const options = {
       },
       async authorize(credentials) {
         try {
-          const User_identifer = credentials.email;
-          const pass = credentials.password;
+          console.log("--------------------------------------")
+          const User_identifier = credentials.email;
+          const password = credentials.password;
           const response = await fetch(
             `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/auth/login`,
             {
@@ -99,14 +98,13 @@ const options = {
               headers: {
                 "Content-Type": "application/json",
               },
-              body: { User_identifer, pass },
+              body: JSON.stringify({ User_identifier, password })
             },
           );
 
-          console.log("Login API called");
-          const data = await response.json();
-
           if (!response.ok) return null;
+
+          const data = await response.json();
 
           data.user.password = "";
 
@@ -115,31 +113,9 @@ const options = {
           cookies().set("role", data.user.role);
 
           return data.user;
-          // const foundUser = await User.findOne({
-          //   email: credentials.email,
-          // })
-          //   .lean()
-          //   .exec();
-
-          // if (foundUser) {
-          //   console.log("User Exist");
-
-          //   const match = await bcrypt.compare(
-          //     credentials.password,
-          //     foundUser.password,
-          //   );
-          //   if (match) {
-          //     console.log("good password");
-          //     delete foundUser.password;
-
-          //     foundUser["role"] = "trainer";
-          //     return foundUser;
-          //   }
-          // }
         } catch (error) {
           console.log(error);
         }
-        return null;
       },
     }),
   ],

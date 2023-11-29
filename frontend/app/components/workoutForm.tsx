@@ -8,6 +8,9 @@ interface Workout {
   reps: string;
 }
 
+import GetCookie from "../utils/getCookie";
+const Token = GetCookie("token") || "";
+
 export const WorkoutForm = ({ user_id }: { user_id: any }) => {
   const { dispatch } = useProgramContext();
 
@@ -60,13 +63,17 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
         date: DateTime.toISOString().split("T")[0],
       };
       console.log(JSON.stringify(WorkoutJSON));
-      const APIresponse = await fetch(process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN + "/api/program", {
-        method: "POST",
-        body: JSON.stringify(WorkoutJSON),
-        headers: {
-          "Content-Type": "application/json",
+      const APIresponse = await fetch(
+        process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN + "/api/program",
+        {
+          method: "POST",
+          body: JSON.stringify(WorkoutJSON),
+          headers: {
+            "Content-Type": "application/json",
+            authorization: Token,
+          },
         },
-      });
+      );
       const responseJSON = await APIresponse.json();
       if (!responseJSON.success) {
         setError(responseJSON.message);

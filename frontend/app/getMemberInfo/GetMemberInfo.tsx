@@ -1,6 +1,9 @@
 "use client";
 import React, { useState } from "react";
 
+import GetCookie from "../utils/getCookie";
+const Token = GetCookie("token") || "";
+
 function GetMemberInfo() {
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
@@ -27,6 +30,7 @@ function GetMemberInfo() {
             body: JSON.stringify({ height, weight, vegan, goal, allergy }),
             headers: {
               "Content-Type": "application/json",
+              authorization: Token,
             },
           },
         );

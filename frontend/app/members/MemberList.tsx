@@ -4,10 +4,19 @@ import React, { useState, useEffect } from "react";
 import { useFetchedData } from "../context/MemberIdContext";
 import { calculateAge } from "../utils/age";
 
+import GetCookie from "../utils/getCookie";
+const Token = GetCookie("token") || "";
 async function getMembers(input: string) {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/users/${input}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: Token,
+        },
+      },
     );
 
     if (!res.ok) {

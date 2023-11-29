@@ -2,6 +2,9 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { calculateAge } from "@/app/utils/age";
 
+import GetCookie from "../../utils/getCookie";
+const Token = GetCookie("token") || "";
+
 import AddNote from "@/app/components/AddNote";
 interface Params {
   id: any;
@@ -12,8 +15,8 @@ export async function generateStaticParams() {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/users`,
     {
-      next: {
-        revalidate: 0,
+      headers: {
+        authorization: Token,
       },
     },
   );
