@@ -1,23 +1,20 @@
-// RootLayout.tsx
-import "./globals.css";
 import React from "react";
-
-import { ProgramsContextProvider } from "./context/programContext";
-import { FetchDataProvider } from "./context/MemberIdContext";
-import AuthProvider from "./components/AuthProvider";
-import SideBar from "./components/SideBar";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
 import { Inter } from "next/font/google";
+import { getServerSession } from "next-auth";
+import { GetServerSidePropsContext } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
-
+import { ProgramsContextProvider } from "../context/programContext";
+import { FetchDataProvider } from "../context/MemberIdContext";
+import AuthProvider from "../components/AuthProvider";
+import SideBar from "../components/SideBar";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
 interface RootLayoutProps {
   children: React.ReactNode;
   session: any; // Define the type for session according to your session structure
 }
-
-export default function RootLayout({ children, session }: RootLayoutProps) {
+function test({ children, session }: RootLayoutProps) {
   return (
     <AuthProvider session={session}>
       <FetchDataProvider>
@@ -40,4 +37,15 @@ export default function RootLayout({ children, session }: RootLayoutProps) {
       </FetchDataProvider>
     </AuthProvider>
   );
+}
+
+export default test;
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const session = await getServerSession();
+
+  return {
+    props: {
+      session,
+    },
+  };
 }
