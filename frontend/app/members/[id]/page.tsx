@@ -12,12 +12,12 @@ interface Params {
   id: any;
 }
 
-export default async function MemberDetails(props: any) {
+export default async function MemberDetails({ params }: { params: Params }) {
   const cookieStore = cookies();
   const token = cookieStore.get("token");
   if (token) {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/user/${props.params.id}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/user/${params.id}`,
       {
         headers: {
           authorization: token.value,
@@ -67,7 +67,7 @@ export default async function MemberDetails(props: any) {
       >
         Create Program
       </Link>
-      <GetPrograms MemberId={props.params.id} />
+      <GetPrograms MemberId={params.id} />
     </div>
   );
 }
