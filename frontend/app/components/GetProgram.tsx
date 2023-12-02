@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import WorkoutStats from "../components/workoutStats";
 import { useProgramContext } from "../hooks/useProgramContext";
 import { useFetchedData } from "../context/MemberIdContext";
+import GetCookie from "../utils/getCookie";
 interface Workout {
   name: string;
   load: number;
@@ -24,6 +25,7 @@ interface WorkoutStatsProps {
 export const GetPrograms = ({ MemberId }: any) => {
   // const { MemberId } = useFetchedData();
   const { programs, dispatch } = useProgramContext();
+  const token = GetCookie("token") || "";
 
   useEffect(() => {
     const fetchPrograms = async () => {
@@ -31,6 +33,11 @@ export const GetPrograms = ({ MemberId }: any) => {
         process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN +
           "/api/programs/" +
           MemberId,
+        {
+          headers: {
+            authorization: token,
+          },
+        },
       );
 
       const json = await response.json();
