@@ -7,7 +7,7 @@ import { cookies } from "next/headers";
 
 import AddNote from "@/app/components/AddNote";
 import GetPrograms from "@/app/components/GetProgram";
-import { Console } from "console";
+
 interface Params {
   id: any;
 }
