@@ -3,37 +3,30 @@ import Link from "next/link";
 import { calculateAge } from "@/app/utils/age";
 import { capitalizeFirstLetter } from "@/app/utils/capitalize";
 
-import GetCookie from "../../utils/getCookie";
-const Token = GetCookie("token") || "";
+import { cookies } from "next/headers";
 
 import AddNote from "@/app/components/AddNote";
 import GetPrograms from "@/app/components/GetProgram";
+import { Console } from "console";
 interface Params {
   id: any;
 }
-export const dynamicParams = true;
 
-export async function generateStaticParams() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/users`,
-    {
-      headers: {
-        authorization: Token,
+export default async function MemberDetails(props: any) {
+  const cookieStore = cookies();
+  const token = cookieStore.get("token");
+  if (token) {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/user/${props.params.id}`,
+      {
+        headers: {
+          authorization: token.value,
+        },
       },
-    },
-  );
-
-  const members = await res.json();
-
-  return members.users.map((member: any) => ({
-    ...member,
-  }));
-}
-
-export default async function MemberDetails({ params }: { params: Params }) {
-  const members = await generateStaticParams(); // Fetch all members
-
-  const member = members.find((m: any) => m._id === params.id);
+    );
+    const json = await res.json();
+    var member = json.user;
+  }
 
   if (!member) {
     notFound();
@@ -74,7 +67,7 @@ export default async function MemberDetails({ params }: { params: Params }) {
       >
         Create Program
       </Link>
-      <GetPrograms MemberId={params.id} />
+      <GetPrograms MemberId={props.params.id} />
     </div>
   );
 }
