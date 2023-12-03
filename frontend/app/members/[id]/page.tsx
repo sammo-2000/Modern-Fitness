@@ -9,7 +9,7 @@ import AddNote from "@/app/components/AddNote";
 import GetPrograms from "@/app/components/GetProgram";
 
 interface Params {
-  id: any;
+  id: string;
 }
 
 export default async function MemberDetails({ params }: { params: Params }) {

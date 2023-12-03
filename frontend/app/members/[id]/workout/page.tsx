@@ -5,23 +5,7 @@ import WorkoutStats from "@/app/components/workoutStats";
 import { useProgramContext } from "@/app/hooks/useProgramContext";
 import GetCookie from "@/app/utils/getCookie";
 import { useFetchedData } from "@/app/context/MemberIdContext";
-interface Workout {
-  name: string;
-  load: number;
-  reps: number;
-  id: number;
-}
-interface Program {
-  workout: Workout[];
-  date: Date;
-}
-interface ProgramAPIResponse {
-  programs: Program[];
-}
-
-interface WorkoutStatsProps {
-  workout: Workout;
-}
+import type { Workout } from "@/app/types/workout";
 
 export const WorkoutPage = ({ params }: any) => {
   const MemberId = params.id;
@@ -61,14 +45,13 @@ export const WorkoutPage = ({ params }: any) => {
         {programs &&
           programs.map(
             (
-              program: { workout: Workout[]; date: Date },
+              program: { workout: Workout[]; date: string },
               programIndex: number,
             ) =>
               program.workout &&
               program.workout.map((workout: Workout, workoutIndex: number) => (
                 <WorkoutStats
                   key={`${program.date}-${programIndex}-${workout.id}-${workoutIndex}`}
-                  date={program.date}
                   workout={workout}
                 />
               )),
