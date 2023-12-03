@@ -9,7 +9,7 @@ import type { Program } from "../types/program";
 
 export const GetPrograms = ({ MemberId }: { MemberId: string }) => {
   // const { MemberId } = useFetchedData();
-  const { programs, dispatch } = useProgramContext();
+  const { programs, dispatch } = useProgramContext(); 
   const token = GetCookie("token") || "";
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export const GetPrograms = ({ MemberId }: { MemberId: string }) => {
       {programs &&
         programs.map((program: Program) => (
           <div key={program._id}>
-            <h1>{program.date}</h1>
+            <h1 className="flex items-center justify-center text-2xl font-bold font-sans">{program.date}</h1>
             {program.workout.map((workout: Workout) => (
               <WorkoutStats key={workout.id} workout={workout} />
             ))}
