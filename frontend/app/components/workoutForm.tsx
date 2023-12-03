@@ -3,6 +3,7 @@ import { FormEvent, useState } from "react";
 import { Datepicker } from "flowbite-react";
 import { useProgramContext } from "../hooks/useProgramContext";
 import Link from "next/link";
+import { Router, useRouter } from "next/router";
 interface Workout {
   name: string;
   load: string;
@@ -83,6 +84,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
         setWorkoutsList([]);
         console.log("Workout has been added: ", responseJSON.program);
         dispatch({ type: "CREATE_PROGRAM", payload: responseJSON.program });
+        
       }
     }
   };
