@@ -174,7 +174,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
         </div>
         <div className="mb-4 flex flex-col justify-between sm:flex-row">
           <button
-            className="mb-2 mt-6 rounded-xl bg-blue-500 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700"
+            className="mb-2 mt-6 rounded-xl border border-blue-500 bg-white px-4 py-2 text-sm font-bold text-blue-500 hover:bg-gray-100"
             type="button"
             onClick={addsToList}
           >
