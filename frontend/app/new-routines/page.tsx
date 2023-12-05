@@ -49,7 +49,7 @@ const DisplaySingleProgram = ({ program }: { program: any }) => {
   return (
     <>
       <div className="m-4 flex flex-col gap-5 border-t-4 p-2">
-        <p className="text-2xl">End date: {program.date}</p>
+        <p className="text-2xl font-sans  font-bold">Program Ending On: {program.date}</p>
         <div className="flex flex-wrap gap-5">
           {program.workout.map((workout: any) => {
             return <DisplayWorkout workout={workout} />;
