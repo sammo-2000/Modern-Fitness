@@ -12,6 +12,9 @@ const workoutStats: React.FC<{ workout: Workout }> = ({ workout }) => {
       <p className="m-0 text-xl text-gray-600">
         Number of reps: {workout.reps}
       </p>
+      <p className="m-0 text-xl text-gray-600">
+        Number of sets: {workout.sets}
+      </p>
     </div>
   );
 };

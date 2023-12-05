@@ -8,6 +8,7 @@ interface Workout {
   name: string;
   load: string;
   reps: string;
+  sets: string
 }
 
 import GetCookie from "../utils/getCookie";
@@ -22,6 +23,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
   const [Name, SetName] = useState("");
   const [Load, SetLoad] = useState("");
   const [Reps, SetReps] = useState("");
+  const [Sets, SetSets] = useState("");
   const [DateTime, SetDate] = useState(new Date());
   const [error, setError] = useState(null);
   const [workoutsList, setWorkoutsList] = useState<Workout[]>([]);
@@ -30,18 +32,21 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
     SetName("");
     SetLoad("");
     SetReps("");
+    SetSets("");
     SetDate(new Date());
   };
   const clearWorkoutForm = () => {
     SetName("");
     SetLoad("");
     SetReps("");
+    SetSets("");
   };
   const addsToList = () => {
     const workout: Workout = {
       name: Name,
       load: Load,
       reps: Reps,
+      sets: Sets,
     };
     setWorkoutsList((prevList) => [...prevList, workout]);
 
@@ -155,6 +160,23 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
         </div>
         <div className="mb-4">
           <label
+            htmlFor="sets"
+            className="mb-2 block text-xl font-bold text-gray-700"
+          >
+            Sets
+          </label>
+          <input
+            className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none"
+            type="number"
+            onChange={(e) => SetSets(e.target.value)}
+            value={Sets}
+            placeholder="Enter the number of sets"
+            id="sets"
+            name="sets"
+          />
+        </div>
+        <div className="mb-4">
+          <label
             htmlFor="date"
             className="mb-2 block text-xl font-bold text-gray-700"
           >
@@ -195,7 +217,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
             className="mb-2 flex list-none justify-between rounded px-4 py-2 shadow"
           >
             <h2 className="self-start text-lg font-semibold">
-              {`${workout.name} - ${workout.load}kg - ${workout.reps} reps `}
+              {`${workout.name} - ${workout.load}kg - ${workout.reps} reps }${workout.sets} sets `}
             </h2>
             <button
               type="button"
