@@ -9,7 +9,7 @@ import AddNote from "@/app/components/AddNote";
 import GetPrograms from "@/app/components/GetProgram";
 
 interface Params {
-  id: string;
+  MemberId: string;
 }
 
 export default async function MemberDetails({ params }: { params: Params }) {
@@ -17,7 +17,7 @@ export default async function MemberDetails({ params }: { params: Params }) {
   const token = cookieStore.get("token");
   if (token) {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/user/${params.id}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/user/${params.MemberId}`,
       {
         headers: {
           authorization: token.value,
@@ -62,12 +62,12 @@ export default async function MemberDetails({ params }: { params: Params }) {
       </div>
       <AddNote />
       <Link
-        href={`${params.id}/workout`}
+        href={`${params.MemberId}/workout`}
         className="mt-6 self-end rounded-xl px-4 py-2 text-sm font-bold text-blue-500 underline"
       >
         Create Program
       </Link>
-      <GetPrograms MemberId={params.id} />
+      <GetPrograms MemberId={params.MemberId} />
     </div>
   );
 }

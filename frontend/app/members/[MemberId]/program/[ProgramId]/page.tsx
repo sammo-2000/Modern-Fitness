@@ -1,14 +1,19 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import WorkoutForm from "@/app/components/workoutForm";
 import WorkoutStats from "@/app/components/workoutStats";
 import { useProgramContext } from "@/app/hooks/useProgramContext";
 import GetCookie from "@/app/utils/getCookie";
-import { useFetchedData } from "@/app/context/MemberIdContext";
 import type { Workout } from "@/app/types/workout";
 
-export const WorkoutPage = ({ params }: any) => {
-  const MemberId = params.id;
+interface Params {
+  MemberId: string;
+  ProgramId: string;
+}
+
+export const WorkoutPage = ({ params }: { params: Params }) => {
+  const memberId = params.MemberId;
+  const programId = params.ProgramId;
 
   const { programs, dispatch } = useProgramContext();
 
@@ -16,9 +21,7 @@ export const WorkoutPage = ({ params }: any) => {
     const token = GetCookie("token") || "";
     const fetchPrograms = async () => {
       const response = await fetch(
-        process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN +
-          "/api/programs/" +
-          MemberId,
+        `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/program/${memberId}/${programId}`,
         {
           headers: {
             authorization: token,
@@ -37,10 +40,9 @@ export const WorkoutPage = ({ params }: any) => {
     fetchPrograms();
   }, []);
 
-  console.log(params.id);
   return (
     <div className="w-full flex-1">
-      <WorkoutForm user_id={MemberId} />
+      <WorkoutForm user_id={memberId} />
       <div className="">
         {programs &&
           programs.map(
