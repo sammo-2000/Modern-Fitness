@@ -78,7 +78,7 @@ export default async function SideBar() {
                   Settings
                 </SidebarLink>
                 <SidebarLink
-                  href=""
+                  href="/new-routines"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
                   // onClick={closeSidebar}
                 >
