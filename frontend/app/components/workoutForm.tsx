@@ -3,7 +3,7 @@ import { FormEvent, useState } from "react";
 import { Datepicker } from "flowbite-react";
 import { useProgramContext } from "../hooks/useProgramContext";
 import Link from "next/link";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 interface Workout {
   name: string;
   load: string;
@@ -14,8 +14,10 @@ import GetCookie from "../utils/getCookie";
 const Token = GetCookie("token") || "";
 
 export const WorkoutForm = ({ user_id }: { user_id: any }) => {
-  const router = useRouter();
+  // const router = useRouter();
   const { dispatch } = useProgramContext();
+
+  console.log("user_id", user_id);
 
   const [Name, SetName] = useState("");
   const [Load, SetLoad] = useState("");
@@ -85,8 +87,9 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
         setWorkoutsList([]);
         console.log("Workout has been added: ", responseJSON.program);
         dispatch({ type: "CREATE_PROGRAM", payload: responseJSON.program });
-        
-        router.push("");
+
+        // router.push("");
+        document.location.replace(`/members/${user_id}`);
       }
     }
   };
@@ -198,12 +201,10 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
         </div>
         <div className="flex items-center justify-between">
           {/* Button css from: https://flowbite.com/docs/components/buttons/ */}
-          
+
           <button
             className="mb-2 me-2 rounded-lg bg-gradient-to-r from-green-400 via-green-500 to-green-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gradient-to-br focus:outline-none focus:ring-4 focus:ring-green-300 dark:focus:ring-green-800"
-            type="submit" 
-           
-
+            type="submit"
           >
             Save
           </button>
