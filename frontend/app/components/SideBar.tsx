@@ -50,44 +50,41 @@ export default async function SideBar() {
             <SidebarLink
               href="\"
               className=" my-2 mb-3  flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-              // onClick={closeSidebar}
             >
               <AiFillHome className=" ml-2 h-auto w-5 " /> Home
             </SidebarLink>
 
             {session ? (
               <>
-                <SidebarLink
+                {/* <SidebarLink
                   href=""
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                  // onClick={closeSidebar}
+                  
                 >
                   <GiProgression className=" ml-2 h-auto w-5" />
                   Progress
-                </SidebarLink>
+                </SidebarLink> */}
                 <SidebarLink
                   href="/profile"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                  // onClick={closeSidebar}
                 >
                   <BsPersonFill className=" ml-2 h-auto w-5" />
                   Account
                 </SidebarLink>
-                <SidebarLink
+                {/* <SidebarLink
                   href=""
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                  // onClick={closeSidebar}
+                  
                 >
                   <AiFillHome className=" ml-2 h-auto w-5" />
                   Settings
-                </SidebarLink>
+                </SidebarLink> */}
                 <SidebarLink
-                  href="/new-routines"
+                  href="/my-programs"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                  // onClick={closeSidebar}
                 >
                   <AiFillHome className=" ml-2 h-auto w-5" />
-                  New Routine
+                  My Programs
                 </SidebarLink>
                 {role?.value == "trainer" && ShowSearch()}
                 {role?.value == "manager" && ShowSearch()}
@@ -106,10 +103,9 @@ export default async function SideBar() {
                 <SidebarLink
                   href="/api/auth/signout?callbackUrl=/"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                  // onClick={closeSidebar}
                 >
                   <AiFillHome className=" ml-2 h-auto w-5" />
-                  SignOut
+                  Sign Out
                 </SidebarLink>
               </>
             ) : (
@@ -117,7 +113,6 @@ export default async function SideBar() {
                 <SidebarLink
                   href="registration"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                  // onClick={closeSidebar}
                 >
                   <AiFillHome className=" ml-2 h-auto w-5" />
                   Register
@@ -125,7 +120,6 @@ export default async function SideBar() {
                 <SidebarLink
                   href="/api/auth/signin"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                  //  onClick={closeSidebar}
                 >
                   <AiFillHome className=" ml-2 h-auto w-5" />
                   Login
@@ -151,7 +145,6 @@ export default async function SideBar() {
           <Link
             href=""
             className="mx-2 flex justify-center rounded-lg bg-blue-500 px-3 py-2 text-sm font-bold text-white hover:bg-blue-600"
-            //  onClick={closeSidebar}
           >
             Check It Out
           </Link>
@@ -160,11 +153,6 @@ export default async function SideBar() {
     </>
   );
 }
-
-// const closeSidebar = () => {
-//   const sidebar = document.getElementById("sidebar");
-//   sidebar?.classList.add("-translate-x-[100%]");
-// };
 
 const ShowSearch = () => {
   return (

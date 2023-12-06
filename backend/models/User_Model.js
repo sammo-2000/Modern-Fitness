@@ -23,7 +23,7 @@ const User_Schema = new Schema(
     note: { type: String, required: false, trim: true, default: null },
     height: { type: String, required: false, trim: true, default: null },
     weight: { type: String, required: false, trim: true, default: null },
-    vegan: { type: Boolean, required: false, trim: true, default: false },
+    vegan: { type: String, required: false, trim: true, default: "no" },
     allergy: { type: String, required: false, trim: true, default: null },
   },
   { timestamps: true }

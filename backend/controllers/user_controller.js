@@ -6,9 +6,15 @@ const validator = require('validator');
 const get_all_users = async (req, res) => {
     const { name } = req.params;
     let users = null;
+    let users_list = null;
     if (name) {
         // Get users by first name
-        users_list = await User_Model.find({ first_name: { $regex: name, $options: 'i' } }, { password: 0 }).sort({ createdAt: -1 }).limit(20);
+        const split_name = name.split(' ');
+        if (split_name.length === 1) {
+            users_list = await User_Model.find({ first_name: { $regex: name, $options: 'i' } }, { password: 0 }).sort({ createdAt: -1 }).limit(20);
+        } else if (split_name.length === 2) {
+            users_list = await User_Model.find({ first_name: { $regex: split_name[0], $options: 'i' }, last_name: { $regex: split_name[1], $options: 'i' } }, { password: 0 }).sort({ createdAt: -1 }).limit(20);
+        }
         users = await Promise.all(users_list.map(async (user) => {
             const has_program = await has_custom_program(user._id);
             return {
@@ -86,8 +92,8 @@ const edit_user = async (req, res) => {
                 throw Error('Weight must only contain numbers');
 
             // Check if the vegan is valid
-            if (vegan && !validator.isBoolean(vegan))
-                throw Error('Vegan must be a boolean');
+            if (vegan && vegan !== 'yes' && vegan !== 'no')
+                throw Error('Vegan must be a yes or no value');
 
             // Check if the allergy is valid
             if (allergy && !/^[a-zA-Z\s]*$/.test(allergy))
