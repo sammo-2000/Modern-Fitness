@@ -5,7 +5,8 @@ import { capitalizeFirstLetter } from "@/app/utils/capitalize";
 
 import { cookies } from "next/headers";
 
-import AddNote from "@/app/components/AddNote";
+// import AddNote from "@/app/components/AddNote";
+import Note from "./note";
 import GetPrograms from "@/app/components/GetProgram";
 
 interface Params {
@@ -60,7 +61,8 @@ export default async function MemberDetails({ params }: { params: Params }) {
           <strong>Role:</strong> {capitalizeFirstLetter(member.role)}
         </p>
       </div>
-      <AddNote />
+      <Note note={member.note} id={member._id} />
+      {/* <AddNote myNote={member.note} /> */}
       <Link
         href={`${params.id}/workout`}
         className="mt-6 self-end rounded-xl px-4 py-2 text-sm font-bold text-blue-500 underline"
