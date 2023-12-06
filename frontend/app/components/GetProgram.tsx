@@ -9,7 +9,7 @@ import type { Program } from "../types/program";
 
 export const GetPrograms = ({ MemberId }: { MemberId: string }) => {
   // const { MemberId } = useFetchedData();
-  const { programs, dispatch } = useProgramContext(); 
+  const { programs, dispatch } = useProgramContext();
   const token = GetCookie("token") || "";
 
   useEffect(() => {
@@ -56,11 +56,13 @@ export const GetPrograms = ({ MemberId }: { MemberId: string }) => {
   //   </div>
   // );
   return (
-    <div className="">
+    <div className="mx-4">
       {programs &&
         programs.map((program: Program) => (
-          <div key={program._id}>
-            <h1 className="flex items-center justify-center text-2xl font-bold font-sans">{program.date}</h1>
+          <div key={program._id} className="rounded-xl px-2 py-4 shadow">
+            <h1 className="mb-2 flex items-center justify-center font-sans text-2xl font-bold">
+              Program Ending On: {program.date}
+            </h1>
             {program.workout.map((workout: Workout) => (
               <WorkoutStats key={workout.id} workout={workout} />
             ))}

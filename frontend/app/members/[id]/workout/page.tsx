@@ -31,12 +31,11 @@ export const WorkoutPage = ({ params }: any) => {
     };
     fetchPrograms();
   }, []);
-  
+
   console.log(params.id);
   return (
-    <div className="w-full flex-1">
+    <div className="w-full flex-1 p-3">
       <WorkoutForm user_id={MemberId} />
-      
     </div>
   );
 };

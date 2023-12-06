@@ -3,23 +3,27 @@ import { FormEvent, useState } from "react";
 import { Datepicker } from "flowbite-react";
 import { useProgramContext } from "../hooks/useProgramContext";
 import Link from "next/link";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 interface Workout {
   name: string;
   load: string;
   reps: string;
+  sets: string
 }
 
 import GetCookie from "../utils/getCookie";
 const Token = GetCookie("token") || "";
 
 export const WorkoutForm = ({ user_id }: { user_id: any }) => {
-  const router = useRouter();
+  // const router = useRouter();
   const { dispatch } = useProgramContext();
+
+  console.log("user_id", user_id);
 
   const [Name, SetName] = useState("");
   const [Load, SetLoad] = useState("");
   const [Reps, SetReps] = useState("");
+  const [Sets, SetSets] = useState("");
   const [DateTime, SetDate] = useState(new Date());
   const [error, setError] = useState(null);
   const [workoutsList, setWorkoutsList] = useState<Workout[]>([]);
@@ -28,18 +32,21 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
     SetName("");
     SetLoad("");
     SetReps("");
+    SetSets("");
     SetDate(new Date());
   };
   const clearWorkoutForm = () => {
     SetName("");
     SetLoad("");
     SetReps("");
+    SetSets("");
   };
   const addsToList = () => {
     const workout: Workout = {
       name: Name,
       load: Load,
       reps: Reps,
+      sets: Sets,
     };
     setWorkoutsList((prevList) => [...prevList, workout]);
 
@@ -85,132 +92,144 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
         setWorkoutsList([]);
         console.log("Workout has been added: ", responseJSON.program);
         dispatch({ type: "CREATE_PROGRAM", payload: responseJSON.program });
-        
-        router.push("");
+
+        // router.push("");
+        document.location.replace(`/members/${user_id}`);
       }
     }
   };
 
   return (
     // https://v1.tailwindcss.com/components/forms
-    <div className="w-full">
-      <div className="flex items-center justify-center bg-white text-xl">
-        <div
-          className="color: #333; text-decoration: none; container mx-auto flex max-w-screen-xl items-center justify-between
-  p-10 px-20"
-        >
-          <header className="flex items-center justify-center text-5xl font-bold text-blue-700">
-            {" "}
-            Tailored Programs
-          </header>
-        </div>
-      </div>
+    <>
+      <h1 className="text-3xl font-bold">Create Program</h1>
       <form
         onSubmit={SubmitWorkoutForm}
-        className="Create bg-grey mb-4 rounded px-8 pb-8 pt-6 shadow-md"
+        className="Create bg-grey mb-4 rounded px-8 pb-8 pt-6 shadow"
       >
         <div className="mb-4">
-          <label className="mb-2 block text-xl font-bold text-gray-700 ">
+          <label
+            htmlFor="name"
+            className="mb-2 block text-xl font-semibold text-gray-700"
+          >
             Type of Exercise
           </label>
           <input
-            className="focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none  md:w-1/2"
+            className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none"
             type="text"
             onChange={(e) => SetName(e.target.value)}
             value={Name}
             placeholder="Enter Workout Name"
-          ></input>
+            id="name"
+            name="name"
+          />
         </div>
-        <div className="mb-6">
-          <label className="mb-2 block text-xl font-bold text-gray-700">
+        <div className="mb-4">
+          <label
+            htmlFor="load"
+            className="mb-2 block text-xl font-bold text-gray-700"
+          >
             Load (in kg)
           </label>
           <input
-            className="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-900 shadow focus:outline-none  md:w-1/2"
+            className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none"
             type="number"
             onChange={(e) => SetLoad(e.target.value)}
             value={Load}
             placeholder="Enter the weight"
-          ></input>
+            id="load"
+            name="load"
+          />
         </div>
-        <div className="mb-6">
-          <label className="mb-2 block text-xl font-bold text-gray-700">
+        <div className="mb-4">
+          <label
+            htmlFor="reps"
+            className="mb-2 block text-xl font-bold text-gray-700"
+          >
             Reps
           </label>
           <input
-            className="border-black-700 focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-900 shadow focus:outline-none  md:w-1/2"
+            className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none"
             type="number"
             onChange={(e) => SetReps(e.target.value)}
             value={Reps}
-            placeholder="Enter the number of reps "
-          ></input>
+            placeholder="Enter the number of reps"
+            id="reps"
+            name="reps"
+          />
         </div>
-        <div className="relative max-w-sm">
-          <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
-            <svg
-              className="h-4 w-4 text-gray-500 dark:text-gray-400"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-            </svg>
-          </div>
+        <div className="mb-4">
+          <label
+            htmlFor="sets"
+            className="mb-2 block text-xl font-bold text-gray-700"
+          >
+            Sets
+          </label>
+          <input
+            className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none"
+            type="number"
+            onChange={(e) => SetSets(e.target.value)}
+            value={Sets}
+            placeholder="Enter the number of sets"
+            id="sets"
+            name="sets"
+          />
+        </div>
+        <div className="mb-4">
+          <label
+            htmlFor="date"
+            className="mb-2 block text-xl font-bold text-gray-700"
+          >
+            Select End Date
+          </label>
           <Datepicker
             onSelectedDateChanged={(date) => {
               console.log(date);
               SetDate(date);
             }}
             autoHide={true}
-            className=" block w-full rounded-lg border border-gray-300 p-2.5 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+            className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none"
             placeholder="Select End date"
-          ></Datepicker>
-        </div>
-        <div className="mb-6 flex items-center">
-          <textarea
-            className="focus:shadow-outline mb-3 w-1/3 resize-none rounded border px-3 py-2 leading-tight text-gray-900 focus:outline-none sm:w-1/2"
-            rows={10}
+            id="date"
+            name="date"
           />
         </div>
+        <div className="mb-4 flex flex-col justify-between sm:flex-row">
+          <button
+            className="mb-2 mt-6 rounded-xl border border-blue-500 bg-white px-4 py-2 text-sm font-bold text-blue-500 hover:bg-gray-100"
+            type="button"
+            onClick={addsToList}
+          >
+            Add Workout
+          </button>
+          <button
+            className="mb-2 mt-6 rounded-xl bg-blue-500 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700"
+            type="submit"
+          >
+            Save Program
+          </button>
+        </div>
+        {error && <div className="text-red-600">{error}</div>}
         {/* https://www.creative-tim.com/learning-lab/tailwind-starter-kit/documentation/css/buttons/small/filled */}
         {workoutsList.map((workout, index) => (
-          <li key={index} className="mb-2">
-            {`${workout.name} - ${workout.load}kg - ${workout.reps} reps `}
+          <li
+            key={index}
+            className="mb-2 flex list-none justify-between rounded px-4 py-2 shadow"
+          >
+            <h2 className="self-start text-lg font-semibold">
+              {`${workout.name} - ${workout.load}kg - ${workout.reps} reps }${workout.sets} sets `}
+            </h2>
             <button
               type="button"
-              className="mb-1 ml-2 mr-1 rounded bg-red-500 px-4 py-2 text-xs font-bold uppercase text-white shadow outline-none transition-all duration-150 ease-linear hover:shadow-md focus:outline-none active:bg-red-600 "
+              className="self-end rounded-xl bg-red-500 px-4 py-2 text-sm font-bold text-white hover:bg-red-700"
               onClick={(event) => deleteWorkout(index, event)}
             >
               Remove
             </button>
           </li>
         ))}
-        <div className="flex items-center justify-between">
-          {/* Button css from: https://flowbite.com/docs/components/buttons/ */}
-          <button
-            className="mb-2 me-2 rounded-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gradient-to-br focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800"
-            type="button"
-            onClick={addsToList}
-          >
-            Add
-          </button>
-        </div>
-        <div className="flex items-center justify-between">
-          {/* Button css from: https://flowbite.com/docs/components/buttons/ */}
-          
-          <button
-            className="mb-2 me-2 rounded-lg bg-gradient-to-r from-green-400 via-green-500 to-green-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gradient-to-br focus:outline-none focus:ring-4 focus:ring-green-300 dark:focus:ring-green-800"
-            type="submit" 
-           
-
-          >
-            Save
-          </button>
-          {error && <div className="dark:text-red-600">{error}</div>}
-        </div>
       </form>
-    </div>
+    </>
   );
 };
 export default WorkoutForm;
