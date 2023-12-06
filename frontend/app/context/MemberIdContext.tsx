@@ -12,6 +12,8 @@ import React, {
 interface FetchedDataContextType {
   MemberId: string;
   setMemberId: Dispatch<SetStateAction<string>>;
+  MemberInfo: string;
+  setMemberInfo: Dispatch<SetStateAction<string>>;
   handleViewMember: (id: string) => void;
 }
 
@@ -33,6 +35,7 @@ interface FetchedDataProviderProps {
 
 export function FetchDataProvider({ children }: FetchedDataProviderProps) {
   const [MemberId, setMemberId] = useState<string>("");
+  const [MemberInfo, setMemberInfo] = useState<string>("");
   // Function to handle setting MemberId
   const handleViewMember = (id: string) => {
     setMemberId(id);
@@ -45,6 +48,8 @@ export function FetchDataProvider({ children }: FetchedDataProviderProps) {
         MemberId,
         setMemberId,
         handleViewMember,
+        MemberInfo,
+        setMemberInfo,
       }}
     >
       {children}

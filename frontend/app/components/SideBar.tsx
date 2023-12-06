@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import options from "@/app/api/auth/[...nextauth]/Options";
+import { BsPeopleFill } from "react-icons/bs";
 import { getServerSession } from "next-auth";
 import { CgGym } from "react-icons/cg";
 import { GiProgression } from "react-icons/gi";
@@ -8,8 +8,9 @@ import { AiFillHome } from "react-icons/ai";
 import { BsPersonFill } from "react-icons/bs";
 import { RxHamburgerMenu } from "react-icons/rx";
 import Image from "next/image";
+import { GoSearch } from "react-icons/go";
 import mainImg from "public/main-gym-img.jpg";
-import { GetServerSidePropsContext } from "next";
+import { cookies } from "next/headers";
 import SidebarLink from "./SidebarLink";
 interface SessionType {
   user: {
@@ -24,7 +25,9 @@ interface SideBarProps {
 
 export default async function SideBar() {
   const session = await getServerSession();
-
+  const cookieStore = cookies();
+  const role = cookieStore.get("role");
+  console.log(role?.value);
   return (
     <>
       <div
@@ -51,6 +54,7 @@ export default async function SideBar() {
             >
               <AiFillHome className=" ml-2 h-auto w-5 " /> Home
             </SidebarLink>
+
             {session ? (
               <>
                 <SidebarLink
@@ -85,6 +89,28 @@ export default async function SideBar() {
                   <AiFillHome className=" ml-2 h-auto w-5" />
                   New Routine
                 </SidebarLink>
+                {role?.value == "trainer" && (
+                  <div>
+                    <SidebarLink
+                      href="/members"
+                      className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                    >
+                      <GoSearch className=" ml-2 h-auto w-5" />
+                      Search Member
+                    </SidebarLink>
+                  </div>
+                )}
+                {role?.value == "manager" && (
+                  <div>
+                    <SidebarLink
+                      href="/createTrainer"
+                      className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                    >
+                      <BsPeopleFill className=" ml-2 h-auto w-5" />
+                      Create Trainer
+                    </SidebarLink>
+                  </div>
+                )}
                 <SidebarLink
                   href="/api/auth/signout?callbackUrl=/"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "

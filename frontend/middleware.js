@@ -1,14 +1,22 @@
 import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
-
+import { cookies } from "next/headers";
 export default withAuth(
   function middleware(req) {
+    const cookieStore = cookies();
+    const role = cookieStore.get("role");
     console.log(req.nextUrl.pathname);
     console.log(req.nextauth.token.role);
 
     if (
       req.nextUrl.pathname.startsWith("/members") &&
-      req.nextauth.token.role != "trainer"
+      role.value != "trainer"
+    ) {
+      return NextResponse.rewrite(new URL("/Denied", req.url));
+    }
+    if (
+      req.nextUrl.pathname.startsWith("/createTrainer") &&
+      role.value != "manager"
     ) {
       return NextResponse.rewrite(new URL("/Denied", req.url));
     }
@@ -20,4 +28,4 @@ export default withAuth(
   },
 );
 
-export const config = { matcher: ["/members"] };
+export const config = { matcher: ["/members", "/createTrainer"] };

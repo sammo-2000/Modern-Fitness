@@ -2,15 +2,13 @@ import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { cookies } from "next/headers";
-//import User from "../../../../../backend/models/User_Model";
+
 const options = {
   providers: [
     GitHubProvider({
       profile(profile) {
         console.log("github profile", profile);
-        //i'm going to fetch all the email in the database where their role == "trainer"
-        //will apply the same approciate to other types of users
-        //if the email the user log in with is not present in the database the user role will be marked as "guest user"
+
         let userRole = "GitHub User";
         if (profile?.email == "c1032994@hallam.shu.ac.uk") {
           userRole = "trainer";
@@ -26,11 +24,21 @@ const options = {
     // Google provider
     GoogleProvider({
       async profile(profile) {
+        const cookieStore = cookies();
+        const token = cookieStore.get("token");
+
         try {
           const res = await fetch(
             `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/users`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                authorization: token.value,
+              },
+            },
           );
           const members = await res.json();
+          console.log(members.token);
           const memberList = members.users.filter(
             (user) => user.role === "member",
           );
@@ -65,7 +73,10 @@ const options = {
         } catch (error) {
           console.error(error);
 
-          return profile;
+          return {
+            ...profile,
+            id: profile.sub,
+          };
         }
       },
       clientId: process.env.GOOGLE_ID,
@@ -86,9 +97,8 @@ const options = {
           placeholder: "your-password",
         },
       },
-      async authorize(credentials) {
+      async authorize(credentials, req) {
         try {
-          console.log("--------------------------------------")
           const User_identifier = credentials.email;
           const password = credentials.password;
           const response = await fetch(
@@ -98,7 +108,7 @@ const options = {
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ User_identifier, password })
+              body: JSON.stringify({ User_identifier, password }),
             },
           );
 
@@ -108,9 +118,12 @@ const options = {
 
           data.user.password = "";
 
-          console.log(data.token);
-          cookies().set("token", data.token, { expires: Date.now() + 60 * 60 * 24 * 7 * 1000 });
-          cookies().set("role", data.user.role, { expires: Date.now() + 60 * 60 * 24 * 7 * 1000 });
+          cookies().set("token", data.token, {
+            expires: Date.now() + 60 * 60 * 24 * 7 * 1000,
+          });
+          cookies().set("role", data.user.role, {
+            expires: Date.now() + 60 * 60 * 24 * 7 * 1000,
+          });
 
           return data.user;
         } catch (error) {

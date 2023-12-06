@@ -1,48 +1,125 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import PhotoUpload from "../components/PhotoUpload";
+import { calculateAge } from "../utils/age";
+import GetCookie from "../utils/getCookie";
+const Token = GetCookie("token") || "";
 
 export default function Account() {
-  const [SignUpForm, setSignUpForm] = useState({
-    FirstName: "Davis",
-    LastName: "Moore",
-    Email: "Davismoore@yahoo.com",
-    Location: "Sheffield, UK",
-    Age: "21",
-  });
+  const [first_name, setFirstName] = useState<string>("");
+  const [last_name, setLastName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [gender, setGender] = useState<string>("");
+  const [age, setAge] = useState<string>("");
+  const [accessCode, setAccessCode] = useState<string>("");
+
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    const getInfo = async () => {
+      try {
+        if (session?.user) {
+          const res = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/user`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                authorization: Token,
+              },
+            },
+          );
+          if (!res.ok) {
+            throw new Error("Failed to fetch members");
+          }
+          const fetchedMembers = await res.json();
+          console.log(fetchedMembers);
+          setFirstName(fetchedMembers.user.first_name);
+          setLastName(fetchedMembers.user.last_name);
+          setAccessCode(fetchedMembers.user.access_code);
+          setEmail(fetchedMembers.user.email);
+          setGender(fetchedMembers.user.gender);
+          setAge(fetchedMembers.user.dob);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getInfo();
+  }, [session]);
 
   function handleChange(event: any) {
-    const { name, value, type, checked } = event.target;
-    setSignUpForm((prevForm) => ({
-      ...prevForm,
-      [name]: type === "checkbox" ? checked : value,
-    }));
+    const { name, value } = event.target;
+
+    switch (name) {
+      case "firstname":
+        setFirstName(value);
+        break;
+      case "lastname":
+        setLastName(value);
+        break;
+      case "email":
+        setEmail(value);
+        break;
+
+      case "dob":
+        setAge(value);
+        break;
+      case "gender":
+        setGender(value);
+        break;
+    }
   }
 
-  function handleSubmission(event: any) {
+  const handleSubmission = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Handle form submission here
-  }
+    try {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/user/`,
+          {
+            method: "PATCH",
+            body: JSON.stringify({ first_name, last_name, email, gender }),
+            headers: {
+              "Content-Type": "application/json",
+              authorization: Token,
+            },
+          },
+        );
+        if (res.ok) {
+          // Content successfully updated
 
-  const SignUpData = [
-    "Sheffield, UK",
-    "Sanpalo, Brazil",
-    "London, UK",
-    "Maryland, USA",
-  ];
+          console.log("update Successful");
+        } else {
+          // Handle errors if needed
 
-  let options = SignUpData.map((data) => {
-    return <option value={data}>{data}</option>;
+          console.error("update Failed");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const getGender = ["Male", "Female", "Non-binary", "Others"];
+
+  let options = getGender.map((gender) => {
+    return <option value={gender}>{gender}</option>;
   });
 
   return (
     <div className="w-full flex-1 p-3">
       <h1 className="mb-3 text-3xl font-semibold">Account</h1>
+
       <div className="flex flex-wrap items-center justify-center gap-4">
         <PhotoUpload
-          FirstName={SignUpForm.FirstName}
-          LastName={SignUpForm.LastName}
-          Location={SignUpForm.Location}
+          FirstName={first_name}
+          LastName={last_name}
+          Location={gender}
         />
 
         <form
@@ -70,8 +147,8 @@ export default function Account() {
                 id="FirstName"
                 type="text"
                 onChange={handleChange}
-                name="FirstName"
-                value={SignUpForm.FirstName}
+                name="firstname"
+                value={first_name}
                 required
               />
             </div>
@@ -79,7 +156,7 @@ export default function Account() {
               <div className="mb-1 text-end">
                 <label
                   className="block text-xs font-bold text-gray-400"
-                  htmlFor="LastName"
+                  htmlFor="lastname"
                 >
                   Last name*
                 </label>
@@ -89,8 +166,8 @@ export default function Account() {
                 id="LastName"
                 type="text"
                 onChange={handleChange}
-                name="LastName"
-                value={SignUpForm.LastName}
+                name="lastname"
+                value={last_name}
                 required
               />
             </div>
@@ -108,8 +185,8 @@ export default function Account() {
                 id="email"
                 type="email"
                 onChange={handleChange}
-                name="Email"
-                value={SignUpForm.Email}
+                name="email"
+                value={email}
                 required
               />
             </div>
@@ -123,7 +200,7 @@ export default function Account() {
                 </label>
               </div>
               <p className="h-14 w-full appearance-none rounded-lg border px-3 pt-5 font-medium leading-tight text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                3456432
+                {accessCode}
               </p>
             </div>
             <div>
@@ -138,8 +215,8 @@ export default function Account() {
               <input
                 className="h-14 w-full appearance-none rounded-lg border px-3 py-2 font-medium leading-tight text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 type="number"
-                name="Age"
-                value={SignUpForm.Age}
+                name="age"
+                value={calculateAge(age)}
                 onChange={handleChange}
               />
             </div>
@@ -149,17 +226,17 @@ export default function Account() {
                   className="block text-xs font-bold text-gray-400"
                   htmlFor="Location"
                 >
-                  Location
+                  Gender
                 </label>
               </div>
               <select
                 className="h-14 w-full rounded-lg border px-3 py-2 font-medium text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 id="Location"
                 onChange={handleChange}
-                value={SignUpForm.Location}
-                name="Location"
+                value={gender}
+                name="gender"
               >
-                <option value="">---Select Location---</option>
+                <option value="">{gender}</option>
                 {options}
               </select>
             </div>

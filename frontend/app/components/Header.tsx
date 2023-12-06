@@ -1,5 +1,5 @@
 import React from "react";
-import { GoSearch } from "react-icons/go";
+
 import { IoNotificationsSharp } from "react-icons/io5";
 import { BsPeopleFill } from "react-icons/bs";
 import Image from "next/image";
@@ -12,13 +12,12 @@ export default function Header() {
     <header className="sticky top-0 z-10 flex items-center justify-between bg-white px-4 py-3 text-gray-700 shadow">
       <div className="flex items-center gap-6">
         <Hamburger />
-        <Link href="/members">
-          <GoSearch className="h-5 w-5" />
-        </Link>
+        <div className="  ml-4 flex justify-center rounded-full bg-gray-200 px-2 py-2">
+          <BsPeopleFill className=" h-5 w-5 text-blue-700" />
+        </div>
       </div>
 
-      <div className="flex items-center gap-6">
-        <BsPeopleFill className="h-5 w-5 " />
+      <div className="flex items-center gap-8">
         <IoNotificationsSharp className="h-5 w-5 " />
         <Image
           src={picture}
