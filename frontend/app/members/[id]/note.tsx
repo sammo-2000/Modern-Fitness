@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Cookie from "../../utils/getCookie";
+import Notify from "../../components/Notify";
 
 const Note = ({ note, id }: { note: string; id: string }) => {
   const [myNote, setMyNote] = useState(note || "");
@@ -53,12 +54,8 @@ const Note = ({ note, id }: { note: string; id: string }) => {
         >
           {note}
         </textarea>
-        {message ? (
-          <p className="rounded bg-green-100 p-2 text-green-500">{message}</p>
-        ) : null}
-        {error ? (
-          <p className="rounded bg-red-100 p-2 text-red-500">{error}</p>
-        ) : null}
+        {message ? <Notify message={message} type="success" /> : null}
+        {error ? <Notify message={error} /> : null}
         <button
           type="submit"
           className="ml-auto w-fit rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"

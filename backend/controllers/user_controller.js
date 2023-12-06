@@ -86,8 +86,8 @@ const edit_user = async (req, res) => {
                 throw Error('Weight must only contain numbers');
 
             // Check if the vegan is valid
-            if (vegan && !validator.isBoolean(vegan))
-                throw Error('Vegan must be a boolean');
+            if (vegan && vegan !== 'yes' && vegan !== 'no')
+                throw Error('Vegan must be a yes or no value');
 
             // Check if the allergy is valid
             if (allergy && !/^[a-zA-Z\s]*$/.test(allergy))
