@@ -24,15 +24,22 @@ const displayProgram = () => {
     fetchProgram();
   }, []);
 
-  return programs.length > 0 ? (
-    <DisplayPrograms programs={programs} />
-  ) : (
-    <NotFound />
-  );
+  if (programs && programs.length !== 0)
+    return <DisplayPrograms programs={programs} />;
+  else return <NotFound />;
 };
 
 const NotFound = () => {
-  return <h1>Sorry, no custom program found</h1>;
+  return (
+    <>
+      <h1 className="mb-4 text-2xl uppercase text-gray-400">
+        Sorry, no custom program found
+      </h1>
+      <p className="uppercase text-gray-400">
+        Please wait until one of our trainer create one for you
+      </p>
+    </>
+  );
 };
 
 const DisplayPrograms = ({ programs }: { programs: any[] }) => {
@@ -49,7 +56,9 @@ const DisplaySingleProgram = ({ program }: { program: any }) => {
   return (
     <>
       <div className="m-4 flex flex-col gap-5 border-t-4 p-2">
-        <p className=" mb-2 flex items-center justify-center text-2xl font-sans  font-bold">Program Ending On: {program.date}</p>
+        <p className=" mb-2 flex items-center justify-center font-sans text-2xl  font-bold">
+          Program Ending On: {program.date}
+        </p>
         <div className="flex flex-wrap gap-5">
           {program.workout.map((workout: any) => {
             return <DisplayWorkout workout={workout} />;
@@ -72,6 +81,9 @@ const DisplayWorkout = ({ workout }: { workout: any }) => {
         </p>
         <p>
           <strong>Reps:</strong> {workout.reps}
+        </p>
+        <p>
+          <strong>Sets:</strong> {workout.sets}
         </p>
       </div>
     </>
