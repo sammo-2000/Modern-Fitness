@@ -8,7 +8,7 @@ interface Workout {
   name: string;
   load: string;
   reps: string;
-  sets: string
+  sets: string;
 }
 
 import GetCookie from "../utils/getCookie";
@@ -217,7 +217,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
             className="mb-2 flex list-none justify-between rounded px-4 py-2 shadow"
           >
             <h2 className="self-start text-lg font-semibold">
-              {`${workout.name} - ${workout.load}kg - ${workout.reps} reps }${workout.sets} sets `}
+              {`${workout.name} - ${workout.load}kg - ${workout.reps} reps ${workout.sets} sets `}
             </h2>
             <button
               type="button"
