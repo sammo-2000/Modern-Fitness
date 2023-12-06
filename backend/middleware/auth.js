@@ -11,9 +11,10 @@ const logged_on = async (req, res, next) => {
     // const token = authorization.split(' ')[1];
     const token = authorization;
 
-    // const token = Users_Type();
     const { id } = jwt.verify(token, process.env.SECRET_TOKEN);
     req._user = await User_Model.findById(id).select("_id role");
+    console.log(req._user._id)
+    console.log(req._user.role)
     next();
   } catch (error) {
     return res.status(401).json({ success: false, error: error.message });

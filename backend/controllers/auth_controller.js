@@ -42,6 +42,7 @@ const login = async (req, res) => {
 }
 
 const signup = async (req, res) => {
+    const { trainer } = req.params;
     const { email, password, first_name, last_name, gender, dob } = req.body;
     try {
         // Check if email is provided
@@ -102,14 +103,15 @@ const signup = async (req, res) => {
         const hash = await bcrypt.hash(password, salt);
 
 
-        // Create user
-        let user = null;
-        if (req._user.role === 'manager')
-            // Manager create trainer
-            user = await User_Model.create({ email, password: hash, first_name, last_name, gender, dob, role: "trainer" });
-        else
-            // User signup
-            user = await User_Model.create({ email, password: hash, first_name, last_name, gender, dob });
+        const user = await User_Model.create({ email, password: hash, first_name, last_name, gender, dob });
+        // // Create user
+        // let user = null;
+        // if (trainer)
+        //     // Manager create trainer
+        //     user = await User_Model.create({ email, password: hash, first_name, last_name, gender, dob, role: "trainer" });
+        // else
+        //     // User signup
+        //     user = await User_Model.create({ email, password: hash, first_name, last_name, gender, dob });
 
 
         // Create token
