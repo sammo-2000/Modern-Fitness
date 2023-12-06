@@ -101,8 +101,16 @@ const signup = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hash = await bcrypt.hash(password, salt);
 
+
         // Create user
-        const user = await User_Model.create({ email, password: hash, first_name, last_name, gender, dob });
+        let user = null;
+        if (req._user.role === 'manager')
+            // Manager create trainer
+            user = await User_Model.create({ email, password: hash, first_name, last_name, gender, dob, role: "trainer" });
+        else
+            // User signup
+            user = await User_Model.create({ email, password: hash, first_name, last_name, gender, dob });
+
 
         // Create token
         const token = createToken(user._id);
