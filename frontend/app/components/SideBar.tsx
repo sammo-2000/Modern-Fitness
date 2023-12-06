@@ -89,17 +89,9 @@ export default async function SideBar() {
                   <AiFillHome className=" ml-2 h-auto w-5" />
                   New Routine
                 </SidebarLink>
-                {role?.value == "trainer" && (
-                  <div>
-                    <SidebarLink
-                      href="/members"
-                      className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                    >
-                      <GoSearch className=" ml-2 h-auto w-5" />
-                      Search Member
-                    </SidebarLink>
-                  </div>
-                )}
+                {role?.value == "trainer" && ShowSearch()}
+                {role?.value == "manager" && ShowSearch()}
+
                 {role?.value == "manager" && (
                   <div>
                     <SidebarLink
@@ -173,3 +165,17 @@ export default async function SideBar() {
 //   const sidebar = document.getElementById("sidebar");
 //   sidebar?.classList.add("-translate-x-[100%]");
 // };
+
+const ShowSearch = () => {
+  return (
+    <div>
+      <SidebarLink
+        href="/members"
+        className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+      >
+        <GoSearch className=" ml-2 h-auto w-5" />
+        Search Member
+      </SidebarLink>
+    </div>
+  );
+};

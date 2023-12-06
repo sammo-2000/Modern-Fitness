@@ -10,10 +10,12 @@ export default withAuth(
 
     if (
       req.nextUrl.pathname.startsWith("/members") &&
-      role.value != "trainer"
+      role.value != "trainer" &&
+      role.value != "manager"
     ) {
       return NextResponse.rewrite(new URL("/Denied", req.url));
     }
+
     if (
       req.nextUrl.pathname.startsWith("/createTrainer") &&
       role.value != "manager"

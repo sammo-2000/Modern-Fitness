@@ -28,10 +28,10 @@ export default function CreateTrainer() {
       if (!gender) return setError("Please select gender");
       if (!checked)
         return setError("Please check the box of agreement to continue");
-      const role = "trainer";
+
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/auth/signup`,
+          `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/auth/signup/trainer`,
           {
             method: "POST",
             headers: {
@@ -44,7 +44,6 @@ export default function CreateTrainer() {
               password,
               gender,
               dob,
-              role,
             }),
           },
         );
