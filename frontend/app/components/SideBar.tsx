@@ -9,7 +9,12 @@ import { BsPersonFill } from "react-icons/bs";
 import { RxHamburgerMenu } from "react-icons/rx";
 import Image from "next/image";
 import { GoSearch } from "react-icons/go";
+import { MdOutlineSelfImprovement } from "react-icons/md";
+import { CiLogin } from "react-icons/ci";
+import { FaRegRegistered } from "react-icons/fa6";
+import { CiLogout } from "react-icons/ci";
 import mainImg from "public/main-gym-img.jpg";
+import { LiaUserPlusSolid } from "react-icons/lia";
 import { cookies } from "next/headers";
 import SidebarLink from "./SidebarLink";
 interface SessionType {
@@ -83,7 +88,7 @@ export default async function SideBar() {
                   href="/my-programs"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
                 >
-                  <AiFillHome className=" ml-2 h-auto w-5" />
+                  <MdOutlineSelfImprovement className=" ml-2 h-auto w-5" />
                   My Programs
                 </SidebarLink>
                 {role?.value == "trainer" && ShowSearch()}
@@ -95,7 +100,8 @@ export default async function SideBar() {
                       href="/createTrainer"
                       className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
                     >
-                      <BsPeopleFill className=" ml-2 h-auto w-5" />
+                      <BsPeopleFill />
+                      <LiaUserPlusSolid className=" ml-2 h-auto w-5" />
                       Create Trainer
                     </SidebarLink>
                   </div>
@@ -104,7 +110,7 @@ export default async function SideBar() {
                   href="/api/auth/signout?callbackUrl=/"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
                 >
-                  <AiFillHome className=" ml-2 h-auto w-5" />
+                  <CiLogout className=" ml-2 h-auto w-5" />
                   Sign Out
                 </SidebarLink>
               </>
@@ -114,14 +120,14 @@ export default async function SideBar() {
                   href="registration"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
                 >
-                  <AiFillHome className=" ml-2 h-auto w-5" />
+                  <FaRegRegistered className=" ml-2 h-auto w-5" />
                   Register
                 </SidebarLink>
                 <SidebarLink
                   href="/api/auth/signin"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
                 >
-                  <AiFillHome className=" ml-2 h-auto w-5" />
+                  <CiLogin className=" ml-2 h-auto w-5" />
                   Login
                 </SidebarLink>
               </>
