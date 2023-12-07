@@ -8,6 +8,7 @@ import GetCookie from "../utils/getCookie";
 const Token = GetCookie("token") || "";
 
 export default function Account() {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [first_name, setFirstName] = useState<string>("");
   const [last_name, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -58,6 +59,7 @@ export default function Account() {
           setWeight(fetchedMembers.user.weight);
           setAllergy(fetchedMembers.user.allergy);
           setVegan(fetchedMembers.user.vegan);
+          setIsLoading(false);
         }
       } catch (error) {
         console.error(error);
@@ -122,131 +124,133 @@ export default function Account() {
     }
   };
 
-  return (
-    <div className="w-full flex-1 p-3">
-      <h1 className="mb-3 text-3xl font-semibold">Account</h1>
+  if (isLoading) return <div>Loading...</div>;
+  else
+    return (
+      <div className="w-full flex-1 p-3">
+        <h1 className="mb-3 text-3xl font-semibold">Account</h1>
 
-      <div className="flex flex-wrap items-center justify-center gap-4">
-        <PhotoUpload
-          FirstName={first_name}
-          LastName={last_name}
-          Location={gender}
-        />
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          <PhotoUpload
+            FirstName={first_name}
+            LastName={last_name}
+            Location={gender}
+          />
 
-        <form
-          onSubmit={handleSubmission}
-          autoComplete="off"
-          noValidate
-          className="mb-4 grow bg-white px-8 pb-8 pt-6"
-        >
-          <h1 className="mb-1 mt-10 text-xl font-bold">Profile</h1>
-          <p className="mb-4 text-xs font-semibold text-gray-500">
-            The information can be edited
-          </p>
-          <div className="mb-12 grid grid-cols-1 gap-5 sm:grid-cols-2">
-            <InputField
-              type="text"
-              label="First Name"
-              name="first_name"
-              value={first_name}
-            />
-            <InputField
-              type="text"
-              label="Last Name"
-              name="last_name"
-              value={last_name}
-            />
-            <InputField
-              type="email"
-              label="Email"
-              name="email"
-              value={email}
-              edit={true}
-              handleChange={handleChange}
-            />
-            <InputField
-              type="text"
-              label="Access Code"
-              name="access_code"
-              value={accessCode}
-            />
-            <InputField
-              type="text"
-              label="Age"
-              name="age"
-              value={age}
-              isAge={true}
-            />
-            <InputField
-              type="text"
-              label="gender"
-              name="gender"
-              value={gender}
-            />
-            <InputField
-              type="text"
-              label="status"
-              name="status"
-              value={status}
-            />
-            <InputField type="text" label="role" name="role" value={role} />
-            <InputField
-              type="number"
-              label="height"
-              name="height"
-              value={height}
-              edit={true}
-              handleChange={handleChange}
-            />
-            <InputField
-              type="number"
-              label="weight"
-              name="weight"
-              value={weight}
-              edit={true}
-              handleChange={handleChange}
-            />
-            <InputField
-              type="text"
-              label="vegan"
-              name="vegan"
-              value={vegan}
-              edit={true}
-              handleChange={handleChange}
-            />
-            <InputField
-              type="text"
-              label="goal"
-              name="goal"
-              value={goal}
-              edit={true}
-              handleChange={handleChange}
-              textarea={true}
-            />
-            <InputField
-              type="text"
-              label="allergy"
-              name="allergy"
-              value={allergy}
-              edit={true}
-              handleChange={handleChange}
-              textarea={true}
-            />
-          </div>
-          {error ? <Notify message={error} /> : null}
-          {success ? <Notify message={success} type="success" /> : null}
-          <div className="flex justify-end">
-            <button
-              type="submit"
-              className="mt-5 rounded-lg bg-blue-500 px-3 py-2 font-bold text-white hover:bg-blue-700"
-            >
-              Save details
-            </button>
-          </div>
-        </form>
+          <form
+            onSubmit={handleSubmission}
+            autoComplete="off"
+            noValidate
+            className="mb-4 grow bg-white px-8 pb-8 pt-6"
+          >
+            <h1 className="mb-1 mt-10 text-xl font-bold">Profile</h1>
+            <p className="mb-4 text-xs font-semibold text-gray-500">
+              The information can be edited
+            </p>
+            <div className="mb-12 grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <InputField
+                type="text"
+                label="First Name"
+                name="first_name"
+                value={first_name}
+              />
+              <InputField
+                type="text"
+                label="Last Name"
+                name="last_name"
+                value={last_name}
+              />
+              <InputField
+                type="email"
+                label="Email"
+                name="email"
+                value={email}
+                edit={true}
+                handleChange={handleChange}
+              />
+              <InputField
+                type="text"
+                label="Access Code"
+                name="access_code"
+                value={accessCode}
+              />
+              <InputField
+                type="text"
+                label="Age"
+                name="age"
+                value={age}
+                isAge={true}
+              />
+              <InputField
+                type="text"
+                label="gender"
+                name="gender"
+                value={gender}
+              />
+              <InputField
+                type="text"
+                label="status"
+                name="status"
+                value={status}
+              />
+              <InputField type="text" label="role" name="role" value={role} />
+              <InputField
+                type="number"
+                label="height"
+                name="height"
+                value={height}
+                edit={true}
+                handleChange={handleChange}
+              />
+              <InputField
+                type="number"
+                label="weight"
+                name="weight"
+                value={weight}
+                edit={true}
+                handleChange={handleChange}
+              />
+              <InputField
+                type="text"
+                label="vegan"
+                name="vegan"
+                value={vegan}
+                edit={true}
+                handleChange={handleChange}
+              />
+              <InputField
+                type="text"
+                label="goal"
+                name="goal"
+                value={goal}
+                edit={true}
+                handleChange={handleChange}
+                textarea={true}
+              />
+              <InputField
+                type="text"
+                label="allergy"
+                name="allergy"
+                value={allergy}
+                edit={true}
+                handleChange={handleChange}
+                textarea={true}
+              />
+            </div>
+            {error ? <Notify message={error} /> : null}
+            {success ? <Notify message={success} type="success" /> : null}
+            <div className="flex justify-end">
+              <button
+                type="submit"
+                className="mt-5 rounded-lg bg-blue-500 px-3 py-2 font-bold text-white hover:bg-blue-700"
+              >
+                Save details
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
-  );
+    );
 }
 
 const InputField = ({
@@ -277,8 +281,9 @@ const InputField = ({
       </div>
       {textarea ? (
         <textarea
-          className="min-h-14 w-full appearance-none rounded-lg border px-3 py-2 font-medium leading-tight text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:cursor-not-allowed disabled:bg-gray-100"
+          className="min-h-14 w-full appearance-none rounded-lg border px-3 py-2 font-medium leading-tight text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:cursor-not-allowed disabled:bg-gray-300"
           name={name}
+          id={name}
           value={isAge ? calculateAge(value) : value}
           onChange={handleChange}
           disabled={!edit}
@@ -288,6 +293,7 @@ const InputField = ({
           className="h-14 w-full appearance-none rounded-lg border px-3 py-2 font-medium leading-tight text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:cursor-not-allowed disabled:bg-gray-100"
           type={type}
           name={name}
+          id={name}
           value={isAge ? calculateAge(value) : value}
           onChange={handleChange}
           disabled={!edit}

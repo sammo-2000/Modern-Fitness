@@ -5,96 +5,18 @@ import { cookies } from "next/headers";
 
 const options = {
   providers: [
-    GitHubProvider({
-      profile(profile) {
-        console.log("github profile", profile);
-
-        let userRole = "GitHub User";
-        if (profile?.email == "c1032994@hallam.shu.ac.uk") {
-          userRole = "trainer";
-        }
-        return {
-          ...profile,
-          role: userRole,
-        };
-      },
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_Secret,
-    }),
-    // Google provider
-    GoogleProvider({
-      async profile(profile) {
-        const cookieStore = cookies();
-        const token = cookieStore.get("token");
-
-        try {
-          const res = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/users`,
-            {
-              headers: {
-                "Content-Type": "application/json",
-                authorization: token.value,
-              },
-            },
-          );
-          const members = await res.json();
-          console.log(members.token);
-          const memberList = members.users.filter(
-            (user) => user.role === "member",
-          );
-
-          let userRole = "Google User";
-          let firstName = "";
-          let lastName = "";
-
-          const userWithEmail = memberList.find(
-            (user) => user.email === profile?.email,
-          );
-
-          if (userWithEmail) {
-            userRole = "Member";
-            firstName = userWithEmail.first_name;
-            lastName = userWithEmail.last_name;
-            console.log(`Found user: ${firstName} ${lastName}`);
-          } else if (profile?.email === "sulaimonahmed08@gmail.com") {
-            userRole = "trainer";
-            console.log(userRole);
-          } else {
-            console.log("Unknown User");
-          }
-
-          return {
-            ...profile,
-            id: profile.sub,
-            role: userRole,
-            first_name: firstName,
-            last_name: lastName,
-          };
-        } catch (error) {
-          console.error(error);
-
-          return {
-            ...profile,
-            id: profile.sub,
-          };
-        }
-      },
-      clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_Secret,
-    }),
-
     CredentialsProvider({
       name: "Credentials",
       credentials: {
         email: {
-          label: "email",
+          label: "Email / Access Code",
           type: "text",
-          placeholder: "your-email",
+          placeholder: "email / access code",
         },
         password: {
           label: "password",
           type: "password",
-          placeholder: "your-password",
+          placeholder: "your password",
         },
       },
       async authorize(credentials, req) {
