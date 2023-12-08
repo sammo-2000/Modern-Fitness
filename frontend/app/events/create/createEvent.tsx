@@ -31,6 +31,7 @@ const CreateEvent = () => {
   const [capacity, setCapacity] = useState(null);
   const [date, setDate] = useState(null);
   const [selectedTrainers, setSelectedTrainers] = useState<Trainer[]>([]);
+  const [description, setDescription] = useState(null);
 
   useEffect(() => {
     const getAllTrainers = async () => {
@@ -45,15 +46,13 @@ const CreateEvent = () => {
         },
       );
       const data = await response.json();
-      console.log(data);
       if (!response.ok) {
         return setError(data.error);
       }
       setTrainers(data.trainers);
     };
-
     getAllTrainers();
-  }, []);
+  }, [Token]);
 
   const AddTrainer = ({ _id, action }: { _id: number; action: string }) => {
     if (action === "add") {
@@ -98,20 +97,49 @@ const CreateEvent = () => {
     if (event.target.name === "capacity") {
       setCapacity(event.target.value);
     }
+    if (event.target.name === "description") {
+      setDescription(event.target.value);
+    }
   };
 
   const HandleSubmit = async (event: any) => {
     event.preventDefault();
+
+    setError("");
+    setSuccess("");
 
     const body = {
       name,
       time,
       capacity,
       date,
-      trainers: selectedTrainers.map((trainer) => trainer._id),
+      description,
+      trainers: selectedTrainers.map((trainer) => ({
+        _id: trainer._id,
+        name: trainer.first_name + " " + trainer.last_name,
+      })),
     };
 
     console.log(body);
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/events`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: Token || "",
+        },
+        body: JSON.stringify(body),
+      },
+    );
+    const data = await response.json();
+    if (!response.ok) {
+      return setError(data.error);
+    }
+
+    setSuccess(data.message);
+    document.location.href = "/events";
   };
 
   return (
@@ -135,6 +163,19 @@ const CreateEvent = () => {
             onChange={HandleChange}
             className="block w-full rounded-lg border-2 border-red-400 bg-red-100 valid:border-black valid:bg-white hover:border-blue-500"
           />
+        </div>
+
+        <div>
+          <label className="mb-1 block" htmlFor="event">
+            Event Description
+          </label>
+          <textarea
+            name="description"
+            id="description"
+            rows={10}
+            className="block w-full rounded-lg border-2 border-red-400 bg-red-100 valid:border-black valid:bg-white hover:border-blue-500"
+            onChange={HandleChange}
+          ></textarea>
         </div>
 
         <div>
@@ -216,7 +257,15 @@ const CreateEvent = () => {
             showClearButton={false}
             defaultDate={new Date(Date.now() + 2 * 24 * 60 * 60 * 1000)}
             onSelectedDateChanged={(date: any) => {
-              setDate(date.toLocaleDateString());
+              const options = {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+              };
+              const formattedDate = date
+                .toLocaleDateString("en-CA", options)
+                .replace(/\//g, "-");
+              setDate(formattedDate);
             }}
           />
         </div>
