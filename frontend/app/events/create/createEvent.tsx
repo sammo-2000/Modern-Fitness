@@ -7,6 +7,7 @@ import { Datepicker } from "flowbite-react";
 // Components
 import Button from "../../components/Button";
 import Notify from "../../components/Notify";
+import LoadingPage from "../../components/LoadingPage";
 
 // Utilites
 import Cookie from "../../utils/getCookie";
@@ -24,6 +25,7 @@ const CreateEvent = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [trainers, setTrainers] = useState<Trainer[]>([]);
+  const [loading, setLoading] = useState(true);
 
   // Data to send
   const [name, setName] = useState("the event");
@@ -50,6 +52,7 @@ const CreateEvent = () => {
         return setError(data.error);
       }
       setTrainers(data.trainers);
+      setLoading(false);
     };
     getAllTrainers();
   }, [Token]);
@@ -107,6 +110,7 @@ const CreateEvent = () => {
 
     setError("");
     setSuccess("");
+    setFetching(true);
 
     const body = {
       name,
@@ -119,8 +123,6 @@ const CreateEvent = () => {
         name: trainer.first_name + " " + trainer.last_name,
       })),
     };
-
-    console.log(body);
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/events`,
@@ -135,13 +137,16 @@ const CreateEvent = () => {
     );
     const data = await response.json();
     if (!response.ok) {
+      setFetching(false);
       return setError(data.error);
     }
 
     setSuccess(data.message);
+    setFetching(false);
     document.location.href = "/events";
   };
 
+  if (loading) return <LoadingPage />;
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-slate-100 p-5">
       <form

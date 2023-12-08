@@ -6,6 +6,7 @@ import { calculateAge } from "../utils/age";
 import Notify from "../components/Notify";
 import GetCookie from "../utils/getCookie";
 const Token = GetCookie("token") || "";
+import Loading from "../components/LoadingPage";
 
 export default function Account() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -124,7 +125,7 @@ export default function Account() {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   else
     return (
       <div className="w-full flex-1 p-3">
