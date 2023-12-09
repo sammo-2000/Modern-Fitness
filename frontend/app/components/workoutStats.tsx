@@ -1,6 +1,7 @@
 import React from "react";
 import { capitalizeFirstLetter } from "../utils/capitalize";
 import type { Workout } from "../types/workout";
+import Link from "next/link"
 
 const workoutStats: React.FC<{ workout: Workout }> = ({ workout }) => {
   return (
@@ -15,6 +16,14 @@ const workoutStats: React.FC<{ workout: Workout }> = ({ workout }) => {
       <p className="m-0 text-xl text-gray-600">
         Number of sets: {workout.sets}
       </p>
+
+      
+      <button
+          type="submit"
+          className="ml-auto w-fit rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+        >
+          Edit
+        </button>
     </div>
   );
 };
