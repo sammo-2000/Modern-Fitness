@@ -52,6 +52,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
 
     clearWorkoutForm();
   };
+  // https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/forms_and_events/
   const deleteWorkout = (
     index: number,
     event: React.MouseEvent<HTMLButtonElement>,
