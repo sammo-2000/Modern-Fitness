@@ -20,6 +20,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
   const { dispatch } = useProgramContext();
 
   console.log("user_id", user_id);
+          {/* https://stackoverflow.com/questions/57491815/how-to-reset-select-dropdown-values-in-react/57491948#57491948 */}
 const defaultValue: string="Please Select Workout Type";
   const [Name, SetName] = useState(defaultValue);
   const [Load, SetLoad] = useState("");
@@ -139,7 +140,7 @@ const defaultValue: string="Please Select Workout Type";
         className="Create bg-grey mb-4 rounded px-8 pb-8 pt-6 shadow"
       >
         <div className="mb-4">
-        {/* https://stackoverflow.com/questions/57491815/how-to-reset-select-dropdown-values-in-react/57491948#57491948 */}
+        {/* https://jsfiddle.net/kb3gN/10396/ */}
   <select value ={Name} className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none" 
   onChange={(e) => SetName(e.target.value)} 
   >
