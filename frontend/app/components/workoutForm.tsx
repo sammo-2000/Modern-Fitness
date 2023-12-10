@@ -20,13 +20,13 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
   const { dispatch } = useProgramContext();
 
   console.log("user_id", user_id);
-
-  const [Name, SetName] = useState("");
+const defaultValue: string="Please Select Workout Type";
+  const [Name, SetName] = useState(defaultValue);
   const [Load, SetLoad] = useState("");
   const [Reps, SetReps] = useState("");
   const [Sets, SetSets] = useState("");
   const [DateTime, SetDate] = useState(new Date());
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
   const [workoutsList, setWorkoutsList] = useState<Workout[]>([]);
 
   const clearsForm = () => {
@@ -43,7 +43,11 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
     SetSets("");
   };
   const addsToList = () => {
-    const workout: Workout = {
+    if(Name==defaultValue){
+      setError("PLease Select Workout Name")
+    }
+    else{
+      const workout: Workout = {
       name: Name,
       load: Load,
       reps: Reps,
@@ -53,6 +57,10 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
 
     clearWorkoutForm();
   };
+    }
+    
+
+  
   // https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/forms_and_events/
   const deleteWorkout = (
     index: number,
@@ -67,8 +75,11 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
   const SubmitWorkoutForm = async (event: FormEvent<HTMLFormElement>) => {
     console.log("saving form");
     event.preventDefault();
-
-    if (workoutsList.length > 0) {
+    if(Name==defaultValue){
+      setError("PLease Select Workout Name")
+    }
+    else{
+      if (workoutsList.length > 0) {
       const WorkoutJSON = {
         user_id: user_id,
         workout: workoutsList,
@@ -100,6 +111,8 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
       }
     }
   };
+    }
+    
 
   return (
     // https://v1.tailwindcss.com/components/forms
@@ -110,22 +123,23 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
         className="Create bg-grey mb-4 rounded px-8 pb-8 pt-6 shadow"
       >
         <div className="mb-4">
-          <label
-            htmlFor="name"
-            className="mb-2 block text-xl font-semibold text-gray-700"
-          >
-            Type of Exercise
-          </label>
-          <input
-            className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none"
-            type="text"
-            onChange={(e) => SetName(e.target.value)}
-            value={Name}
-            placeholder="Enter Workout Name"
-            id="name"
-            name="name"
-          />
-        </div>
+  <select defaultValue={defaultValue} className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none" 
+  onChange={(e) => SetName(e.target.value)} 
+  >
+    <option value={defaultValue}>Please Enter the Type</option>
+     <option value="Bicep Curl">Bicep Curl</option>
+     <option value="Tricep Curl">Tricep Curl</option>
+     <option value="Pushup">Pushup</option>
+     <option value="Lat Pull Down">Lat Pull Down</option>
+     <option value="Bench Press">Bench Press</option>
+     <option value="Leg Extensions">Leg Extensions</option>
+     <option value="Leg Press">Leg Press</option>
+     <option value="Pull Ups">Pull Ups</option>
+
+
+   </select>
+   </div>   
+       
         <div className="mb-4">
           <label
             htmlFor="load"
