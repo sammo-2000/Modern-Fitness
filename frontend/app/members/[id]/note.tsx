@@ -49,11 +49,10 @@ const Note = ({ note, id }: { note: string; id: string }) => {
           className="rounded-lg border p-2"
           name="note"
           id="note"
-          placeholder="note"
+          placeholder="Note"
           rows={5}
-        >
-          {note}
-        </textarea>
+          defaultValue={note}
+        />
         {message ? <Notify message={message} type="success" /> : null}
         {error ? <Notify message={error} /> : null}
         <button
