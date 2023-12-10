@@ -12,6 +12,7 @@ interface Workout {
 }
 
 import GetCookie from "../utils/getCookie";
+import Notify from "./Notify";
 const Token = GetCookie("token") || "";
 
 export const WorkoutForm = ({ user_id }: { user_id: any }) => {
@@ -25,14 +26,11 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
   const [Reps, SetReps] = useState("");
   const [Sets, SetSets] = useState("");
   const [DateTime, SetDate] = useState(new Date());
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string>("");
   const [workoutsList, setWorkoutsList] = useState<Workout[]>([]);
 
   const clearsForm = () => {
-    SetName("");
-    SetLoad("");
-    SetReps("");
-    SetSets("");
+    clearWorkoutForm();
     SetDate(new Date());
   };
   const clearWorkoutForm = () => {
@@ -40,8 +38,42 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
     SetLoad("");
     SetReps("");
     SetSets("");
+    setError("");
   };
   const addsToList = () => {
+    if (Name === "") {
+      return setError("Workout name is required");
+    }
+    if (Load === "") {
+      return setError("Workout load is required");
+    }
+    const loadInt = parseInt(Load, 10);
+    if (Number.isNaN(loadInt)) {
+      return setError("Workout load must be a number");
+    }
+    if (loadInt <= 0) {
+      return setError("Workout load must be greater than 0");
+    }
+    if (Reps === "") {
+      return setError("Workout reps is required");
+    }
+    const repsInt = parseInt(Reps, 10);
+    if (Number.isNaN(repsInt)) {
+      return setError("Workout reps must be a number");
+    }
+    if (repsInt <= 0) {
+      return setError("Workout reps must be greater than 0");
+    }
+    if (Sets === "") {
+      return setError("Workout sets is required");
+    }
+    const setsInt = parseInt(Sets, 10);
+    if (Number.isNaN(setsInt)) {
+      return setError("Workout sets must be a number");
+    }
+    if (setsInt <= 0) {
+      return setError("Workout sets must be greater than 0");
+    }
     const workout: Workout = {
       name: Name,
       load: Load,
@@ -67,6 +99,9 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
     event.preventDefault();
 
     if (workoutsList.length > 0) {
+      if (DateTime < new Date()) {
+        return setError("End date must be in the future");
+      }
       const WorkoutJSON = {
         user_id: user_id,
         workout: workoutsList,
@@ -96,6 +131,8 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
         // router.push("");
         document.location.replace(`/members/${user_id}`);
       }
+    } else {
+      setError("No workouts have been added");
     }
   };
 
@@ -108,10 +145,24 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
         className="Create bg-grey mb-4 rounded px-8 pb-8 pt-6 shadow"
       >
         <div className="mb-4">
-          <label
-            htmlFor="name"
-            className="mb-2 block text-xl font-semibold text-gray-700"
-          >
+          <label htmlFor="date" className="mb-2 block text-xl font-bold">
+            Select End Date
+          </label>
+          <Datepicker
+            minDate={new Date()}
+            onSelectedDateChanged={(date) => {
+              console.log(date);
+              SetDate(date);
+            }}
+            autoHide={true}
+            className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none"
+            placeholder="Select End date"
+            id="date"
+            name="date"
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="name" className="mb-2 block text-xl font-semibold">
             Type of Exercise
           </label>
           <input
@@ -125,10 +176,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
           />
         </div>
         <div className="mb-4">
-          <label
-            htmlFor="load"
-            className="mb-2 block text-xl font-bold text-gray-700"
-          >
+          <label htmlFor="load" className="mb-2 block text-xl font-bold">
             Load (in kg)
           </label>
           <input
@@ -142,10 +190,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
           />
         </div>
         <div className="mb-4">
-          <label
-            htmlFor="reps"
-            className="mb-2 block text-xl font-bold text-gray-700"
-          >
+          <label htmlFor="reps" className="mb-2 block text-xl font-bold">
             Reps
           </label>
           <input
@@ -159,10 +204,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
           />
         </div>
         <div className="mb-4">
-          <label
-            htmlFor="sets"
-            className="mb-2 block text-xl font-bold text-gray-700"
-          >
+          <label htmlFor="sets" className="mb-2 block text-xl font-bold">
             Sets
           </label>
           <input
@@ -175,25 +217,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
             name="sets"
           />
         </div>
-        <div className="mb-4">
-          <label
-            htmlFor="date"
-            className="mb-2 block text-xl font-bold text-gray-700"
-          >
-            Select End Date
-          </label>
-          <Datepicker
-            onSelectedDateChanged={(date) => {
-              console.log(date);
-              SetDate(date);
-            }}
-            autoHide={true}
-            className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none"
-            placeholder="Select End date"
-            id="date"
-            name="date"
-          />
-        </div>
+
         <div className="mb-4 flex flex-col justify-between sm:flex-row">
           <button
             className="mb-2 mt-6 rounded-xl border border-blue-500 bg-white px-4 py-2 text-sm font-bold text-blue-500 hover:bg-gray-100"
@@ -209,7 +233,11 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
             Save Program
           </button>
         </div>
-        {error && <div className="text-red-600">{error}</div>}
+        {error && (
+          <div className="mb-4">
+            <Notify message={error} />
+          </div>
+        )}
         {/* https://www.creative-tim.com/learning-lab/tailwind-starter-kit/documentation/css/buttons/small/filled */}
         {workoutsList.map((workout, index) => (
           <li

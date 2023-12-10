@@ -3,5 +3,5 @@ export interface Workout {
     load: number;
     reps: number;
     sets: number;
-    id: string;
+    _id: string;
 }

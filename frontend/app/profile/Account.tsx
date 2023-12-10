@@ -54,8 +54,8 @@ export default function Account() {
           setStatus(fetchedMembers.user.status);
           setRole(fetchedMembers.user.role);
           setGoal(fetchedMembers.user.goal);
-          setHeight(fetchedMembers.user.height);
-          setWeight(fetchedMembers.user.weight);
+          setHeight(fetchedMembers.user.height.toString());
+          setWeight(fetchedMembers.user.weight.toString());
           setAllergy(fetchedMembers.user.allergy);
           setVegan(fetchedMembers.user.vegan);
         }
@@ -179,20 +179,20 @@ export default function Account() {
             />
             <InputField
               type="text"
-              label="gender"
+              label="Gender"
               name="gender"
               value={gender}
             />
             <InputField
               type="text"
-              label="status"
+              label="Status"
               name="status"
               value={status}
             />
             <InputField type="text" label="role" name="role" value={role} />
             <InputField
               type="number"
-              label="height"
+              label="Height (cm)"
               name="height"
               value={height}
               edit={true}
@@ -200,7 +200,7 @@ export default function Account() {
             />
             <InputField
               type="number"
-              label="weight"
+              label="Weight (kg)"
               name="weight"
               value={weight}
               edit={true}
@@ -208,7 +208,7 @@ export default function Account() {
             />
             <InputField
               type="text"
-              label="vegan"
+              label="Vegan"
               name="vegan"
               value={vegan}
               edit={true}
@@ -216,7 +216,7 @@ export default function Account() {
             />
             <InputField
               type="text"
-              label="goal"
+              label="Goal"
               name="goal"
               value={goal}
               edit={true}
@@ -225,7 +225,7 @@ export default function Account() {
             />
             <InputField
               type="text"
-              label="allergy"
+              label="Allergy"
               name="allergy"
               value={allergy}
               edit={true}

@@ -36,7 +36,7 @@ const NotFound = () => {
         Sorry, no custom program found
       </h1>
       <p className="uppercase text-gray-400">
-        Please wait until one of our trainer create one for you
+        Please wait until one of our trainers create one for you
       </p>
     </>
   );
