@@ -129,7 +129,7 @@ const defaultValue: string="Please Select Workout Type";
         className="Create bg-grey mb-4 rounded px-8 pb-8 pt-6 shadow"
       >
         <div className="mb-4">
-  <select defaultValue={defaultValue} value ={Name} className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none" 
+  <select value ={Name} className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none" 
   onChange={(e) => SetName(e.target.value)} 
   >
     <option value={defaultValue}>Please Enter the Type</option>
