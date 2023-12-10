@@ -77,12 +77,10 @@ const get_single_user = async (req, res) => {
       res.status(200).json({ success: true, user });
     } else {
       console.log("❌ You are not authorized to view this user");
-      res
-        .status(401)
-        .json({
-          success: false,
-          message: "You are not authorized to view this user",
-        });
+      res.status(401).json({
+        success: false,
+        message: "You are not authorized to view this user",
+      });
     }
   } catch (error) {
     console.log("❌ Get single user failed");
@@ -111,16 +109,14 @@ const edit_user = async (req, res) => {
         throw Error("Height must only contain numbers");
 
       //Check if height is positive
-      if (height && height <= 0) 
-        throw Error("Height must be greater than 0cm");
+      if (height && height <= 0) throw Error("Height must be greater than 0cm");
 
       // Check if the weight is valid
       if (weight && !validator.isNumeric(weight))
         throw Error("Weight must only contain numbers");
 
       //Check if height is positive
-      if (weight && weight <= 0) 
-        throw Error("Weight must be greater than 0kg");
+      if (weight && weight <= 0) throw Error("Weight must be greater than 0kg");
 
       // Check if the vegan is valid
       if (vegan && vegan !== "yes" && vegan !== "no")
@@ -152,13 +148,6 @@ const edit_user = async (req, res) => {
       // Check if the ID is valid
       if (!mongoose.Types.ObjectId.isValid(id)) throw Error("Invalid user ID");
 
-      // Check if note is provided
-      if (!note) throw Error("Note is required");
-
-      // Check if the note is valid
-      if (note && !/^[a-zA-Z0-9\s]*$/.test(note))
-        throw Error("Note must only contain letters and numbers");
-
       // Update user
       const user = await User_Model.findOneAndUpdate(
         { _id: id },
@@ -169,12 +158,10 @@ const edit_user = async (req, res) => {
       return res.status(200).json({ success: true, user });
     } else {
       console.log("❌ You are not authorized to edit this user");
-      res
-        .status(401)
-        .json({
-          success: false,
-          message: "You are not authorized to edit this user",
-        });
+      res.status(401).json({
+        success: false,
+        message: "You are not authorized to edit this user",
+      });
     }
   } catch (error) {
     console.log("❌ Edit user failed");
