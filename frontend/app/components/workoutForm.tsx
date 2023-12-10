@@ -27,6 +27,7 @@ const defaultValue: string="Please Select Workout Type";
   const [Sets, SetSets] = useState("");
   const [DateTime, SetDate] = useState(new Date());
   const [error, setError] = useState("");
+  const [isSaveDisabled, SetSaveDisabled] = useState(true);
   const [workoutsList, setWorkoutsList] = useState<Workout[]>([]);
 
   const clearsForm = () => {
@@ -54,6 +55,10 @@ const defaultValue: string="Please Select Workout Type";
       setError("Please enter Reps that are 0 or above")
 
     }
+    else if(Sets =="" || Sets<"1"){
+      setError("Please enter Sets that are above 0")
+
+    }
     else{
       const workout: Workout = {
       name: Name,
@@ -64,6 +69,7 @@ const defaultValue: string="Please Select Workout Type";
     setWorkoutsList((prevList) => [...prevList, workout]);
 
     clearWorkoutForm();
+    SetSaveDisabled(false);
   };
     }
     
