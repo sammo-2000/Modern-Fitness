@@ -59,6 +59,10 @@ const defaultValue: string="Please Select Workout Type";
       setError("Please enter Sets that are above 0")
 
     }
+    // else if(DateTime.getDate()< new Date().getDate()){
+    //   setError("Please Set a Valid Date either Current or a Future Date")
+
+    // }
     else{
       const workout: Workout = {
       name: Name,
@@ -135,6 +139,7 @@ const defaultValue: string="Please Select Workout Type";
         className="Create bg-grey mb-4 rounded px-8 pb-8 pt-6 shadow"
       >
         <div className="mb-4">
+        {/* https://stackoverflow.com/questions/57491815/how-to-reset-select-dropdown-values-in-react/57491948#57491948 */}
   <select value ={Name} className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none" 
   onChange={(e) => SetName(e.target.value)} 
   >
