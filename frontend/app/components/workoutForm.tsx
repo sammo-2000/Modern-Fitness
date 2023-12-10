@@ -37,7 +37,7 @@ const defaultValue: string="Please Select Workout Type";
     SetDate(new Date());
   };
   const clearWorkoutForm = () => {
-    SetName("");
+    SetName(defaultValue);
     SetLoad("");
     SetReps("");
     SetSets("");
@@ -45,6 +45,14 @@ const defaultValue: string="Please Select Workout Type";
   const addsToList = () => {
     if(Name==defaultValue){
       setError("PLease Select Workout Name")
+    }
+    else if(Load =="" || Load<"0"){
+      setError("Please enter a Load that is 0 or above")
+
+    }
+    else if(Reps =="" || Reps<"0"){
+      setError("Please enter Reps that are 0 or above")
+
     }
     else{
       const workout: Workout = {
@@ -75,10 +83,8 @@ const defaultValue: string="Please Select Workout Type";
   const SubmitWorkoutForm = async (event: FormEvent<HTMLFormElement>) => {
     console.log("saving form");
     event.preventDefault();
-    if(Name==defaultValue){
-      setError("PLease Select Workout Name")
-    }
-    else{
+    
+  {
       if (workoutsList.length > 0) {
       const WorkoutJSON = {
         user_id: user_id,
@@ -123,7 +129,7 @@ const defaultValue: string="Please Select Workout Type";
         className="Create bg-grey mb-4 rounded px-8 pb-8 pt-6 shadow"
       >
         <div className="mb-4">
-  <select defaultValue={defaultValue} className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none" 
+  <select defaultValue={defaultValue} value ={Name} className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none" 
   onChange={(e) => SetName(e.target.value)} 
   >
     <option value={defaultValue}>Please Enter the Type</option>
@@ -247,5 +253,5 @@ const defaultValue: string="Please Select Workout Type";
       </form>
     </>
   );
-};
+        };
 export default WorkoutForm;
