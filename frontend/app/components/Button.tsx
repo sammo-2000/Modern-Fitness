@@ -11,11 +11,20 @@ interface ButtonProps {
 }
 
 const Button = (props: ButtonProps) => {
-  if (props.isLink === true)
+  if (props.isLink && props.style === "outline")
     return (
       <Link
         href={props.linkTo || "/"}
-        className={`block-inline ml-auto mt-auto w-fit rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-blue-400`}
+        className={`block-inline ml-auto w-fit rounded-lg border border-blue-500 bg-white px-4 py-2 text-blue-500 transition-colors hover:border-blue-700 hover:text-blue-700 disabled:cursor-not-allowed disabled:border-blue-300 disabled:text-blue-300 ${props.className}`}
+      >
+        {props.name}
+      </Link>
+    );
+  if (props.isLink)
+    return (
+      <Link
+        href={props.linkTo || "/"}
+        className={`block-inline ml-auto mt-auto w-fit rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-blue-400 ${props.className}`}
       >
         {props.name}
       </Link>

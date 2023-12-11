@@ -25,6 +25,14 @@ export default withAuth(
     }
 
     if (
+      req.nextUrl.pathname.startsWith("/events/edit") &&
+      role.value != "trainer" &&
+      role.value != "manager"
+    ) {
+      return NextResponse.rewrite(new URL("/Denied", req.url));
+    }
+
+    if (
       req.nextUrl.pathname.startsWith("/createTrainer") &&
       role.value != "manager"
     ) {
@@ -38,4 +46,4 @@ export default withAuth(
   },
 );
 
-export const config = { matcher: ["/members", "/createTrainer", "/events/create"] };
+export const config = { matcher: ["/members", "/createTrainer", "/events/create", "/events/edit"] };

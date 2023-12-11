@@ -63,7 +63,7 @@ export default Events;
 const CustomCard = ({ event }: { event: EventPageProps }) => {
   return (
     <div className="flex w-full max-w-sm flex-grow flex-col overflow-hidden rounded-lg shadow-lg">
-      <img src={event.url} alt={event.alt} />
+      <img src={event.url} alt={event.alt} className="h-60 object-cover" />
       <div className="flex flex-col p-4">
         <p className="text-2xl font-bold tracking-tight text-gray-900">
           {event.name}
@@ -84,8 +84,14 @@ const CustomCard = ({ event }: { event: EventPageProps }) => {
             </ul>
           ))}
       </div>
-      <div className="mt-auto flex p-4">
+      <div className="mt-auto flex flex-col gap-2 p-4">
         <Button name="View" isLink={true} linkTo={`/events/${event._id}`} />
+        <Button
+          name="Edit Event"
+          style="outline"
+          isLink={true}
+          linkTo={`/events/edit/${event._id}`}
+        />
       </div>
     </div>
   );
