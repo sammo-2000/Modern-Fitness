@@ -2,6 +2,7 @@
 import React from "react";
 import { capitalizeFirstLetter } from "../utils/capitalize";
 import type { Workout } from "../types/workout";
+import Button from "../components/Button";
 import Link from "next/link"
 
 const workoutStats: React.FC<{ workout: Workout }> = ({ workout }) => {
@@ -19,14 +20,15 @@ const workoutStats: React.FC<{ workout: Workout }> = ({ workout }) => {
       </p>
 
       
-      <Link href={`@/members/`}>
-      <button
+      
+      <Button
           type="submit"
-          className="ml-auto w-fit rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+          style="outline"
+          isLink={true}
+          linkTo={`/members/[id]/${members._id}`}
         >
           Edit 
-        </button>
-      </Link>
+        </Button>
     </div>
   );
 };
