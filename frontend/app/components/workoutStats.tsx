@@ -1,3 +1,4 @@
+// code reference: https://www.youtube.com/watch?v=tRmeik-IpUQ&list=PL4cUxeGkcC9iJ_KkrkBZWZRHVwnzLIoUE&index=10
 import React from "react";
 import { capitalizeFirstLetter } from "../utils/capitalize";
 import type { Workout } from "../types/workout";

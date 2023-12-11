@@ -1,3 +1,4 @@
+// Code Reference https://www.youtube.com/watch?v=tRmeik-IpUQ&list=PL4cUxeGkcC9iJ_KkrkBZWZRHVwnzLIoUE&index=10
 "use client";
 import { FormEvent, useState } from "react";
 import { Datepicker } from "flowbite-react";
@@ -19,13 +20,15 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
   const { dispatch } = useProgramContext();
 
   console.log("user_id", user_id);
-
-  const [Name, SetName] = useState("");
+          {/* https://stackoverflow.com/questions/57491815/how-to-reset-select-dropdown-values-in-react/57491948#57491948 */}
+const defaultValue: string="Please Select Workout Type";
+  const [Name, SetName] = useState(defaultValue);
   const [Load, SetLoad] = useState("");
   const [Reps, SetReps] = useState("");
   const [Sets, SetSets] = useState("");
   const [DateTime, SetDate] = useState(new Date());
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
+  const [isSaveDisabled, SetSaveDisabled] = useState(true);
   const [workoutsList, setWorkoutsList] = useState<Workout[]>([]);
 
   const clearsForm = () => {
@@ -36,13 +39,33 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
     SetDate(new Date());
   };
   const clearWorkoutForm = () => {
-    SetName("");
+    SetName(defaultValue);
     SetLoad("");
     SetReps("");
     SetSets("");
   };
   const addsToList = () => {
-    const workout: Workout = {
+    if(Name==defaultValue){
+      setError("PLease Select Workout Name")
+    }
+    else if(Load =="" || Load<"0"){
+      setError("Please enter a Load that is 0 or above")
+
+    }
+    else if(Reps =="" || Reps<"0"){
+      setError("Please enter Reps that are 0 or above")
+
+    }
+    else if(Sets =="" || Sets<"1"){
+      setError("Please enter Sets that are above 0")
+
+    }
+    // else if(DateTime.getDate()< new Date().getDate()){
+    //   setError("Please Set a Valid Date either Current or a Future Date")
+
+    // }
+    else{
+      const workout: Workout = {
       name: Name,
       load: Load,
       reps: Reps,
@@ -51,7 +74,12 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
     setWorkoutsList((prevList) => [...prevList, workout]);
 
     clearWorkoutForm();
+    SetSaveDisabled(false);
   };
+    }
+    
+
+  
   // https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/forms_and_events/
   const deleteWorkout = (
     index: number,
@@ -66,8 +94,9 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
   const SubmitWorkoutForm = async (event: FormEvent<HTMLFormElement>) => {
     console.log("saving form");
     event.preventDefault();
-
-    if (workoutsList.length > 0) {
+    
+  {
+      if (workoutsList.length > 0) {
       const WorkoutJSON = {
         user_id: user_id,
         workout: workoutsList,
@@ -99,6 +128,8 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
       }
     }
   };
+    }
+    
 
   return (
     // https://v1.tailwindcss.com/components/forms
@@ -109,22 +140,24 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
         className="Create bg-grey mb-4 rounded px-8 pb-8 pt-6 shadow"
       >
         <div className="mb-4">
-          <label
-            htmlFor="name"
-            className="mb-2 block text-xl font-semibold text-gray-700"
-          >
-            Type of Exercise
-          </label>
-          <input
-            className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none"
-            type="text"
-            onChange={(e) => SetName(e.target.value)}
-            value={Name}
-            placeholder="Enter Workout Name"
-            id="name"
-            name="name"
-          />
-        </div>
+        {/* https://jsfiddle.net/kb3gN/10396/ */}
+  <select value ={Name} className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none" 
+  onChange={(e) => SetName(e.target.value)} 
+  >
+    <option value={defaultValue}>Please Enter the Type</option>
+     <option value="Bicep Curl">Bicep Curl</option>
+     <option value="Tricep Curl">Tricep Curl</option>
+     <option value="Pushup">Pushup</option>
+     <option value="Lat Pull Down">Lat Pull Down</option>
+     <option value="Bench Press">Bench Press</option>
+     <option value="Leg Extensions">Leg Extensions</option>
+     <option value="Leg Press">Leg Press</option>
+     <option value="Pull Ups">Pull Ups</option>
+
+
+   </select>
+   </div>   
+       
         <div className="mb-4">
           <label
             htmlFor="load"
@@ -232,5 +265,5 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
       </form>
     </>
   );
-};
+        };
 export default WorkoutForm;
