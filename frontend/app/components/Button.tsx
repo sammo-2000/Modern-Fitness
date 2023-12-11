@@ -1,12 +1,25 @@
+import Link from "next/link";
+
 interface ButtonProps {
   name: string;
   onClick?: any;
   style?: string;
   className?: string;
   disabled?: boolean;
+  isLink?: boolean;
+  linkTo?: string;
 }
 
 const Button = (props: ButtonProps) => {
+  if (props.isLink === true)
+    return (
+      <Link
+        href={props.linkTo || "/"}
+        className={`block-inline ml-auto mt-auto w-fit rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-blue-400`}
+      >
+        {props.name}
+      </Link>
+    );
   if (props.style === "outline")
     return (
       <button

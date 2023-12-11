@@ -34,6 +34,8 @@ const CreateEvent = () => {
   const [date, setDate] = useState(null);
   const [selectedTrainers, setSelectedTrainers] = useState<Trainer[]>([]);
   const [description, setDescription] = useState(null);
+  const [url, setUrl] = useState(null);
+  const [alt, setAlt] = useState(null);
 
   useEffect(() => {
     const getAllTrainers = async () => {
@@ -103,6 +105,12 @@ const CreateEvent = () => {
     if (event.target.name === "description") {
       setDescription(event.target.value);
     }
+    if (event.target.name === "url") {
+      setUrl(event.target.value);
+    }
+    if (event.target.name === "alt") {
+      setAlt(event.target.value);
+    }
   };
 
   const HandleSubmit = async (event: any) => {
@@ -118,6 +126,8 @@ const CreateEvent = () => {
       capacity,
       date,
       description,
+      alt,
+      url,
       trainers: selectedTrainers.map((trainer) => ({
         _id: trainer._id,
         name: trainer.first_name + " " + trainer.last_name,
@@ -166,6 +176,35 @@ const CreateEvent = () => {
             name="event"
             id="event"
             onChange={HandleChange}
+            placeholder="Give me nice name :D"
+            className="block w-full rounded-lg border-2 border-red-400 bg-red-100 valid:border-black valid:bg-white hover:border-blue-500"
+          />
+        </div>
+
+        <div>
+          <label className="mb-1 block" htmlFor="event">
+            Image Link
+          </label>
+          <input
+            type="url"
+            name="url"
+            id="url"
+            onChange={HandleChange}
+            placeholder="https://example.com/image.png"
+            className="block w-full rounded-lg border-2 border-red-400 bg-red-100 valid:border-black valid:bg-white hover:border-blue-500"
+          />
+        </div>
+
+        <div>
+          <label className="mb-1 block" htmlFor="event">
+            Image Description
+          </label>
+          <input
+            type="text"
+            name="alt"
+            id="alt"
+            onChange={HandleChange}
+            placeholder="Describe of the image"
             className="block w-full rounded-lg border-2 border-red-400 bg-red-100 valid:border-black valid:bg-white hover:border-blue-500"
           />
         </div>
@@ -209,6 +248,7 @@ const CreateEvent = () => {
             name="capacity"
             id="capacity"
             onChange={HandleChange}
+            placeholder="5 - 50"
             className="block w-full rounded-lg border-2 border-red-400 bg-red-100 valid:border-black valid:bg-white hover:border-blue-500"
           />
         </div>

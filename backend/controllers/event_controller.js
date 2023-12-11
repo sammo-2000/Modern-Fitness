@@ -1,16 +1,31 @@
 const Event_Model = require('../models/Event_Model');
 const validator = require('validator');
 const mongoose = require('mongoose');
+const { ObjectId } = require('mongodb')
 
-const get_events = async (req, res) => {
-    res.json({
-        success: true,
-        message: "Get all events",
+const get_all_events = async (req, res) => {
+    // Get all events after today
+    const events = await Event_Model.find();
+
+    let events_after_today = [];
+
+    events.forEach(event => {
+        const event_date = new Date(event.date);
+        const today = new Date() - 1 * 24 * 60 * 60 * 1000;
+        if (event_date >= today) {
+            events_after_today.push(event);
+        } else {
+            // Delete event
+            event.deleteOne({ _id: new ObjectId(event._id) })
+        }
     });
+
+    // Return response
+    return res.status(200).json({ success: true, events: events_after_today });
 }
 
 const create_event = async (req, res) => {
-    const { name, description, time, capacity, date, trainers } = req.body;
+    const { name, description, time, capacity, date, trainers, url, alt } = req.body;
 
     // Valdiate input are sent
     if (!name) return res.status(400).json({ success: false, error: "Name is required" });
@@ -19,6 +34,8 @@ const create_event = async (req, res) => {
     if (!capacity) return res.status(400).json({ success: false, error: "Capacity is required" });
     if (!date) return res.status(400).json({ success: false, error: "Date is required" });
     if (!trainers) return res.status(400).json({ success: false, error: "Trainers is required" });
+    if (!url) return res.status(400).json({ success: false, error: "Image is required" });
+    if (!alt) return res.status(400).json({ success: false, error: "Image description is required" });
 
     // Validate input are correct
     // Name
@@ -71,8 +88,16 @@ const create_event = async (req, res) => {
             return res.status(400).json({ success: false, error: "Trainer name must be letters only" });
     }
 
+    // URL
+    if (!validator.isURL(url))
+        return res.status(400).json({ success: false, error: "Image URL invalid" });
+
+    // Alt
+    if (!validator.isLength(alt, { min: 2, max: 40 }))
+        return res.status(400).json({ success: false, error: "Image description must be between 2 and 40 characters" });
+
     // Create event
-    const event = await Event_Model.create({ name, description, time, capacity, date, trainers });
+    const event = await Event_Model.create({ name, description, time, capacity, date, trainers, alt, url });
 
     // Return response
     res.status(201).json({
@@ -104,7 +129,7 @@ const delete_event = async (req, res) => {
 }
 
 module.exports = {
-    get_events,
+    get_all_events,
     create_event,
     get_event,
     update_event,

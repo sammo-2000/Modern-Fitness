@@ -1,6 +1,7 @@
-// View all events
+import EventPage from "./eventPage";
+
 const Events = () => {
-  return <h1>View all events</h1>;
+  return <EventPage />;
 };
 
 export default Events;
