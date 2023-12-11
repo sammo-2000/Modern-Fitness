@@ -25,7 +25,7 @@ const workoutStats: React.FC<{ workout: Workout }> = ({ workout }) => {
           type="submit"
           style="outline"
           isLink={true}
-          linkTo={`/members/[id]/${members._id}`}
+          linkTo={`/members/[id]/${members_id}`}
         >
           Edit 
         </Button>
