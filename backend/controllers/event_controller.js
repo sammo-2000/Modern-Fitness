@@ -109,6 +109,7 @@ const create_event = async (req, res) => {
 
 const get_event = async (req, res) => {
     const { id } = req.params;
+    const user_id = req._user._id;
 
     if (!mongoose.Types.ObjectId.isValid(id))
         return res.status(400).json({ success: false, error: "Event ID invalid" });
@@ -118,6 +119,9 @@ const get_event = async (req, res) => {
 
     // Count registered users
     event.current_register = event.registered_users.length
+
+    // Check if user is registered
+    const user_already_registered = event.registered_users?.includes(user_id);
 
     const event_data = {
         _id: event._id,
@@ -130,6 +134,7 @@ const get_event = async (req, res) => {
         url: event.url,
         alt: event.alt,
         current_register: event.current_register,
+        registered: user_already_registered
     }
 
     return res.json({
@@ -146,10 +151,21 @@ const update_event = async (req, res) => {
 }
 
 const delete_event = async (req, res) => {
-    res.json({
+    // Get event ID
+    const { id } = req.params;
+
+    // Check ID is valid
+    if (!mongoose.Types.ObjectId.isValid(id))
+        return res.status(400).json({ success: false, error: "Event ID invalid" });
+
+    // Delete event
+    await Event_Model.findByIdAndDelete(id);
+
+    // Return response
+    return res.json({
         success: true,
         message: "Delete event",
-    });
+    })
 }
 
 const register = async (req, res) => {

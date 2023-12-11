@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 // Components
 import Notify from "../../components/Notify";
+import Button from "@/app/components/Button";
 
 // Utilites
 import Cookie from "../../utils/getCookie";
@@ -24,17 +25,19 @@ interface EventPageProps {
   alt: string;
   url: string;
   current_register: number;
+  registered: boolean;
 }
 
 const ViewEvent = ({ eventID }: { eventID: string }) => {
+  const [EventID, setEventID] = useState<string>(eventID);
   const [event, setEvent] = useState<EventPageProps>();
   const [error, setError] = useState<string>("");
-  const [success, setSuccess] = useState<string>("");
+  const [count, setCount] = useState<number>(0);
+  const [inEvent, setInEvent] = useState<boolean>(false);
 
-  const HandleRegister = async (event: any) => {
-    event.preventDefault();
+  const HandleRegister = async (e: any) => {
+    e.preventDefault();
     setError("");
-    setSuccess("");
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/events/register/${eventID}`,
       {
@@ -47,14 +50,34 @@ const ViewEvent = ({ eventID }: { eventID: string }) => {
     const data = await response.json();
     console.log(data);
     if (!response.ok) setError(data.error);
-    else if (data.message === "Registered for the event")
-      setSuccess(data.message);
-    else setError(data.message);
 
-    setTimeout(() => {
-      setError("");
-      setSuccess("");
-    }, 3000);
+    if (inEvent) {
+      setInEvent(false);
+      setCount(count - 1);
+    } else {
+      setInEvent(true);
+      setCount(count + 1);
+    }
+  };
+
+  const HandleDelete = async (e: any) => {
+    e.preventDefault();
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/events/${EventID}`,
+      {
+        method: "DELETE",
+        headers: {
+          authorization: Token || "",
+        },
+      },
+    );
+
+    const data = await response.json();
+    console.log(data);
+
+    if (!response.ok) setError(data.error);
+    else window.location.href = "/events";
   };
 
   useEffect(() => {
@@ -74,10 +97,6 @@ const ViewEvent = ({ eventID }: { eventID: string }) => {
 
     GetData();
   }, []);
-
-  useEffect(() => {
-    console.log(event);
-  }, [event]);
   return (
     <>
       {event ? (
@@ -96,7 +115,7 @@ const ViewEvent = ({ eventID }: { eventID: string }) => {
                 {event.date} - {event.time}
               </p>
               <p className="mt-1 text-xs font-bold text-gray-300">
-                Capacity: {event.current_register} / {event.capacity}
+                Capacity: {count} / {event.capacity}
               </p>
               <p className="mt-3 font-bold">Description</p>
               <p className="mb-3 font-normal text-gray-300">
@@ -111,15 +130,21 @@ const ViewEvent = ({ eventID }: { eventID: string }) => {
                 ))}
               <form className="mt-1 flex flex-col gap-2">
                 {error && <Notify message={error} />}
-                {success && <Notify message={success} type="success" />}
                 <button
                   className="block-inline ml-auto w-fit rounded-lg bg-white px-4 py-2 text-black transition-colors hover:bg-gray-300"
                   onClick={(event) => {
                     HandleRegister(event);
                   }}
                 >
-                  Register
+                  Register {inEvent ? "out" : "in"}
                 </button>
+                <Button
+                  name="Delete"
+                  style="red"
+                  onClick={(e: any) => {
+                    HandleDelete(e);
+                  }}
+                />
               </form>
             </div>
           </div>
