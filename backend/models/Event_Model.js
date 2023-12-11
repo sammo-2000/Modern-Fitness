@@ -11,6 +11,7 @@ const Event_Schema = new Schema({
     trainers: { type: Array, required: true, trim: true },
     url: { type: String, required: true, trim: true },
     alt: { type: String, required: true, trim: true },
+    registered_users: { type: Array, required: false, trim: true, default: [] },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Event', Event_Schema);

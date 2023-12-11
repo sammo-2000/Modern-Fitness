@@ -108,9 +108,33 @@ const create_event = async (req, res) => {
 }
 
 const get_event = async (req, res) => {
-    res.json({
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id))
+        return res.status(400).json({ success: false, error: "Event ID invalid" });
+
+    const event = await Event_Model.findById(id);
+    if (!event) return res.status(404).json({ success: false, error: "Event not found" });
+
+    // Count registered users
+    event.current_register = event.registered_users.length
+
+    const event_data = {
+        _id: event._id,
+        name: event.name,
+        description: event.description,
+        time: event.time,
+        capacity: event.capacity,
+        date: event.date,
+        trainers: event.trainers,
+        url: event.url,
+        alt: event.alt,
+        current_register: event.current_register,
+    }
+
+    return res.json({
         success: true,
-        message: "Get event",
+        event: event_data
     });
 }
 
@@ -128,10 +152,54 @@ const delete_event = async (req, res) => {
     });
 }
 
+const register = async (req, res) => {
+    const { id } = req.params;
+    const user_id = req._user._id;
+
+    // Check ID is valid
+    if (!mongoose.Types.ObjectId.isValid(id))
+        return res.status(400).json({ success: false, error: "Event ID invalid" });
+
+    // Get all register users ID
+    const event = await Event_Model.findById(id);
+    if (!event) return res.status(404).json({ success: false, error: "Event not found" });
+
+    // Check if user is already registered
+    const user_already_registered = event.registered_users?.includes(user_id);
+
+    // If user is registered, unregister
+    if (user_already_registered) {
+        // Remove user from registered users
+        event.registered_users.pull(user_id);
+        event.save();
+
+        // Return response
+        return res.json({
+            success: true,
+            message: "Unregister from the event",
+        });
+    }
+
+    // Check event is not full
+    const event_full = event.registered_users.length >= event.capacity;
+    if (event_full) return res.status(400).json({ success: false, error: "Event is full" });
+
+    // If user is not registered, register
+    event.registered_users.push(user_id);
+    event.save();
+
+    // Return response
+    return res.json({
+        success: true,
+        message: "Registered for the event",
+    });
+}
+
 module.exports = {
     get_all_events,
     create_event,
     get_event,
     update_event,
     delete_event,
+    register,
 }

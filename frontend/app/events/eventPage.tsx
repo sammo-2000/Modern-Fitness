@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Card } from "flowbite-react";
 
 // Components
 import Button from "../components/Button";
@@ -66,19 +65,17 @@ const CustomCard = ({ event }: { event: EventPageProps }) => {
     <div className="flex w-full max-w-sm flex-grow flex-col overflow-hidden rounded-lg shadow-lg">
       <img src={event.url} alt={event.alt} />
       <div className="flex flex-col p-4">
-        <p className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        <p className="text-2xl font-bold tracking-tight text-gray-900">
           {event.name}
         </p>
-        <p className="text-xs font-bold text-gray-700 dark:text-gray-400">
+        <p className="text-xs font-bold text-gray-700">
           {event.date} - {event.time}
         </p>
-        <p className="mt-1 text-xs font-bold text-gray-700 dark:text-gray-400">
+        <p className="mt-1 text-xs font-bold text-gray-700">
           max capacity: {event.capacity}
         </p>
         <p className="mt-3 font-bold">Description</p>
-        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-          {event.description}
-        </p>
+        <p className="mb-3 font-normal text-gray-700">{event.description}</p>
         <p className="font-bold">Trainers</p>
         {Array.isArray(event.trainers) &&
           event.trainers.map((trainer) => (

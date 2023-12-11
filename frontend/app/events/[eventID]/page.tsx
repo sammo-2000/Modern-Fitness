@@ -3,14 +3,11 @@ interface Params {
   eventID: string;
 }
 
+import ViewEvent from "./viewEvent";
+
 const Events = ({ params }: { params: Params }) => {
   const eventID = params.eventID;
-  return (
-    <>
-      <h1>View single event</h1>
-      <p>{eventID}</p>
-    </>
-  );
+  return <ViewEvent eventID={eventID} />;
 };
 
 export default Events;
