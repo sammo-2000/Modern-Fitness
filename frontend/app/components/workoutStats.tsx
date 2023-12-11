@@ -18,12 +18,14 @@ const workoutStats: React.FC<{ workout: Workout }> = ({ workout }) => {
       </p>
 
       
+      <Link href={`@/members/`}>
       <button
           type="submit"
           className="ml-auto w-fit rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
         >
           Edit 
         </button>
+      </Link>
     </div>
   );
 };

@@ -75,7 +75,7 @@ export const EditWorkoutForm = ({ user_id }: { user_id: any }) => {
       };
       console.log(JSON.stringify(WorkoutJSON));
       const APIresponse = await fetch(
-        process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN + "/api/program",
+        process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN + "/api/program/:program_id",
         {
           method: "PATCH",
           body: JSON.stringify(WorkoutJSON),
@@ -91,8 +91,8 @@ export const EditWorkoutForm = ({ user_id }: { user_id: any }) => {
       } else {
         clearsForm();
         setWorkoutsList([]);
-        console.log("Workout has been added: ", responseJSON.program);
-        dispatch({ type: "CREATE_PROGRAM", payload: responseJSON.program });
+        console.log("Workout has been updated: ", responseJSON.program);
+        dispatch({ type: "UPDATE_PROGRAM", payload: responseJSON.program });
 
         // router.push("");
         document.location.replace(`/members/${user_id}`);

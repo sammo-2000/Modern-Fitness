@@ -1,7 +1,6 @@
 "use client";
 import React from 'react'
 import EditWorkoutForm from '@/app/components/EditProgram'
-import WorkoutForm from "@/app/components/workoutForm";
 import { useProgramContext } from "@/app/hooks/useProgramContext";
 import GetCookie from "@/app/utils/getCookie";
 import { useFetchedData } from "@/app/context/MemberIdContext";
@@ -16,7 +15,7 @@ export const EditWorkout = ({ params }: any) => {
     const fetchPrograms = async () => {
       const response = await fetch(
         process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN +
-          "/api/programs/" +
+          "/api/programs/:program_id" +
           MemberId,
         {
           headers: {
@@ -36,7 +35,7 @@ export const EditWorkout = ({ params }: any) => {
   console.log(params.id);
   return (
     <div className="w-full flex-1 p-3">
-      <WorkoutForm user_id={MemberId} />
+      <EditWorkoutForm user_id={MemberId} />
     </div>
   );
 };
