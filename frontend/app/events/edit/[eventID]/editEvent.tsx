@@ -11,11 +11,12 @@ import LoadingPage from "@/app/components/LoadingPage";
 
 // Utilites
 import Cookie from "@/app/utils/getCookie";
+import { validateEventData } from "../../validation";
 const Token = Cookie("token");
 
 // Interfaces
 interface Trainer {
-  _id: number;
+  _id: string;
   first_name: string;
   last_name: string;
 }
@@ -85,7 +86,7 @@ const EditEvent = ({ eventID }: { eventID: string }) => {
     setAllData();
   }, [Token]);
 
-  const AddTrainer = ({ _id, action }: { _id: number; action: string }) => {
+  const AddTrainer = ({ _id, action }: { _id: string; action: string }) => {
     if (action === "add") {
       const selectedTrainer = trainers.find((trainer) => trainer._id === _id);
 
@@ -159,6 +160,12 @@ const EditEvent = ({ eventID }: { eventID: string }) => {
         name: trainer.first_name + " " + trainer.last_name,
       })),
     };
+
+    const validated = validateEventData(body);
+    if (!validated.valid) {
+      setError(validated.error);
+      return setFetching(false);
+    }
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/events/${EventID}`,

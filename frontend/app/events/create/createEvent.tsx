@@ -3,6 +3,7 @@ import { useState, useEffect, use } from "react";
 
 // FlowBites
 import { Datepicker } from "flowbite-react";
+import { datePickerTheme } from "../../flowbite/themes";
 
 // Components
 import Button from "../../components/Button";
@@ -10,12 +11,13 @@ import Notify from "../../components/Notify";
 import LoadingPage from "../../components/LoadingPage";
 
 // Utilites
+import { validateEventData } from "../validation";
 import Cookie from "../../utils/getCookie";
 const Token = Cookie("token");
 
 // Interfaces
 interface Trainer {
-  _id: number;
+  _id: string;
   first_name: string;
   last_name: string;
 }
@@ -28,14 +30,14 @@ const CreateEvent = () => {
   const [loading, setLoading] = useState(true);
 
   // Data to send
-  const [name, setName] = useState("the event");
-  const [time, setTime] = useState(null);
+  const [name, setName] = useState<string | null>(null);
+  const [time, setTime] = useState<string | null>(null);
   const [capacity, setCapacity] = useState(null);
   const [date, setDate] = useState(null);
   const [selectedTrainers, setSelectedTrainers] = useState<Trainer[]>([]);
-  const [description, setDescription] = useState(null);
+  const [description, setDescription] = useState<string | null>(null);
   const [url, setUrl] = useState(null);
-  const [alt, setAlt] = useState(null);
+  const [alt, setAlt] = useState<string | null>(null);
 
   useEffect(() => {
     const getAllTrainers = async () => {
@@ -59,7 +61,7 @@ const CreateEvent = () => {
     getAllTrainers();
   }, [Token]);
 
-  const AddTrainer = ({ _id, action }: { _id: number; action: string }) => {
+  const AddTrainer = ({ _id, action }: { _id: string; action: string }) => {
     if (action === "add") {
       const selectedTrainer = trainers.find((trainer) => trainer._id === _id);
 
@@ -134,6 +136,12 @@ const CreateEvent = () => {
       })),
     };
 
+    const validated = validateEventData(body);
+    if (!validated.valid) {
+      setError(validated.error);
+      return setFetching(false);
+    }
+
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/events`,
       {
@@ -154,6 +162,76 @@ const CreateEvent = () => {
     setSuccess(data.message);
     setFetching(false);
     document.location.href = "/events";
+  };
+
+  const validateData = (): boolean => {
+    // Some Frontend validation to reduce load on backend
+    if (!name) {
+      setError("Name is required");
+      return false;
+    }
+    if (!description) {
+      setError("Description is required");
+      return false;
+    }
+    if (!time) {
+      setError("Time is required");
+      return false;
+    }
+    if (!capacity) {
+      setError("Capacity is required");
+      return false;
+    }
+    if (!date) {
+      setError("Date is required");
+      return false;
+    }
+    if (!trainers) {
+      setError("Trainers are required");
+      return false;
+    }
+    if (!url) {
+      setError("Image URL is required");
+      return false;
+    }
+    if (!alt) {
+      setError("Image description is required");
+      return false;
+    }
+
+    // Name
+    if (name.length < 5 || name.length > 20) {
+      setError("Name must be between 5 and 20 characters");
+      return false;
+    }
+    if (!/^[a-zA-Z0-9\s]*$/.test(name)) {
+      setError("Name must only contain letters and numbers");
+      return false;
+    }
+
+    // description
+    if (description.length < 10 || description.length > 200) {
+      setError("Description must be between 10 and 200 characters");
+      return false;
+    }
+    if (!/^[a-zA-Z0-9\s]*$/.test(description)) {
+      setError("Description must only contain letters and numbers");
+      return false;
+    }
+
+    // // Trainers
+    if (selectedTrainers.length === 0) {
+      setError("No trainers have been selected");
+      return false;
+    }
+
+    // // Alt
+    if (alt.length < 2 || alt.length > 40) {
+      setError("Image description must be between 2 and 40 characters");
+      return false;
+    }
+
+    return true;
   };
 
   if (loading) return <LoadingPage />;
@@ -294,8 +372,11 @@ const CreateEvent = () => {
         <div className="flex items-center justify-center">
           <Datepicker
             inline={true}
+            theme={datePickerTheme}
             weekStart={2}
-            title={`Pick a date for ${name}`}
+            title={
+              name ? `Pick a date for ${name}` : "Pick a date for the event"
+            }
             minDate={new Date(Date.now() + 2 * 24 * 60 * 60 * 1000)}
             onChange={HandleChange}
             showTodayButton={false}
