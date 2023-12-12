@@ -29,11 +29,13 @@ app.use((req, res, next) => {
 const auth_router = require("./routes/auth_router");
 const user_router = require("./routes/user_router");
 const program_router = require("./routes/program_router");
+const event_router = require("./routes/event_router");
 
 // Use routes
 app.use("/api/auth", auth_router);
 app.use("/api/", user_router);
 app.use("/api/", program_router);
+app.use("/api/", event_router);
 
 // 404
 app.use((req, res) => {
