@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import PhotoUpload from "../components/PhotoUpload";
 import { calculateAge } from "../utils/age";
+import { capitalizeFirstLetter } from "../utils/capitalize";
 import Notify from "../components/Notify";
 import GetCookie from "../utils/getCookie";
 const Token = GetCookie("token") || "";
@@ -126,9 +127,9 @@ export default function Account() {
 
       <div className="flex flex-wrap items-center justify-center gap-4">
         <PhotoUpload
-          FirstName={first_name}
-          LastName={last_name}
-          Location={gender}
+          firstName={first_name}
+          lastName={last_name}
+          gender={gender}
         />
 
         <form
@@ -145,18 +146,21 @@ export default function Account() {
             <InputField
               type="text"
               label="First Name"
+              id="first_name"
               name="first_name"
-              value={first_name}
+              value={capitalizeFirstLetter(first_name)}
             />
             <InputField
               type="text"
               label="Last Name"
+              id="last_name"
               name="last_name"
-              value={last_name}
+              value={capitalizeFirstLetter(last_name)}
             />
             <InputField
               type="email"
               label="Email"
+              id="email"
               name="email"
               value={email}
               edit={true}
@@ -165,12 +169,14 @@ export default function Account() {
             <InputField
               type="text"
               label="Access Code"
+              id="access_code"
               name="access_code"
               value={accessCode}
             />
             <InputField
               type="text"
               label="Age"
+              id="age"
               name="age"
               value={age}
               isAge={true}
@@ -178,19 +184,28 @@ export default function Account() {
             <InputField
               type="text"
               label="Gender"
+              id="gender"
               name="gender"
-              value={gender}
+              value={capitalizeFirstLetter(gender)}
             />
             <InputField
               type="text"
               label="Status"
+              id="status"
               name="status"
-              value={status}
+              value={capitalizeFirstLetter(status)}
             />
-            <InputField type="text" label="role" name="role" value={role} />
+            <InputField
+              type="text"
+              label="Role"
+              id="role"
+              name="role"
+              value={capitalizeFirstLetter(role)}
+            />
             <InputField
               type="number"
               label="Height (cm)"
+              id="height"
               name="height"
               value={height}
               edit={true}
@@ -199,6 +214,7 @@ export default function Account() {
             <InputField
               type="number"
               label="Weight (kg)"
+              id="weight"
               name="weight"
               value={weight}
               edit={true}
@@ -244,6 +260,7 @@ export default function Account() {
             <InputField
               type="text"
               label="Goal"
+              id="goal"
               name="goal"
               value={goal}
               edit={true}
@@ -253,6 +270,7 @@ export default function Account() {
             <InputField
               type="text"
               label="Allergy"
+              id="allergy"
               name="allergy"
               value={allergy}
               edit={true}
@@ -278,6 +296,7 @@ export default function Account() {
 
 const InputField = ({
   label,
+  id,
   name,
   type,
   value,
@@ -287,6 +306,7 @@ const InputField = ({
   textarea = false,
 }: {
   label: string;
+  id: string;
   name: string;
   type: string;
   value: string;
@@ -298,13 +318,14 @@ const InputField = ({
   return (
     <div>
       <div className="mb-1 text-end">
-        <label className="block text-xs font-bold text-gray-400" htmlFor={name}>
+        <label className="block text-xs font-bold text-gray-400" htmlFor={id}>
           {label}
         </label>
       </div>
       {textarea ? (
         <textarea
           className="min-h-14 w-full appearance-none rounded-lg border px-3 py-2 font-medium leading-tight text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:cursor-not-allowed disabled:bg-gray-100"
+          id={id}
           name={name}
           value={isAge ? calculateAge(value) : value}
           onChange={handleChange}
@@ -314,6 +335,7 @@ const InputField = ({
         <input
           className="h-14 w-full appearance-none rounded-lg border px-3 py-2 font-medium leading-tight text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:cursor-not-allowed disabled:bg-gray-100"
           type={type}
+          id={id}
           name={name}
           value={isAge ? calculateAge(value) : value}
           onChange={handleChange}
