@@ -57,7 +57,7 @@ export default function Account() {
           setHeight(fetchedMembers.user.height.toString());
           setWeight(fetchedMembers.user.weight.toString());
           setAllergy(fetchedMembers.user.allergy);
-          setVegan(fetchedMembers.user.vegan);
+          setVegan(fetchedMembers.user.vegan.toString());
         }
       } catch (error) {
         console.error(error);
@@ -65,8 +65,6 @@ export default function Account() {
     };
 
     getInfo();
-
-    console.log(first_name);
   }, [session]);
 
   function handleChange(event: any) {
@@ -206,14 +204,43 @@ export default function Account() {
               edit={true}
               handleChange={handleChange}
             />
-            <InputField
-              type="text"
-              label="Vegan"
-              name="vegan"
-              value={vegan}
-              edit={true}
-              handleChange={handleChange}
-            />
+            <div className="mt-5 flex h-14 items-center justify-between rounded-lg border border-gray-500 px-3 py-2">
+              <p className="font-semibold text-gray-700">Vegan?</p>
+              <div>
+                <div className="mb-4 flex justify-between gap-3">
+                  <label
+                    className="block text-xs font-bold text-gray-400"
+                    htmlFor="vegan-yes"
+                  >
+                    Yes
+                  </label>
+                  <input
+                    type="radio"
+                    id="vegan-yes"
+                    name="vegan"
+                    value="true"
+                    onChange={handleChange}
+                    checked={vegan === "true"}
+                  />
+                </div>
+                <div className="flex justify-between gap-3">
+                  <label
+                    className="block text-xs font-bold text-gray-400"
+                    htmlFor="vegan-no"
+                  >
+                    No
+                  </label>
+                  <input
+                    type="radio"
+                    id="vegan-no"
+                    name="vegan"
+                    value="false"
+                    onChange={handleChange}
+                    checked={vegan === "false"}
+                  />
+                </div>
+              </div>
+            </div>
             <InputField
               type="text"
               label="Goal"

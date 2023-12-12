@@ -119,8 +119,8 @@ const edit_user = async (req, res) => {
       if (weight && weight <= 0) throw Error("Weight must be greater than 0kg");
 
       // Check if the vegan is valid
-      if (vegan && vegan !== "yes" && vegan !== "no")
-        throw Error("Vegan must be a yes or no value");
+      if (vegan && vegan !== "true" && vegan !== "false")
+        throw Error("Vegan is an unrecognized value");
 
       // Check if the allergy is valid
       if (allergy && !/^[a-zA-Z\s]*$/.test(allergy))
