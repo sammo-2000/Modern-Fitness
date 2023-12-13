@@ -4,7 +4,7 @@ import { capitalizeFirstLetter } from "../utils/capitalize";
 import { useFetchedData } from "../context/MemberIdContext";
 import type { Workout } from "../types/workout";
 import Button from "../components/Button";
-import Link from "next/link"
+import Link from "next/link";
 
 const workoutStats: React.FC<{ workout: Workout }> = ({ workout }) => {
   return (
@@ -20,16 +20,13 @@ const workoutStats: React.FC<{ workout: Workout }> = ({ workout }) => {
         Number of sets: {workout.sets}
       </p>
 
-      
-      
-      <Link
-      href={`/members/${workout.id}/editWorkout`}>
-      <button
-            className="mb-2 mt-6 rounded-xl bg-blue-500 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700"
-            type="submit"
-          >
-            Edit
-          </button>
+      <Link href={`/members/${workout._id}/editWorkout`}>
+        <button
+          className="mb-2 mt-6 rounded-xl bg-blue-500 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700"
+          type="submit"
+        >
+          Edit
+        </button>
       </Link>
     </div>
   );
