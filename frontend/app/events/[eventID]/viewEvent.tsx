@@ -93,6 +93,8 @@ const ViewEvent = ({ eventID }: { eventID: string }) => {
       );
       const data = await response.json();
       setEvent(data.event);
+      setInEvent(data.event.registered);
+      setCount(data.event.current_register);
     };
 
     GetData();
