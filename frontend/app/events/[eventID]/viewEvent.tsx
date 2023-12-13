@@ -11,7 +11,7 @@ const Token = Cookie("token");
 
 // Interface
 interface Trainer {
-  id: string;
+  _id: string;
   name: string;
 }
 interface EventPageProps {
@@ -126,7 +126,7 @@ const ViewEvent = ({ eventID }: { eventID: string }) => {
               <p className="font-bold">Trainers</p>
               {Array.isArray(event.trainers) &&
                 event.trainers.map((trainer) => (
-                  <ul key={trainer.id} className="ml-10 list-disc">
+                  <ul key={trainer._id} className="ml-10 list-disc">
                     <li>{trainer.name}</li>
                   </ul>
                 ))}
