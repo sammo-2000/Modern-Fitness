@@ -129,171 +129,171 @@ export default function Account() {
     return (
       <div className="w-full flex-1 p-3">
         <h1 className="mb-3 text-3xl font-semibold">Account</h1>
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          <PhotoUpload
+            firstName={first_name}
+            lastName={last_name}
+            gender={gender}
+          />
 
-      <div className="flex flex-wrap items-center justify-center gap-4">
-        <PhotoUpload
-          firstName={first_name}
-          lastName={last_name}
-          gender={gender}
-        />
-
-        <form
-          onSubmit={handleSubmission}
-          autoComplete="off"
-          noValidate
-          className="mb-4 grow bg-white px-8 pb-8 pt-6"
-        >
-          <h1 className="mb-1 mt-10 text-xl font-bold">Profile</h1>
-          <p className="mb-4 text-xs font-semibold text-gray-500">
-            The information can be edited
-          </p>
-          <div className="mb-12 grid grid-cols-1 gap-5 sm:grid-cols-2">
-            <InputField
-              type="text"
-              label="First Name"
-              id="first_name"
-              name="first_name"
-              value={capitalizeFirstLetter(first_name)}
-            />
-            <InputField
-              type="text"
-              label="Last Name"
-              id="last_name"
-              name="last_name"
-              value={capitalizeFirstLetter(last_name)}
-            />
-            <InputField
-              type="email"
-              label="Email"
-              id="email"
-              name="email"
-              value={email}
-              edit={true}
-              handleChange={handleChange}
-            />
-            <InputField
-              type="text"
-              label="Access Code"
-              id="access_code"
-              name="access_code"
-              value={accessCode}
-            />
-            <InputField
-              type="text"
-              label="Age"
-              id="age"
-              name="age"
-              value={age}
-              isAge={true}
-            />
-            <InputField
-              type="text"
-              label="Gender"
-              id="gender"
-              name="gender"
-              value={capitalizeFirstLetter(gender)}
-            />
-            <InputField
-              type="text"
-              label="Status"
-              id="status"
-              name="status"
-              value={capitalizeFirstLetter(status)}
-            />
-            <InputField
-              type="text"
-              label="Role"
-              id="role"
-              name="role"
-              value={capitalizeFirstLetter(role)}
-            />
-            <InputField
-              type="number"
-              label="Height (cm)"
-              id="height"
-              name="height"
-              value={height}
-              edit={true}
-              handleChange={handleChange}
-            />
-            <InputField
-              type="number"
-              label="Weight (kg)"
-              id="weight"
-              name="weight"
-              value={weight}
-              edit={true}
-              handleChange={handleChange}
-            />
-            <div className="mt-5 flex h-14 items-center justify-between rounded-lg border border-gray-500 px-3 py-2">
-              <p className="font-semibold text-gray-700">Vegan?</p>
-              <div>
-                <div className="mb-4 flex justify-between gap-3">
-                  <label
-                    className="block text-xs font-bold text-gray-400"
-                    htmlFor="vegan-yes"
-                  >
-                    Yes
-                  </label>
-                  <input
-                    type="radio"
-                    id="vegan-yes"
-                    name="vegan"
-                    value="true"
-                    onChange={handleChange}
-                    checked={vegan === "true"}
-                  />
-                </div>
-                <div className="flex justify-between gap-3">
-                  <label
-                    className="block text-xs font-bold text-gray-400"
-                    htmlFor="vegan-no"
-                  >
-                    No
-                  </label>
-                  <input
-                    type="radio"
-                    id="vegan-no"
-                    name="vegan"
-                    value="false"
-                    onChange={handleChange}
-                    checked={vegan === "false"}
-                  />
+          <form
+            onSubmit={handleSubmission}
+            autoComplete="off"
+            noValidate
+            className="mb-4 grow bg-white px-8 pb-8 pt-6"
+          >
+            <h1 className="mb-1 mt-10 text-xl font-bold">Profile</h1>
+            <p className="mb-4 text-xs font-semibold text-gray-500">
+              The information can be edited
+            </p>
+            <div className="mb-12 grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <InputField
+                type="text"
+                label="First Name"
+                id="first_name"
+                name="first_name"
+                value={capitalizeFirstLetter(first_name)}
+              />
+              <InputField
+                type="text"
+                label="Last Name"
+                id="last_name"
+                name="last_name"
+                value={capitalizeFirstLetter(last_name)}
+              />
+              <InputField
+                type="email"
+                label="Email"
+                id="email"
+                name="email"
+                value={email}
+                edit={true}
+                handleChange={handleChange}
+              />
+              <InputField
+                type="text"
+                label="Access Code"
+                id="access_code"
+                name="access_code"
+                value={accessCode}
+              />
+              <InputField
+                type="text"
+                label="Age"
+                id="age"
+                name="age"
+                value={age}
+                isAge={true}
+              />
+              <InputField
+                type="text"
+                label="Gender"
+                id="gender"
+                name="gender"
+                value={capitalizeFirstLetter(gender)}
+              />
+              <InputField
+                type="text"
+                label="Status"
+                id="status"
+                name="status"
+                value={capitalizeFirstLetter(status)}
+              />
+              <InputField
+                type="text"
+                label="Role"
+                id="role"
+                name="role"
+                value={capitalizeFirstLetter(role)}
+              />
+              <InputField
+                type="number"
+                label="Height (cm)"
+                id="height"
+                name="height"
+                value={height}
+                edit={true}
+                handleChange={handleChange}
+              />
+              <InputField
+                type="number"
+                label="Weight (kg)"
+                id="weight"
+                name="weight"
+                value={weight}
+                edit={true}
+                handleChange={handleChange}
+              />
+              <div className="mt-5 flex h-14 items-center justify-between rounded-lg border border-gray-500 px-3 py-2">
+                <p className="font-semibold text-gray-700">Vegan?</p>
+                <div>
+                  <div className="mb-4 flex justify-between gap-3">
+                    <label
+                      className="block text-xs font-bold text-gray-400"
+                      htmlFor="vegan-yes"
+                    >
+                      Yes
+                    </label>
+                    <input
+                      type="radio"
+                      id="vegan-yes"
+                      name="vegan"
+                      value="true"
+                      onChange={handleChange}
+                      checked={vegan === "true"}
+                    />
+                  </div>
+                  <div className="flex justify-between gap-3">
+                    <label
+                      className="block text-xs font-bold text-gray-400"
+                      htmlFor="vegan-no"
+                    >
+                      No
+                    </label>
+                    <input
+                      type="radio"
+                      id="vegan-no"
+                      name="vegan"
+                      value="false"
+                      onChange={handleChange}
+                      checked={vegan === "false"}
+                    />
+                  </div>
                 </div>
               </div>
+              <InputField
+                type="text"
+                label="Goal"
+                id="goal"
+                name="goal"
+                value={goal}
+                edit={true}
+                handleChange={handleChange}
+                textarea={true}
+              />
+              <InputField
+                type="text"
+                label="Allergy"
+                id="allergy"
+                name="allergy"
+                value={allergy}
+                edit={true}
+                handleChange={handleChange}
+                textarea={true}
+              />
             </div>
-            <InputField
-              type="text"
-              label="Goal"
-              id="goal"
-              name="goal"
-              value={goal}
-              edit={true}
-              handleChange={handleChange}
-              textarea={true}
-            />
-            <InputField
-              type="text"
-              label="Allergy"
-              id="allergy"
-              name="allergy"
-              value={allergy}
-              edit={true}
-              handleChange={handleChange}
-              textarea={true}
-            />
-          </div>
-          {error ? <Notify message={error} /> : null}
-          {success ? <Notify message={success} type="success" /> : null}
-          <div className="flex justify-end">
-            <button
-              type="submit"
-              className="mt-5 rounded-lg bg-blue-500 px-3 py-2 font-bold text-white hover:bg-blue-700"
-            >
-              Save details
-            </button>
-          </div>
-        </form>
+            {error ? <Notify message={error} /> : null}
+            {success ? <Notify message={success} type="success" /> : null}
+            <div className="flex justify-end">
+              <button
+                type="submit"
+                className="mt-5 rounded-lg bg-blue-500 px-3 py-2 font-bold text-white hover:bg-blue-700"
+              >
+                Save details
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     );
 }

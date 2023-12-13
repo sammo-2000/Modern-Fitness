@@ -173,12 +173,19 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
         </div>
         <div className="mb-4">
           {/* https://jsfiddle.net/kb3gN/10396/ */}
+          <label htmlFor="name" className="mb-2 block text-xl font-bold">
+            Workout Type
+          </label>
           <select
             value={Name}
             className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none"
             onChange={(e) => SetName(e.target.value)}
+            id="name"
+            name="name"
           >
-            <option value={defaultValue}>Please Enter the Type</option>
+            <option value={defaultValue}>
+              Please Enter the Type of workout
+            </option>
             <option value="Bicep Curl">Bicep Curl</option>
             <option value="Tricep Curl">Tricep Curl</option>
             <option value="Pushup">Pushup</option>
