@@ -25,7 +25,7 @@ export default withAuth(
     }
 
     if (
-      req.nextUrl.pathname.startsWith("/events/edit") &&
+      req.nextUrl.pathname.startsWith("/events/edit/:id") &&
       role.value != "trainer" &&
       role.value != "manager"
     ) {
