@@ -1,20 +1,23 @@
 import React from "react";
-import { GoSearch } from "react-icons/go";
+
 import { IoNotificationsSharp } from "react-icons/io5";
 import { BsPeopleFill } from "react-icons/bs";
 import Image from "next/image";
 import picture from "public/profile.png";
 import Link from "next/link";
+import Hamburger from "./Hamburger";
 
-function Header() {
+export default function Header() {
   return (
     <header className="sticky top-0 z-10 flex items-center justify-between bg-white px-4 py-3 text-gray-700 shadow">
-      <div className="ml-10 lg:ml-0">
-        <GoSearch className="h-5 w-5" />
+      <div className="flex items-center gap-6">
+        <Hamburger />
+        <div className="  ml-4 flex justify-center rounded-full bg-gray-200 px-2 py-2">
+          <BsPeopleFill className=" h-5 w-5 text-blue-700" />
+        </div>
       </div>
 
-      <div className="flex gap-6 ">
-        <BsPeopleFill className="h-5 w-5 " />
+      <div className="flex items-center gap-8">
         <IoNotificationsSharp className="h-5 w-5 " />
         <Image
           src={picture}
@@ -27,5 +30,3 @@ function Header() {
     </header>
   );
 }
-
-export default Header;

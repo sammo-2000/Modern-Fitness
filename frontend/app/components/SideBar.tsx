@@ -1,32 +1,45 @@
-"use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { getServerSession } from "next-auth";
+import Image from "next/image";
+import mainImg from "public/main-gym-img.jpg";
+import { cookies } from "next/headers";
+import SidebarLink from "./SidebarLink";
+
+// Icons
 import { CgGym } from "react-icons/cg";
+import { BsPeopleFill } from "react-icons/bs";
 import { GiProgression } from "react-icons/gi";
 import { AiFillHome } from "react-icons/ai";
 import { BsPersonFill } from "react-icons/bs";
 import { RxHamburgerMenu } from "react-icons/rx";
-import Image from "next/image";
-import mainImg from "public/main-gym-img.jpg";
+import { GoSearch } from "react-icons/go";
+import { MdOutlineSelfImprovement } from "react-icons/md";
+import { CiLogin } from "react-icons/ci";
+import { FaRegRegistered } from "react-icons/fa6";
+import { CiLogout } from "react-icons/ci";
+import { MdEventNote } from "react-icons/md";
+import { IoCreateSharp } from "react-icons/io5";
+import { LiaUserPlusSolid } from "react-icons/lia";
 
-const toggleSidebar = () => {
-  const sidebar = document.getElementById("sidebar");
-  sidebar?.classList.toggle("-translate-x-[100%]");
-  // sidebar?.classList.toggle("height-screen");
-  const homeLink = document.getElementById("home-link");
-};
+interface SessionType {
+  user: {
+    name: string;
+    // other properties...
+  };
+}
 
-export default function SideBar() {
+interface SideBarProps {
+  session: SessionType | any; // Define the type as SessionType or any
+}
+
+export default async function SideBar() {
+  const session = await getServerSession();
+  const cookieStore = cookies();
+  const role = cookieStore.get("role");
+  console.log(role?.value);
   return (
     <>
-      <button
-        className="fixed left-4 top-[0.875rem] z-20 bg-white lg:hidden"
-        aria-controls="sidebar"
-        onClick={toggleSidebar}
-      >
-        <span className="sr-only">Open sidebar</span>
-        <RxHamburgerMenu className="h-5 w-5" />
-      </button>
       <div
         id="sidebar"
         className="height-screen hide-scrollbar fixed z-20 w-full -translate-x-[100%] overflow-y-auto bg-gray-800 text-white transition-transform lg:fixed lg:w-64 lg:translate-x-0 lg:overflow-y-auto"
@@ -36,61 +49,110 @@ export default function SideBar() {
             <CgGym className=" h-10 w-10 rounded-md bg-blue-700" />
           </div>
           <div className=" mb-4  rounded-lg bg-slate-700 px-3 py-3 leading-6">
-            <h1 className=" font-semibold">Modern</h1>
-            <p className=" text-sm font-normal text-gray-300">Fitness Gym</p>
+            <h1 className=" font-semibold">ModernFit</h1>
+            <p className=" text-sm font-normal text-gray-300">
+              The Personalised Gym
+            </p>
           </div>
         </div>
-        <div className="border-b-1 border border-x-0 border-t-0 border-gray-700 pb-20">
+        <div className="border-b-1 border border-x-0 border-t-0 border-gray-700">
           <div className="mx-4 py-3  text-sm font-semibold text-gray-400 ">
-            <Link
+            <SidebarLink
               href="\"
-              id="home-link"
               className=" my-2 mb-3  flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
             >
               <AiFillHome className=" ml-2 h-auto w-5 " /> Home
-            </Link>
-            <Link
-              href=""
-              className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-            >
-              <GiProgression className=" ml-2 h-auto w-5" />
-              Progress
-            </Link>
-            <Link
-              href="profile"
-              className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-            >
-              <BsPersonFill className=" ml-2 h-auto w-5" />
-              Account
-            </Link>
-            <Link
-              href=""
-              className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-            >
-              <AiFillHome className=" ml-2 h-auto w-5" />
-              Settings
-            </Link>
-            <Link
-              href="registration"
-              className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-            >
-              <AiFillHome className=" ml-2 h-auto w-5" />
-              Register
-            </Link>
-            <Link
-              href="signIn"
-              className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-            >
-              <AiFillHome className=" ml-2 h-auto w-5" />
-              Login
-            </Link>
-            <Link
-              href=""
-              className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-            >
-              <AiFillHome className=" ml-2 h-auto w-5" />
-              New Routine
-            </Link>
+            </SidebarLink>
+
+            {session ? (
+              <>
+                {/* <SidebarLink
+                  href=""
+                  className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                  
+                >
+                  <GiProgression className=" ml-2 h-auto w-5" />
+                  Progress
+                </SidebarLink> */}
+                <SidebarLink
+                  href="/profile"
+                  className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                >
+                  <BsPersonFill className=" ml-2 h-auto w-5" />
+                  Account
+                </SidebarLink>
+                {/* <SidebarLink
+                  href=""
+                  className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                  
+                >
+                  <AiFillHome className=" ml-2 h-auto w-5" />
+                  Settings
+                </SidebarLink> */}
+                <SidebarLink
+                  href="/my-programs"
+                  className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                >
+                  <MdOutlineSelfImprovement className=" ml-2 h-auto w-5" />
+                  My Programs
+                </SidebarLink>
+
+                {role && role.value !== "undefined" && (
+                  <div>
+                    <SidebarLink
+                      href="/events"
+                      className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                    >
+                      <MdEventNote className=" ml-2 h-auto w-5" />
+                      Events
+                    </SidebarLink>
+                  </div>
+                )}
+
+                {role?.value == "trainer" && ShowCreateEvent()}
+                {role?.value == "trainer" && ShowSearch()}
+                {role?.value == "manager" && ShowCreateEvent()}
+                {role?.value == "manager" && ShowSearch()}
+
+                {role?.value == "manager" && (
+                  <div>
+                    <SidebarLink
+                      href="/createTrainer"
+                      className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                    >
+                      <BsPeopleFill />
+                      <LiaUserPlusSolid className=" ml-2 h-auto w-5" />
+                      Create Trainer
+                    </SidebarLink>
+                  </div>
+                )}
+                <SidebarLink
+                  // href="/api/auth/signout?callbackUrl=/"
+                  href="/logout"
+                  className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                >
+                  <CiLogout className=" ml-2 h-auto w-5" />
+                  Sign Out
+                </SidebarLink>
+              </>
+            ) : (
+              <>
+                <SidebarLink
+                  href="registration"
+                  className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                >
+                  <FaRegRegistered className=" ml-2 h-auto w-5" />
+                  Register
+                </SidebarLink>
+                <SidebarLink
+                  href="/api/auth/signin"
+                  className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                >
+                  <CiLogin className=" ml-2 h-auto w-5" />
+                  Login
+                </SidebarLink>
+              </>
+            )}
           </div>
         </div>
         <div className=" bg-gray-800  py-5">
@@ -118,3 +180,31 @@ export default function SideBar() {
     </>
   );
 }
+
+const ShowSearch = () => {
+  return (
+    <div>
+      <SidebarLink
+        href="/members"
+        className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+      >
+        <GoSearch className=" ml-2 h-auto w-5" />
+        Search Member
+      </SidebarLink>
+    </div>
+  );
+};
+
+const ShowCreateEvent = () => {
+  return (
+    <div>
+      <SidebarLink
+        href="/events/create"
+        className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+      >
+        <IoCreateSharp className=" ml-2 h-auto w-5" />
+        Create Event
+      </SidebarLink>
+    </div>
+  );
+};
