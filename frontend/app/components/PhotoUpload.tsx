@@ -1,10 +1,17 @@
 import React from "react";
 import Image from "next/image";
 import picture from "public/profile.png";
+import { capitalizeFirstLetter } from "../utils/capitalize";
 
-function PhotoUpload(props: any) {
+interface Props {
+  firstName: string;
+  lastName: string;
+  gender: string;
+}
+
+function PhotoUpload(props: Props) {
   return (
-    <div className="w-full min-w-[18.75rem] grow bg-white p-4 shadow-md lg:w-auto">
+    <div className="w-full min-w-[18.75rem] grow bg-white p-4 shadow-md lg:mt-24 lg:w-auto lg:self-start">
       <div className=" flex flex-col items-center">
         <Image
           src={picture}
@@ -16,10 +23,11 @@ function PhotoUpload(props: any) {
 
         <div className=" mb-6 space-y-2">
           <p className="text-center text-2xl font-semibold">
-            {props.FirstName} <span>{props.LastName}</span>
+            {props.firstName} <span>{props.lastName}</span>
           </p>
-          <p className="text-center text-sm text-gray-500">{props.Location}</p>
-          <p className="text-center text-sm text-gray-500">GTM-7</p>
+          <p className="text-center text-sm text-gray-500">
+            {capitalizeFirstLetter(props.gender)}
+          </p>
         </div>
       </div>
       <hr className="my-3 " />
