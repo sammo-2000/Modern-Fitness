@@ -21,14 +21,16 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
   const { dispatch } = useProgramContext();
 
   console.log("user_id", user_id);
-          {/* https://stackoverflow.com/questions/57491815/how-to-reset-select-dropdown-values-in-react/57491948#57491948 */}
-const defaultValue: string="Please Select Workout Type";
+  {
+    /* https://stackoverflow.com/questions/57491815/how-to-reset-select-dropdown-values-in-react/57491948#57491948 */
+  }
+  const defaultValue: string = "Please Select Workout Type";
   const [Name, SetName] = useState(defaultValue);
   const [Load, SetLoad] = useState("");
   const [Reps, SetReps] = useState("");
   const [Sets, SetSets] = useState("");
   const [DateTime, SetDate] = useState(new Date());
-  
+
   const [error, setError] = useState<string>("");
   const [isSaveDisabled, SetSaveDisabled] = useState(true);
 
@@ -90,10 +92,7 @@ const defaultValue: string="Please Select Workout Type";
     clearWorkoutForm();
     SetSaveDisabled(false);
   };
-    }
-    
 
-  
   // https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/forms_and_events/
   const deleteWorkout = (
     index: number,
@@ -146,8 +145,6 @@ const defaultValue: string="Please Select Workout Type";
       setError("No workouts have been added");
     }
   };
-    }
-    
 
   return (
     // https://v1.tailwindcss.com/components/forms
@@ -175,21 +172,23 @@ const defaultValue: string="Please Select Workout Type";
           />
         </div>
         <div className="mb-4">
-        {/* https://jsfiddle.net/kb3gN/10396/ */}
-          <select value ={Name} className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none" 
-          onChange={(e) => SetName(e.target.value)} 
+          {/* https://jsfiddle.net/kb3gN/10396/ */}
+          <select
+            value={Name}
+            className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none"
+            onChange={(e) => SetName(e.target.value)}
           >
             <option value={defaultValue}>Please Enter the Type</option>
-             <option value="Bicep Curl">Bicep Curl</option>
-             <option value="Tricep Curl">Tricep Curl</option>
-             <option value="Pushup">Pushup</option>
-             <option value="Lat Pull Down">Lat Pull Down</option>
-             <option value="Bench Press">Bench Press</option>
-             <option value="Leg Extensions">Leg Extensions</option>
-             <option value="Leg Press">Leg Press</option>
-             <option value="Pull Ups">Pull Ups</option>
-           </select>
-         </div>   
+            <option value="Bicep Curl">Bicep Curl</option>
+            <option value="Tricep Curl">Tricep Curl</option>
+            <option value="Pushup">Pushup</option>
+            <option value="Lat Pull Down">Lat Pull Down</option>
+            <option value="Bench Press">Bench Press</option>
+            <option value="Leg Extensions">Leg Extensions</option>
+            <option value="Leg Press">Leg Press</option>
+            <option value="Pull Ups">Pull Ups</option>
+          </select>
+        </div>
         <div className="mb-4">
           <label htmlFor="load" className="mb-2 block text-xl font-bold">
             Load (in kg)
@@ -274,5 +273,5 @@ const defaultValue: string="Please Select Workout Type";
       </form>
     </>
   );
-        };
+};
 export default WorkoutForm;
