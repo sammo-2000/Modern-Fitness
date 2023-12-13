@@ -56,11 +56,21 @@ export default function Account() {
           setAge(fetchedMembers.user.dob);
           setStatus(fetchedMembers.user.status);
           setRole(fetchedMembers.user.role);
-          setGoal(fetchedMembers.user.goal);
-          setHeight(fetchedMembers.user.height.toString());
-          setWeight(fetchedMembers.user.weight.toString());
-          setAllergy(fetchedMembers.user.allergy);
-          setVegan(fetchedMembers.user.vegan.toString());
+          setGoal(fetchedMembers.user.goal ? fetchedMembers.user.goal : "");
+          setHeight(
+            fetchedMembers.user.height ? fetchedMembers.user.height : "",
+          );
+          setWeight(
+            fetchedMembers.user.weight ? fetchedMembers.user.weight : "",
+          );
+          setAllergy(
+            fetchedMembers.user.allergy ? fetchedMembers.user.allergy : "",
+          );
+          setVegan(
+            fetchedMembers.user.vegan
+              ? String(fetchedMembers.user.vegan)
+              : "false",
+          );
           setIsLoading(false);
         }
       } catch (error) {
