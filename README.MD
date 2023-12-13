@@ -117,14 +117,14 @@ Overall, the software will make managing the gym much easier as it will be acces
     cd ../frontend
     npm i
   ```
-3. Add `.env` file in the same format as `.env_example`, just using the values you wish to use locally, this must be done for backend and frontend
-4. Run local server for backend [Must be inside backend folder]
+4. Add `.env` file in the same format as `.env_example`, just using the values you wish to use locally, this must be done for backend and frontend
+5. Run local server for backend [Must be inside backend folder]
     ```sh
     nodemon server
     ```
-5. Run local server for frontend [Must be inside frontend folder]
+6. Run local server for frontend [Must be inside frontend folder]
   ```sh
-    npm start
+    npm run dev
   ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
