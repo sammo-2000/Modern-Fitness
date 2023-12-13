@@ -186,6 +186,16 @@ const delele_user = async (req, res) => {
   }
 };
 
+const get_all_trainers = async (req, res) => {
+    const trainers = await User_Model.find({ role: 'trainer' }, { password: 0 });
+    if (!trainers) {
+        console.log('❌ No trainers found');
+        return res.status(400).json({ success: false, message: 'No trainers found' });
+    }
+    console.log('✅ Get all trainers successfully');
+    return res.status(200).json({ success: true, trainers });
+}
+
 const has_custom_program = async (user_id) => {
   const has_program = await Program_Model.exists({ user_id });
   if (has_program) return true;
@@ -193,8 +203,9 @@ const has_custom_program = async (user_id) => {
 };
 
 module.exports = {
-  get_all_users,
-  get_single_user,
-  edit_user,
-  delele_user,
+    get_all_users,
+    get_single_user,
+    edit_user,
+    delele_user,
+    get_all_trainers
 };

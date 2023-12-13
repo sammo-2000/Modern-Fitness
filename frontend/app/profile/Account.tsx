@@ -7,8 +7,10 @@ import { capitalizeFirstLetter } from "../utils/capitalize";
 import Notify from "../components/Notify";
 import GetCookie from "../utils/getCookie";
 const Token = GetCookie("token") || "";
+import Loading from "../components/LoadingPage";
 
 export default function Account() {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [first_name, setFirstName] = useState<string>("");
   const [last_name, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -59,6 +61,7 @@ export default function Account() {
           setWeight(fetchedMembers.user.weight.toString());
           setAllergy(fetchedMembers.user.allergy);
           setVegan(fetchedMembers.user.vegan.toString());
+          setIsLoading(false);
         }
       } catch (error) {
         console.error(error);
@@ -121,9 +124,11 @@ export default function Account() {
     }
   };
 
-  return (
-    <div className="w-full flex-1 p-3">
-      <h1 className="mb-3 text-3xl font-semibold">Account</h1>
+  if (isLoading) return <Loading />;
+  else
+    return (
+      <div className="w-full flex-1 p-3">
+        <h1 className="mb-3 text-3xl font-semibold">Account</h1>
 
       <div className="flex flex-wrap items-center justify-center gap-4">
         <PhotoUpload
@@ -290,8 +295,7 @@ export default function Account() {
           </div>
         </form>
       </div>
-    </div>
-  );
+    );
 }
 
 const InputField = ({

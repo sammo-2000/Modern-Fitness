@@ -8,6 +8,7 @@ router.use(middleware.logged_on);
 // Get list of user
 router.get("/users/", middleware.staff, User.get_all_users);
 router.get("/users/:name", middleware.staff, User.get_all_users);
+router.get("/get-all-trainers", middleware.staff, User.get_all_trainers);
 // Get single user
 router.get("/user/", User.get_single_user);
 router.get("/user/:id", middleware.staff, User.get_single_user);

@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Button from "../components/Button";
 export default function SignUp() {
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
@@ -216,13 +217,13 @@ export default function SignUp() {
               {error}
             </div>
           )}
-
-          <button
+          <Button name={"Continue"} />
+          {/* <button
             type="submit"
             className=" w-full rounded-lg bg-blue-500 px-3 py-5 text-white hover:bg-blue-600"
           >
             Continue
-          </button>
+          </button> */}
         </div>
       </form>
     </div>

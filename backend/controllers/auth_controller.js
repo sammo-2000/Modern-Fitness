@@ -136,6 +136,7 @@ const signup = async (req, res) => {
   }
 };
 
+
 const createToken = (id) => {
   return jwt.sign({ id }, process.env.SECRET_TOKEN, { expiresIn: "14d" });
 };
