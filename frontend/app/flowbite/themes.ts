@@ -1,6 +1,13 @@
 import type { CustomFlowbiteTheme } from "flowbite-react";
 
 export const datePickerTheme: CustomFlowbiteTheme["datepicker"] = {
+  popup: {
+    footer: {
+      button: {
+        today: "bg-blue-500 text-white hover:bg-blue-400 dark:bg-blue-500 dark:hover:bg-blue-400"
+      }
+    }
+  },
     views: {
       days: {
         items: {

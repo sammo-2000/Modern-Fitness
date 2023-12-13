@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react";
 import { Datepicker } from "flowbite-react";
 import { useProgramContext } from "../hooks/useProgramContext";
 import Link from "next/link";
+import { datePickerTheme } from "../flowbite/themes";
 // import { useRouter } from "next/router";
 interface Workout {
   name: string;
@@ -160,6 +161,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
           </label>
           <Datepicker
             minDate={new Date()}
+            theme={datePickerTheme}
             onSelectedDateChanged={(date) => {
               console.log(date);
               SetDate(date);
