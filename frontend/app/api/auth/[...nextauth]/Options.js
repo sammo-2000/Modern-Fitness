@@ -58,7 +58,6 @@ const options = {
             console.log(`Found user: ${firstName} ${lastName}`);
           } else if (profile?.email === "sulaimonahmed08@gmail.com") {
             userRole = "trainer";
-            console.log(userRole);
           } else {
             console.log("Unknown User");
           }
@@ -124,8 +123,13 @@ const options = {
           cookies().set("role", data.user.role, {
             expires: Date.now() + 60 * 60 * 24 * 7 * 1000,
           });
+          cookies().set("id", data.user._id, {
+            expires: Date.now() + 60 * 60 * 24 * 7 * 1000,
+          });
 
-          return data.user;
+          return {
+            ...data.user,
+          };
         } catch (error) {
           console.log(error);
         }

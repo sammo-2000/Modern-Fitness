@@ -71,6 +71,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
         user_id: user_id,
         workout: workoutsList,
         date: DateTime.toISOString().split("T")[0],
+        //add workout start date
       };
       console.log(JSON.stringify(WorkoutJSON));
       const APIresponse = await fetch(

@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { BsPeopleFill } from "react-icons/bs";
 import { getServerSession } from "next-auth";
 import { CgGym } from "react-icons/cg";
-import { GiProgression } from "react-icons/gi";
 import { AiFillHome } from "react-icons/ai";
 import { BsPersonFill } from "react-icons/bs";
-import { RxHamburgerMenu } from "react-icons/rx";
 import Image from "next/image";
 import { GoSearch } from "react-icons/go";
 import { MdOutlineSelfImprovement } from "react-icons/md";
@@ -76,20 +73,20 @@ export default async function SideBar() {
                   <BsPersonFill className=" ml-2 h-auto w-5" />
                   Account
                 </SidebarLink>
-                {/* <SidebarLink
-                  href=""
-                  className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                  
-                >
-                  <AiFillHome className=" ml-2 h-auto w-5" />
-                  Settings
-                </SidebarLink> */}
+
                 <SidebarLink
                   href="/my-programs"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
                 >
                   <MdOutlineSelfImprovement className=" ml-2 h-auto w-5" />
                   My Programs
+                </SidebarLink>
+                <SidebarLink
+                  href="/Log-workout"
+                  className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                >
+                  <AiFillHome className=" ml-2 h-auto w-5" />
+                  Log Workout
                 </SidebarLink>
                 {role?.value == "trainer" && ShowSearch()}
                 {role?.value == "manager" && ShowSearch()}
@@ -100,7 +97,6 @@ export default async function SideBar() {
                       href="/createTrainer"
                       className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
                     >
-                      <BsPeopleFill />
                       <LiaUserPlusSolid className=" ml-2 h-auto w-5" />
                       Create Trainer
                     </SidebarLink>
