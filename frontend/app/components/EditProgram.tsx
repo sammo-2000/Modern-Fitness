@@ -1,10 +1,8 @@
-// Code Reference https://www.youtube.com/watch?v=tRmeik-IpUQ&list=PL4cUxeGkcC9iJ_KkrkBZWZRHVwnzLIoUE&index=10
 "use client";
 import { FormEvent, useState } from "react";
 import { Datepicker } from "flowbite-react";
-import { useProgramContext } from "../hooks/useProgramContext";
+import { useProgramContext } from "@/app/hooks/useProgramContext";
 import Link from "next/link";
-import { datePickerTheme } from "../flowbite/themes";
 // import { useRouter } from "next/router";
 interface Workout {
   name: string;
@@ -13,75 +11,37 @@ interface Workout {
   sets: string;
 }
 
-import GetCookie from "../utils/getCookie";
-import Notify from "./Notify";
+import GetCookie from "@/app/utils/getCookie";
 const Token = GetCookie("token") || "";
 
-export const WorkoutForm = ({ user_id }: { user_id: any }) => {
+export const EditWorkoutForm = ({ user_id }: { user_id: any }) => {
   // const router = useRouter();
   const { dispatch } = useProgramContext();
 
   console.log("user_id", user_id);
-  {
-    /* https://stackoverflow.com/questions/57491815/how-to-reset-select-dropdown-values-in-react/57491948#57491948 */
-  }
-  const defaultValue: string = "Please Select Workout Type";
-  const [Name, SetName] = useState(defaultValue);
+
+  const [Name, SetName] = useState("");
   const [Load, SetLoad] = useState("");
   const [Reps, SetReps] = useState("");
   const [Sets, SetSets] = useState("");
   const [DateTime, SetDate] = useState(new Date());
-
-  const [error, setError] = useState<string>("");
-  const [isSaveDisabled, SetSaveDisabled] = useState(true);
-
+  const [error, setError] = useState(null);
   const [workoutsList, setWorkoutsList] = useState<Workout[]>([]);
 
   const clearsForm = () => {
-    clearWorkoutForm();
-    SetDate(new Date());
-  };
-  const clearWorkoutForm = () => {
-    SetName(defaultValue);
+    SetName("");
     SetLoad("");
     SetReps("");
     SetSets("");
-    setError("");
+    SetDate(new Date());
+  };
+  const clearWorkoutForm = () => {
+    SetName("");
+    SetLoad("");
+    SetReps("");
+    SetSets("");
   };
   const addsToList = () => {
-    if (Name === "") {
-      return setError("Workout name is required");
-    }
-    if (Load === "") {
-      return setError("Workout load is required");
-    }
-    const loadInt = parseInt(Load, 10);
-    if (Number.isNaN(loadInt)) {
-      return setError("Workout load must be a number");
-    }
-    if (loadInt <= 0) {
-      return setError("Workout load must be greater than 0");
-    }
-    if (Reps === "") {
-      return setError("Workout reps is required");
-    }
-    const repsInt = parseInt(Reps, 10);
-    if (Number.isNaN(repsInt)) {
-      return setError("Workout reps must be a number");
-    }
-    if (repsInt <= 0) {
-      return setError("Workout reps must be greater than 0");
-    }
-    if (Sets === "") {
-      return setError("Workout sets is required");
-    }
-    const setsInt = parseInt(Sets, 10);
-    if (Number.isNaN(setsInt)) {
-      return setError("Workout sets must be a number");
-    }
-    if (setsInt <= 0) {
-      return setError("Workout sets must be greater than 0");
-    }
     const workout: Workout = {
       name: Name,
       load: Load,
@@ -91,9 +51,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
     setWorkoutsList((prevList) => [...prevList, workout]);
 
     clearWorkoutForm();
-    SetSaveDisabled(false);
   };
-
   // https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/forms_and_events/
   const deleteWorkout = (
     index: number,
@@ -110,20 +68,16 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
     event.preventDefault();
 
     if (workoutsList.length > 0) {
-      if (DateTime < new Date()) {
-        return setError("End date must be in the future");
-      }
       const WorkoutJSON = {
         user_id: user_id,
         workout: workoutsList,
         date: DateTime.toISOString().split("T")[0],
-        //add workout start date
       };
       console.log(JSON.stringify(WorkoutJSON));
       const APIresponse = await fetch(
-        process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN + "/api/program",
+        process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN + `/api/program/:program_id`,
         {
-          method: "POST",
+          method: "PATCH",
           body: JSON.stringify(WorkoutJSON),
           headers: {
             "Content-Type": "application/json",
@@ -137,71 +91,46 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
       } else {
         clearsForm();
         setWorkoutsList([]);
-        console.log("Workout has been added: ", responseJSON.program);
+        console.log("Workout has been updated: ", responseJSON.program);
         dispatch({ type: "CREATE_PROGRAM", payload: responseJSON.program });
 
         // router.push("");
         document.location.replace(`/members/${user_id}`);
       }
-    } else {
-      setError("No workouts have been added");
     }
   };
 
   return (
     // https://v1.tailwindcss.com/components/forms
     <>
-      <h1 className="text-3xl font-bold">Create Program</h1>
+      <h1 className="text-3xl font-bold">Edit Program</h1>
       <form
         onSubmit={SubmitWorkoutForm}
         className="Create bg-grey mb-4 rounded px-8 pb-8 pt-6 shadow"
       >
         <div className="mb-4">
-          <label htmlFor="date" className="mb-2 block text-xl font-bold">
-            Select End Date
+          <label
+            htmlFor="name"
+            className="mb-2 block text-xl font-semibold text-gray-700"
+          >
+            New Exercise
           </label>
-          <Datepicker
-            minDate={new Date()}
-            theme={datePickerTheme}
-            onSelectedDateChanged={(date) => {
-              console.log(date);
-              SetDate(date);
-            }}
-            autoHide={true}
+          <input
             className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none"
-            placeholder="Select End date"
-            id="date"
-            name="date"
+            type="text"
+            onChange={(e) => SetName(e.target.value)}
+            value={Name}
+            placeholder="Enter Workout Name"
+            id="name"
+            name="name"
           />
         </div>
         <div className="mb-4">
-          {/* https://jsfiddle.net/kb3gN/10396/ */}
-          <label htmlFor="name" className="mb-2 block text-xl font-bold">
-            Workout Type
-          </label>
-          <select
-            value={Name}
-            className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none"
-            onChange={(e) => SetName(e.target.value)}
-            id="name"
-            name="name"
+          <label
+            htmlFor="load"
+            className="mb-2 block text-xl font-bold text-gray-700"
           >
-            <option value={defaultValue}>
-              Please Enter the Type of workout
-            </option>
-            <option value="Bicep Curl">Bicep Curl</option>
-            <option value="Tricep Curl">Tricep Curl</option>
-            <option value="Pushup">Pushup</option>
-            <option value="Lat Pull Down">Lat Pull Down</option>
-            <option value="Bench Press">Bench Press</option>
-            <option value="Leg Extensions">Leg Extensions</option>
-            <option value="Leg Press">Leg Press</option>
-            <option value="Pull Ups">Pull Ups</option>
-          </select>
-        </div>
-        <div className="mb-4">
-          <label htmlFor="load" className="mb-2 block text-xl font-bold">
-            Load (in kg)
+            New Load (in kg)
           </label>
           <input
             className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none"
@@ -214,8 +143,11 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="reps" className="mb-2 block text-xl font-bold">
-            Reps
+          <label
+            htmlFor="reps"
+            className="mb-2 block text-xl font-bold text-gray-700"
+          >
+            New Reps
           </label>
           <input
             className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none"
@@ -228,8 +160,11 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="sets" className="mb-2 block text-xl font-bold">
-            Sets
+          <label
+            htmlFor="sets"
+            className="mb-2 block text-xl font-bold text-gray-700"
+          >
+           New Sets
           </label>
           <input
             className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none"
@@ -241,27 +176,41 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
             name="sets"
           />
         </div>
-
+        <div className="mb-4">
+          <label
+            htmlFor="date"
+            className="mb-2 block text-xl font-bold text-gray-700"
+          >
+            New End Date
+          </label>
+          <Datepicker
+            onSelectedDateChanged={(date) => {
+              console.log(date);
+              SetDate(date);
+            }}
+            autoHide={true}
+            className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none"
+            placeholder="Select End date"
+            id="date"
+            name="date"
+          />
+        </div>
         <div className="mb-4 flex flex-col justify-between sm:flex-row">
-          <button
+          {/* <button
             className="mb-2 mt-6 rounded-xl border border-blue-500 bg-white px-4 py-2 text-sm font-bold text-blue-500 hover:bg-gray-100"
             type="button"
             onClick={addsToList}
           >
             Add Workout
-          </button>
+          </button> */}
           <button
             className="mb-2 mt-6 rounded-xl bg-blue-500 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700"
             type="submit"
           >
-            Save Program
+            Update Program
           </button>
         </div>
-        {error && (
-          <div className="mb-4">
-            <Notify message={error} />
-          </div>
-        )}
+        {error && <div className="text-red-600">{error}</div>}
         {/* https://www.creative-tim.com/learning-lab/tailwind-starter-kit/documentation/css/buttons/small/filled */}
         {workoutsList.map((workout, index) => (
           <li
@@ -284,4 +233,4 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
     </>
   );
 };
-export default WorkoutForm;
+export default EditWorkoutForm;

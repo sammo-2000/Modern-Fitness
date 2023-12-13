@@ -36,7 +36,7 @@ const NotFound = () => {
         Sorry, no custom program found
       </h1>
       <p className="uppercase text-gray-400">
-        Please wait until one of our trainer create one for you
+        Please wait until one of our trainers create one for you
       </p>
     </>
   );
@@ -46,7 +46,7 @@ const DisplayPrograms = ({ programs }: { programs: any[] }) => {
   return (
     <div className="flex min-h-screen w-full flex-col gap-5">
       {programs.map((program: any) => {
-        return <DisplaySingleProgram program={program} />;
+        return <DisplaySingleProgram key={program._id} program={program} />;
       })}
     </div>
   );
@@ -61,7 +61,7 @@ const DisplaySingleProgram = ({ program }: { program: any }) => {
         </p>
         <div className="flex flex-wrap gap-5">
           {program.workout.map((workout: any) => {
-            return <DisplayWorkout workout={workout} />;
+            return <DisplayWorkout key={workout._id} workout={workout} />;
           })}
         </div>
       </div>

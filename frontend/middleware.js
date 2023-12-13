@@ -17,6 +17,22 @@ export default withAuth(
     }
 
     if (
+      req.nextUrl.pathname.startsWith("/events/create") &&
+      role.value != "trainer" &&
+      role.value != "manager"
+    ) {
+      return NextResponse.rewrite(new URL("/Denied", req.url));
+    }
+
+    if (
+      req.nextUrl.pathname.startsWith("/events/edit/:id") &&
+      role.value != "trainer" &&
+      role.value != "manager"
+    ) {
+      return NextResponse.rewrite(new URL("/Denied", req.url));
+    }
+
+    if (
       req.nextUrl.pathname.startsWith("/createTrainer") &&
       role.value != "manager"
     ) {
@@ -30,4 +46,4 @@ export default withAuth(
   },
 );
 
-export const config = { matcher: ["/members", "/createTrainer"] };
+export const config = { matcher: ["/members", "/createTrainer", "/events/create", "/events/edit"] };

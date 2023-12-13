@@ -21,9 +21,9 @@ const User_Schema = new Schema(
     role: { type: String, required: true, trim: true, default: "member" },
     goal: { type: String, required: false, trim: true, default: null },
     note: { type: String, required: false, trim: true, default: null },
-    height: { type: String, required: false, trim: true, default: null },
-    weight: { type: String, required: false, trim: true, default: null },
-    vegan: { type: String, required: false, trim: true, default: "no" },
+    height: { type: Number, required: false, trim: true, default: null },
+    weight: { type: Number, required: false, trim: true, default: null },
+    vegan: { type: Boolean, required: false, trim: true, default: false },
     allergy: { type: String, required: false, trim: true, default: null },
   },
   { timestamps: true }

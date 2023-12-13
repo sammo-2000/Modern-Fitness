@@ -1,19 +1,24 @@
 import Link from "next/link";
-import { BsPeopleFill } from "react-icons/bs";
 import { getServerSession } from "next-auth";
+import Image from "next/image";
+import mainImg from "public/main-gym-img.jpg";
+import { cookies } from "next/headers";
+import SidebarLink from "./SidebarLink";
+
+// Icons
 import { CgGym } from "react-icons/cg";
+import { GiProgression } from "react-icons/gi";
 import { AiFillHome } from "react-icons/ai";
 import { BsPersonFill } from "react-icons/bs";
-import Image from "next/image";
 import { GoSearch } from "react-icons/go";
 import { MdOutlineSelfImprovement } from "react-icons/md";
 import { CiLogin } from "react-icons/ci";
 import { FaRegRegistered } from "react-icons/fa6";
 import { CiLogout } from "react-icons/ci";
-import mainImg from "public/main-gym-img.jpg";
+
+import { IoCreateSharp } from "react-icons/io5";
 import { LiaUserPlusSolid } from "react-icons/lia";
-import { cookies } from "next/headers";
-import SidebarLink from "./SidebarLink";
+
 interface SessionType {
   user: {
     name: string;
@@ -81,14 +86,8 @@ export default async function SideBar() {
                   <MdOutlineSelfImprovement className=" ml-2 h-auto w-5" />
                   My Programs
                 </SidebarLink>
-                <SidebarLink
-                  href="/Log-workout"
-                  className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                >
-                  <AiFillHome className=" ml-2 h-auto w-5" />
-                  Log Workout
-                </SidebarLink>
                 {role?.value == "trainer" && ShowSearch()}
+                {role?.value == "manager" && ShowCreateEvent()}
                 {role?.value == "manager" && ShowSearch()}
 
                 {role?.value == "manager" && (
@@ -103,7 +102,8 @@ export default async function SideBar() {
                   </div>
                 )}
                 <SidebarLink
-                  href="/api/auth/signout?callbackUrl=/"
+                  // href="/api/auth/signout?callbackUrl=/"
+                  href="/logout"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
                 >
                   <CiLogout className=" ml-2 h-auto w-5" />
@@ -165,6 +165,20 @@ const ShowSearch = () => {
       >
         <GoSearch className=" ml-2 h-auto w-5" />
         Search Member
+      </SidebarLink>
+    </div>
+  );
+};
+
+const ShowCreateEvent = () => {
+  return (
+    <div>
+      <SidebarLink
+        href="/events/create"
+        className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+      >
+        <IoCreateSharp className=" ml-2 h-auto w-5" />
+        Create Event
       </SidebarLink>
     </div>
   );

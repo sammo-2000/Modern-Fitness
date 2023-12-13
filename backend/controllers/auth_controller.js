@@ -1,47 +1,47 @@
-const User_Model = require('../models/User_Model');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const validator = require('validator');
-const send_email = require('../mail/welcome');
+const User_Model = require("../models/User_Model");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const validator = require("validator");
+const send_email = require("../mail/welcome");
 
 const login = async (req, res) => {
-    const { User_identifier, password } = req.body;
-    try {
-        // Check if email is provided
-        if (!User_identifier)
-            throw Error('User Identifier is required');
+  const { User_identifier, password } = req.body;
+  try {
+    // Check if email is provided
+    if (!User_identifier) throw Error("User Identifier is required");
 
-        // Check if password is provided
-        if (!password)
-            throw Error('Password is required');
+    // Check if password is provided
+    if (!password) throw Error("Password is required");
 
-        // Check if email is valid
-        let user = await User_Model.findOne({ email: User_identifier });
-        if (!user) {
-            user = await User_Model.findOne({ access_code: User_identifier });
-            if (!user) {
-                throw Error('Incorrect credentials');
-            }
-        }
+    // Check if email is valid
+    let user = await User_Model.findOne({ email: User_identifier });
+    if (!user) {
+      user = await User_Model.findOne({ access_code: User_identifier });
+      if (!user) {
+        throw Error("Incorrect credentials");
+      }
+    }
 
-        // Check if password is correct
-        const match = await bcrypt.compare(password, user.password);
-        if (!match)
-            throw Error('Incorrect credentials');
+    // Check if password is correct
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) throw Error("Incorrect credentials");
 
-        // Create token
-        const token = createToken(user._id);
+    // Create token
+    const token = createToken(user._id);
 
-        // Return response
-        console.log('✅ Login successfully');
-        return res.status(200).json({ success: true, message: 'Login successfully', token, user });
-    } catch (error) {
-        console.log('❌ Login failed');
-        return res.status(400).json({ success: false, message: error.message });
-    };
-}
+    // Return response
+    console.log("✅ Login successfully");
+    return res
+      .status(200)
+      .json({ success: true, message: "Login successfully", token, user });
+  } catch (error) {
+    console.log("❌ Login failed");
+    return res.status(400).json({ success: false, message: error.message });
+  }
+};
 
 const signup = async (req, res) => {
+
     const { trainer } = req.params;
     const { email, password, first_name, last_name, gender, dob } = req.body;
     try {
@@ -102,17 +102,12 @@ const signup = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hash = await bcrypt.hash(password, salt);
 
-
         const user = await User_Model.create({ email, password: hash, first_name, last_name, gender, dob });
-        // // Create user
-        // let user = null;
-        // if (trainer)
-        //     // Manager create trainer
-        //     user = await User_Model.create({ email, password: hash, first_name, last_name, gender, dob, role: "trainer" });
-        // else
-        //     // User signup
-        //     user = await User_Model.create({ email, password: hash, first_name, last_name, gender, dob });
 
+        // let user = null
+
+        // if (req._user.role && req._user.role === 'manager') user = await User_Model.create({ email, password: hash, first_name, last_name, gender, dob, role: 'trainer' });
+        // else user = await User_Model.create({ email, password: hash, first_name, last_name, gender, dob });
 
         // Create token
         const token = createToken(user._id);
@@ -128,12 +123,11 @@ const signup = async (req, res) => {
         return res.status(400).json({ success: false, message: error.message });
     };
 }
-
 const createToken = (id) => {
-    return jwt.sign({ id }, process.env.SECRET_TOKEN, { expiresIn: '14d' })
-}
+  return jwt.sign({ id }, process.env.SECRET_TOKEN, { expiresIn: "14d" });
+};
 
 module.exports = {
-    login,
-    signup
+  login,
+  signup,
 };

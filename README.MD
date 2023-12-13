@@ -1,5 +1,7 @@
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
+
 <a name="readme-top"></a>
+
 <!--
 *** Thanks for checking out the Best-README-Template. If you have a suggestion
 *** that would make this better, please fork the repo and create a pull request
@@ -39,9 +41,8 @@
   </ol>
 </details>
 
-
-
 <!-- ABOUT THE PROJECT -->
+
 <a name="about-the-project"></a>
 
 ## About The Project
@@ -50,7 +51,7 @@
 
 ### Project Vision
 
-The outcome of the project is a fully functioning web app with the ability for managers, staff and members who have a membership to utilize the system to achieve their goals far more efficiently than they previously had done due to the change from paper management to paperless. An aspiration of this project is creating a user-friendly intuitive interface to complete tasks easier. 
+The outcome of the project is a fully functioning web app with the ability for managers, staff and members who have a membership to utilize the system to achieve their goals far more efficiently than they previously had done due to the change from paper management to paperless. An aspiration of this project is creating a user-friendly intuitive interface to complete tasks easier.
 
 The software will allow Modern Fit to handle the user digitally with less effort as the user will be able to sign up without the help of staff member being always on site. In addition, Modern Fit will be able to display all their services online for potential clients.
 
@@ -58,30 +59,29 @@ Staff members will be able to create custom workout plans for each member, who c
 
 Staff members will also be able to create custom events such as group workout and can view and take part in it.
 
-Overall, the software will make managing the gym much easier as it will be accessible everywhere, even outside of the gym. 
+Overall, the software will make managing the gym much easier as it will be accessible everywhere, even outside of the gym.
 
 <a name="project-objectives"></a>
 
 ### Project Objectives
 
-*	Eliminate the need for ModernFit to use any other system to aid in the management of their gym.
-*	Make it easier and faster for ModernFit to register new members so that they can scale their business.
-*	Make it easier for members to track their progression and log their workouts and meals so that more customers wish to register with ModernFit, thus netting them greater profits.
-*	Make it easier for ModernFit’s various branches to share their data with one another as they scale up their business.
+- Eliminate the need for ModernFit to use any other system to aid in the management of their gym.
+- Make it easier and faster for ModernFit to register new members so that they can scale their business.
+- Make it easier for members to track their progression and log their workouts and meals so that more customers wish to register with ModernFit, thus netting them greater profits.
+- Make it easier for ModernFit’s various branches to share their data with one another as they scale up their business.
 
 <a name="built-with"></a>
 
 ### Built With
 
-* [![Node][Node.js]][Node-url]
-* [![Tailwind][Tailwindcss.com]][Tailwindcss-url]
-* [![Next JS][Next.com]][Next-url]
+- [![Node][Node.js]][Node-url]
+- [![Tailwind][Tailwindcss.com]][Tailwindcss-url]
+- [![Next JS][Next.com]][Next-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- GETTING STARTED -->
+
 <a name="getting-started"></a>
 
 ## Getting Started
@@ -90,59 +90,63 @@ Overall, the software will make managing the gym much easier as it will be acces
 
 ### Prerequisites
 
-* Node: Make sure you have at least version `18.18`, check by running
-    ```sh
-    node -v
-    ```
-* Nodemon: Install nodemon on your machine
-    ```sh
-    npm i -g nodemon
-    ```
+- Node: Make sure you have at least version `18.18`, check by running
+  ```sh
+  node -v
+  ```
+- Nodemon: Install nodemon on your machine
+  ```sh
+  npm i -g nodemon
+  ```
 
 <a name="installation"></a>
 
 ### Installation
 
 1. Clone the repo
-    ```sh
-    git clone https://github.com/sammo-2000/modernFit
-    ```
+   ```sh
+   git clone https://github.com/sammo-2000/modernFit
+   ```
 2. Install NPM packages for backend
-    ```sh
-    cd modernFit/backend
-    npm i
-    ```
+   ```sh
+   cd modernFit/backend
+   npm i
+   ```
 3. Install NPM packages for frontend
-  ```
-    cd ../frontend
-    npm i
-  ```
+
+```
+  cd ../frontend
+  npm i
+```
+
 4. Add `.env` file in the same format as `.env_example`, just using the values you wish to use locally, this must be done for backend and frontend
 5. Run local server for backend [Must be inside backend folder]
-    ```sh
-    nodemon server
-    ```
+   ```sh
+   nodemon server
+   ```
 6. Run local server for frontend [Must be inside frontend folder]
-  ```sh
-    npm run dev
-  ```
+
+```sh
+  npm run dev
+```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- ACKNOWLEDGMENTS -->
+
 <a name="acknowledgements"></a>
 
 ## Acknowledgments
 
-* [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
-* [Img Shields](https://shields.io)
+- [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
+- [Img Shields](https://shields.io)
+- [Net Ninja MERN stack](https://www.youtube.com/@NetNinja)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
 [Node.js]: https://img.shields.io/badge/Node.js-6DA753?style=for-the-badge&logo=nodedotjs&logoColor=white
 [Node-url]: https://nodejs.org/
 [Tailwindcss.com]: https://img.shields.io/badge/Tailwind-444444?style=for-the-badge&logo=tailwindcss&logoColor=62baf2

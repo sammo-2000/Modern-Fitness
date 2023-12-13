@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Button from "../components/Button";
 export default function SignUp() {
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
@@ -13,6 +14,11 @@ export default function SignUp() {
 
   const [error, setError] = useState("");
   const router = useRouter();
+
+  const maxDate = new Date();
+  maxDate.setFullYear(maxDate.getFullYear() - 18);
+  const maxDateString = maxDate.toISOString().split("T")[0];
+
   const handleSubmission = async (event: any) => {
     event.preventDefault();
     setError("");
@@ -28,6 +34,11 @@ export default function SignUp() {
       if (!gender) return setError("Please select gender");
       if (!checked)
         return setError("Please check the box of agreement to continue");
+      if (dob > new Date().toISOString().split("T")[0])
+        return setError("Date of birth cannot be in the future");
+      if (dob > maxDateString) {
+        return setError("You must be at least 18 years old to sign up");
+      }
 
       try {
         const response = await fetch(
@@ -136,6 +147,7 @@ export default function SignUp() {
                 name="firstname"
                 placeholder="Firstname"
                 className="mr-2 w-1/2 rounded-xl border  border-gray-300 px-3 py-5 focus:border-2 focus:border-blue-500 focus:outline-none"
+                required
               />
               <input
                 id="LastName"
@@ -144,6 +156,7 @@ export default function SignUp() {
                 name="lastname"
                 placeholder="Lastname"
                 className="w-1/2 rounded-xl border border-gray-300  px-3 py-5 focus:border-2 focus:border-blue-500 focus:outline-none "
+                required
               />
             </div>
             <input
@@ -153,6 +166,7 @@ export default function SignUp() {
               name="email"
               placeholder="Email"
               className="mb-6 w-full rounded-xl border border-gray-300 bg-blue-50 px-3 py-5 focus:border-2 focus:border-blue-500 focus:outline-none"
+              required
             />
             <input
               id="password"
@@ -161,6 +175,7 @@ export default function SignUp() {
               name="password"
               placeholder="Password"
               className="mb-6 w-full rounded-xl border border-gray-300 bg-blue-50 px-3 py-5 focus:border-2 focus:border-blue-500 focus:outline-none"
+              required
             />
             <input
               id="dob"
@@ -169,12 +184,15 @@ export default function SignUp() {
               name="dob"
               placeholder="Date of birth"
               className="mb-6 w-full rounded-xl border border-gray-300 bg-blue-50 px-3 py-5 focus:border-2 focus:border-blue-500 focus:outline-none"
+              max={maxDateString}
+              required
             />
             <select
               name="gender"
               id="gender"
               onChange={handleChange}
               className="mb-6 w-full rounded-xl border border-gray-300 bg-blue-50 px-3 py-5 focus:border-2 focus:border-blue-500 focus:outline-none"
+              required
             >
               <option value="" disabled hidden selected>
                 Select
@@ -188,6 +206,7 @@ export default function SignUp() {
               type="checkbox"
               name="isCheck"
               onChange={handleChange}
+              required
             />
             <label htmlFor="consent" className="ml-4 text-sm font-bold">
               I consent to sharing my information
@@ -198,13 +217,13 @@ export default function SignUp() {
               {error}
             </div>
           )}
-
-          <button
+          <Button name={"Continue"} />
+          {/* <button
             type="submit"
             className=" w-full rounded-lg bg-blue-500 px-3 py-5 text-white hover:bg-blue-600"
           >
             Continue
-          </button>
+          </button> */}
         </div>
       </form>
     </div>
