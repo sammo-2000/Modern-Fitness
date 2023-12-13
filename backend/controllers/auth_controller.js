@@ -104,6 +104,11 @@ const signup = async (req, res) => {
 
         const user = await User_Model.create({ email, password: hash, first_name, last_name, gender, dob });
 
+        // let user = null
+
+        // if (req._user.role && req._user.role === 'manager') user = await User_Model.create({ email, password: hash, first_name, last_name, gender, dob, role: 'trainer' });
+        // else user = await User_Model.create({ email, password: hash, first_name, last_name, gender, dob });
+
         // Create token
         const token = createToken(user._id);
 

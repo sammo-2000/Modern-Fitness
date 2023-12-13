@@ -127,7 +127,8 @@ export default async function SideBar() {
                   </div>
                 )}
                 <SidebarLink
-                  href="/api/auth/signout?callbackUrl=/"
+                  // href="/api/auth/signout?callbackUrl=/"
+                  href="/logout"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
                 >
                   <CiLogout className=" ml-2 h-auto w-5" />
