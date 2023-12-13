@@ -33,28 +33,9 @@ export const GetPrograms = ({ MemberId }: { MemberId: string }) => {
       }
     };
 
-    //   if (MemberId) {
-    //     fetchPrograms();
-    //   }
-    // }, [MemberId, dispatch]);
     fetchPrograms();
   }, []);
-  // return (
-  //   <div className="">
-  //     {programs &&
-  //       programs.map(
-  //         (program: { workout: Workout[]; date: Date }, programIndex: number) =>
-  //           program.workout &&
-  //           program.workout.map((workout: Workout, workoutIndex: number) => (
-  //             <WorkoutStats
-  //               key={`${program.date}-${programIndex}-${workout.id}-${workoutIndex}`}
-  //               date={program.date}
-  //               workout={workout}
-  //             />
-  //           )),
-  //       )}
-  //   </div>
-  // );
+
   return (
     <div className="mx-4">
       {programs &&
@@ -64,7 +45,7 @@ export const GetPrograms = ({ MemberId }: { MemberId: string }) => {
               Program Ending On: {program.date}
             </h1>
             {program.workout.map((workout: Workout) => (
-              <WorkoutStats key={workout.id} workout={workout} />
+              <WorkoutStats key={workout._id} workout={workout} />
             ))}
           </div>
         ))}
