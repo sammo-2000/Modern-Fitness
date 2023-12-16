@@ -63,20 +63,27 @@ export default async function SideBar() {
 
             {session ? (
               <>
-                {/* <SidebarLink
-                  href=""
+                <SidebarLink
+                  href="/progress"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                  
                 >
                   <GiProgression className=" ml-2 h-auto w-5" />
                   Progress
-                </SidebarLink> */}
+                </SidebarLink>
                 <SidebarLink
                   href="/profile"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
                 >
                   <BsPersonFill className=" ml-2 h-auto w-5" />
                   Account
+                </SidebarLink>
+
+                <SidebarLink
+                  href="/Log-workout"
+                  className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                >
+                  <BsPersonFill className=" ml-2 h-auto w-5" />
+                  Log Workout
                 </SidebarLink>
 
                 <SidebarLink
