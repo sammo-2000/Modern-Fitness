@@ -291,6 +291,7 @@ const Data = () => {
                   name="week"
                   id="week"
                   onChange={handleChange}
+                  value={week}
                   className="mb-6 w-full rounded-xl border border-gray-300 bg-blue-50 px-3 py-5 focus:border-2 focus:border-blue-500 focus:outline-none"
                 >
                   <option value="" disabled hidden selected>
@@ -306,6 +307,7 @@ const Data = () => {
                   name="exercise"
                   id="exercise"
                   onChange={handleChange}
+                  value={exercise}
                   className="mb-6 w-full rounded-xl border border-gray-300 bg-blue-50 px-3 py-5 focus:border-2 focus:border-blue-500 focus:outline-none"
                 >
                   <option value="" disabled hidden selected>
@@ -323,6 +325,7 @@ const Data = () => {
                   id="sets"
                   type="number"
                   onChange={handleChange}
+                  value={sets}
                   name="sets"
                   placeholder="Log Sets "
                   className="mb-4 w-1/2 rounded-xl border  border-gray-300 px-3 py-5 focus:border-2 focus:border-blue-500 focus:outline-none"
@@ -331,6 +334,7 @@ const Data = () => {
                   id="reps"
                   type="number"
                   onChange={handleChange}
+                  value={reps}
                   name="reps"
                   placeholder="Log Reps"
                   className="w-1/2 rounded-xl border border-gray-300  px-3 py-5 focus:border-2 focus:border-blue-500 focus:outline-none "
@@ -339,6 +343,7 @@ const Data = () => {
                   id="loads"
                   type="number"
                   onChange={handleChange}
+                  value={loads}
                   name="loads"
                   placeholder="Log Loads (kg)"
                   className="w-1/2 rounded-xl border border-gray-300  px-3 py-5 focus:border-2 focus:border-blue-500 focus:outline-none "
