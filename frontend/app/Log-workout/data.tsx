@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import GetCookie from "../utils/getCookie";
+import Notify from "../components/Notify";
 const Token = GetCookie("token") || "";
 const UserId = GetCookie("id") || "";
 interface ExerciseInfo {
@@ -351,14 +352,16 @@ const Data = () => {
               </div>
             </div>
             {error && (
-              <div className="mb-6 rounded-lg bg-red-100 px-5 py-2 text-center font-bold text-red-600">
-                {error}
-              </div>
+              // <div className="mb-6 rounded-lg bg-red-100 px-5 py-2 text-center font-bold text-red-600">
+              //   {error}
+              // </div>
+              <Notify type="error" message={error} />
             )}
             {success && (
-              <div className="mb-6 rounded-lg bg-green-100 px-5 py-2 text-center font-bold text-green-600 ">
-                {success}
-              </div>
+              // <div className="mb-6 rounded-lg bg-green-100 px-5 py-2 text-center font-bold text-green-600 ">
+              //   {success}
+              // </div>
+              <Notify type="success" message={success} />
             )}
 
             <button
