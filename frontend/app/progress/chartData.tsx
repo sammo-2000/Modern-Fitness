@@ -88,58 +88,51 @@ const ChartData = () => {
     const setsPerWeek: string[][] = [];
     const RepsPerWeek: string[][] = [];
 
-    programs.forEach((program: any) => {
-      const { date } = program;
+    if (programs.length > 0) {
+      const { date } = programs[0]; // Fetching the first date from the database
       const { weeks } = getWeeks(start, date);
 
       for (let i = 1; i < weeks + 1; i++) {
         let str = i.toString();
         updatedNumberOfWeeks.push(i);
-        //get loads per week----------------------------------------------------------------------------
+
+        // Fetching data per week based on the first date
         const loadsForWeekOne = workout
           .flatMap((program: any) =>
-            // Filter 'loads' where 'week' equals 'str'
             program.logged_workout.filter(
               (workoutData: any) => workoutData.week === str,
             ),
           )
           .map((workoutData: any) => workoutData.loads);
 
-        console.log("loads :" + loadsForWeekOne);
         loadsPerWeek.push(loadsForWeekOne);
 
-        //get sets per week------------------------------------------------------------------------------
         const setForWeek = workout
           .flatMap((program: any) =>
-            // Filter 'loads' where 'week' equals 'str'
             program.logged_workout.filter(
               (workoutData: any) => workoutData.week === str,
             ),
           )
           .map((workoutData: any) => workoutData.sets);
 
-        console.log("sets :" + setForWeek);
         setsPerWeek.push(setForWeek);
 
-        //get reps per week--------------------------------------------------------------------------------
         const repsForWeek = workout
           .flatMap((program: any) =>
-            // Filter 'loads' where 'week' equals 'str'
             program.logged_workout.filter(
               (workoutData: any) => workoutData.week === str,
             ),
           )
           .map((workoutData: any) => workoutData.reps);
 
-        console.log("sets :" + repsForWeek);
         RepsPerWeek.push(repsForWeek);
       }
-      console.log(`Program ID: ${program._id}, Total weeks: ${weeks}`);
-    });
-    setLoadsForWeek(loadsPerWeek);
-    setSetForWeek(setsPerWeek);
-    setRepsForWeek(RepsPerWeek);
-    setNumberOfWeeks(updatedNumberOfWeeks);
+
+      setLoadsForWeek(loadsPerWeek);
+      setSetForWeek(setsPerWeek);
+      setRepsForWeek(RepsPerWeek);
+      setNumberOfWeeks(updatedNumberOfWeeks);
+    }
   }, [programs, workout]);
 
   //calculate the total loads per week------------------------------------------------------------------------

@@ -261,23 +261,23 @@ const Data = () => {
   };
 
   const start = "2023-11-04";
-  useEffect(() => {
-    const updatedNumberOfWeeks: number[] = [];
-    programs.forEach((program: any) => {
-      const { date } = program;
-      const { weeks, remainingDays } = getWeeks(start, date);
 
+  useEffect(() => {
+    if (programs.length > 0) {
+      const { date } = programs[0]; // Fetching the first date from the database
+      const { weeks } = getWeeks(start, date);
+
+      const updatedNumberOfWeeks: number[] = [];
       for (let i = 1; i < weeks + 1; i++) {
         updatedNumberOfWeeks.push(i);
       }
-      console.log(numberOfWeeks);
-      console.log(
-        `Program ID: ${program._id}, Total weeks: ${weeks}, Remaining days: ${remainingDays}`,
-      );
-    });
-    setNumberOfWeeks(updatedNumberOfWeeks);
-  }, [programs]);
 
+      console.log(updatedNumberOfWeeks);
+      console.log(`Program ID: ${programs[0]._id}, Total weeks: ${weeks}`);
+
+      setNumberOfWeeks(updatedNumberOfWeeks);
+    }
+  }, [programs]);
   return (
     <div>
       <h1 className=" mb-16 text-center text-xl font-extrabold text-gray-700">
