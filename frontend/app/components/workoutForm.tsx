@@ -11,7 +11,7 @@ interface Workout {
   load: string;
   reps: string;
   sets: string;
-  log : string;
+  log: string;
 }
 
 import GetCookie from "../utils/getCookie";
@@ -86,14 +86,14 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
       return setError("Workout sets must be greater than 0");
     }
     if (Log === "") {
-      return setError("Workout log is required");
+      return setError("Times per week is required");
     }
-    const logInt = parseInt(Log, 7);
+    const logInt = parseInt(Log, 10);
     if (Number.isNaN(logInt)) {
-      return setError("Workout log must be a number");
+      return setError("Times per week must be a number");
     }
-    if (logInt <= 0 || logInt > 7) {
-      return setError("Workout log must be greater than 0 or 7 or less");
+    if (logInt < 1 || logInt > 7) {
+      return setError("Times per week must be between 1 and 7");
     }
     const workout: Workout = {
       name: Name,
@@ -257,7 +257,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
         </div>
         <div className="mb-4">
           <label htmlFor="log" className="mb-2 block text-xl font-bold">
-            Times Workout Completed in a week:
+            Times per week
           </label>
           <input
             className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none"
