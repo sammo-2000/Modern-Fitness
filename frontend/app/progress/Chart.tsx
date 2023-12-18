@@ -78,6 +78,7 @@ const LineChart: React.FC<LineChartProps> = ({
       },
     },
     responsive: true,
+    maintainAspectRatio: false,
     scales: {
       y: {
         ticks: {
@@ -124,12 +125,12 @@ const LineChart: React.FC<LineChartProps> = ({
   };
 
   return (
-    <div>
+    <>
       {/* <h1 className="mb-6 mt-10 text-center text-3xl font-bold text-gray-500">
         Live update of workout progress
       </h1> */}
-      <div className=" mb-12 flex justify-center  gap-3 shadow-lg">
-        <div className=" m-2 h-[210px] w-full rounded-lg border border-x-2 border-y-2 p-4 shadow-lg">
+      <div className=" mb-12 flex w-full flex-wrap justify-center gap-3 shadow-lg">
+        <div className=" m-2 min-w-[16rem] flex-grow rounded-lg border border-x-2 border-y-2 p-4 shadow-lg">
           <div className="mt-3 text-center">
             <h2 className=" mb-7 text-lg font-bold text-gray-500">
               {" "}
@@ -149,7 +150,7 @@ const LineChart: React.FC<LineChartProps> = ({
             </p>
           </div>
         </div>
-        <div className=" m-2 h-[210px] w-full rounded-lg  border border-x-2 border-y-2 p-4 shadow-lg">
+        <div className=" m-2 min-w-[16rem] flex-grow rounded-lg  border border-x-2 border-y-2 p-4 shadow-lg">
           <div className="mt-4 text-center">
             <h2 className=" mb-7 text-lg font-bold text-gray-500">
               {" "}
@@ -169,7 +170,7 @@ const LineChart: React.FC<LineChartProps> = ({
             </p>
           </div>
         </div>
-        <div className=" m-2 h-[210px] w-full rounded-lg  border border-x-2 border-y-2 p-4 shadow-lg">
+        <div className=" m-2 min-w-[16rem] flex-grow rounded-lg  border border-x-2 border-y-2 p-4 shadow-lg ">
           <div className="mt-4 text-center">
             <h2 className=" mb-7 text-lg font-bold text-gray-500">
               {" "}
@@ -191,17 +192,10 @@ const LineChart: React.FC<LineChartProps> = ({
         </div>
       </div>
 
-      <div
-        style={{
-          width: "1000px",
-          height: "600px",
-          padding: "20px",
-          cursor: "pointer",
-        }}
-      >
+      <div className="graph-container h-[80vh] w-full p-5">
         <Line data={data} options={options}></Line>
       </div>
-    </div>
+    </>
   );
 };
 
