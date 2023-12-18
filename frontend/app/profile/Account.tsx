@@ -157,14 +157,14 @@ export default function Account() {
               The information can be edited
             </p>
             <div className="mb-12 grid grid-cols-1 gap-5 sm:grid-cols-2">
-              <InputField
+              <NonModifiableField
                 type="text"
                 label="First Name"
                 id="first_name"
                 name="first_name"
                 value={capitalizeFirstLetter(first_name)}
               />
-              <InputField
+              <NonModifiableField
                 type="text"
                 label="Last Name"
                 id="last_name"
@@ -180,14 +180,14 @@ export default function Account() {
                 edit={true}
                 handleChange={handleChange}
               />
-              <InputField
+              <NonModifiableField
                 type="text"
                 label="Access Code"
                 id="access_code"
                 name="access_code"
                 value={accessCode}
               />
-              <InputField
+              <NonModifiableField
                 type="text"
                 label="Age"
                 id="age"
@@ -195,21 +195,21 @@ export default function Account() {
                 value={age}
                 isAge={true}
               />
-              <InputField
+              <NonModifiableField
                 type="text"
                 label="Gender"
                 id="gender"
                 name="gender"
                 value={capitalizeFirstLetter(gender)}
               />
-              <InputField
+              <NonModifiableField
                 type="text"
                 label="Status"
                 id="status"
                 name="status"
                 value={capitalizeFirstLetter(status)}
               />
-              <InputField
+              <NonModifiableField
                 type="text"
                 label="Role"
                 id="role"
@@ -307,7 +307,7 @@ export default function Account() {
       </div>
     );
 }
-
+//modifiable input field
 const InputField = ({
   label,
   id,
@@ -338,7 +338,7 @@ const InputField = ({
       </div>
       {textarea ? (
         <textarea
-          className="min-h-14 w-full appearance-none rounded-lg border px-3 py-2 font-medium leading-tight text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:cursor-not-allowed disabled:bg-gray-100"
+          className="min-h-14 w-full appearance-none rounded-lg border  px-3 py-2 font-medium leading-tight text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:cursor-not-allowed disabled:bg-gray-100"
           id={id}
           name={name}
           value={isAge ? calculateAge(value) : value}
@@ -347,7 +347,59 @@ const InputField = ({
         />
       ) : (
         <input
-          className="h-14 w-full appearance-none rounded-lg border px-3 py-2 font-medium leading-tight text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:cursor-not-allowed disabled:bg-gray-100"
+          className="h-14 w-full appearance-none rounded-lg border  px-3 py-2 font-medium leading-tight text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:cursor-not-allowed disabled:bg-gray-100"
+          type={type}
+          id={id}
+          name={name}
+          value={isAge ? calculateAge(value) : value}
+          onChange={handleChange}
+          disabled={!edit}
+        />
+      )}
+    </div>
+  );
+};
+//non-modifiable input field
+const NonModifiableField = ({
+  label,
+  id,
+  name,
+  type,
+  value,
+  handleChange,
+  edit = false,
+  isAge = false,
+  textarea = false,
+}: {
+  label: string;
+  id: string;
+  name: string;
+  type: string;
+  value: string;
+  handleChange?: any;
+  edit?: boolean;
+  isAge?: boolean;
+  textarea?: boolean;
+}) => {
+  return (
+    <div>
+      <div className="mb-1 text-end">
+        <label className="block text-xs font-bold text-gray-400" htmlFor={id}>
+          {label}
+        </label>
+      </div>
+      {textarea ? (
+        <textarea
+          className="min-h-14 w-full appearance-none rounded-lg border border-gray-300 px-3 py-2 font-medium leading-tight text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:cursor-not-allowed disabled:bg-gray-100"
+          id={id}
+          name={name}
+          value={isAge ? calculateAge(value) : value}
+          onChange={handleChange}
+          disabled={!edit}
+        />
+      ) : (
+        <input
+          className="h-14 w-full appearance-none rounded-lg border border-gray-300 px-3 py-2 font-medium leading-tight text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:cursor-not-allowed disabled:bg-gray-100"
           type={type}
           id={id}
           name={name}

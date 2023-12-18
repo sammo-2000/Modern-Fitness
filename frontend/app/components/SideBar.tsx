@@ -15,7 +15,7 @@ import { MdOutlineSelfImprovement } from "react-icons/md";
 import { CiLogin } from "react-icons/ci";
 import { FaRegRegistered } from "react-icons/fa6";
 import { CiLogout } from "react-icons/ci";
-
+import { IoIosAddCircle } from "react-icons/io";
 import { IoCreateSharp } from "react-icons/io5";
 import { LiaUserPlusSolid } from "react-icons/lia";
 
@@ -82,7 +82,7 @@ export default async function SideBar() {
                   href="/Log-workout"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
                 >
-                  <BsPersonFill className=" ml-2 h-auto w-5" />
+                  <IoIosAddCircle className=" ml-2 h-auto w-5" />
                   Log Workout
                 </SidebarLink>
 
