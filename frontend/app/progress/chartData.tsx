@@ -77,7 +77,7 @@ const ChartData = () => {
 
       // Calculate the total days and weeks
       const totalDays = Math.round(difference / oneDay);
-      const weeks = Math.floor(totalDays / 7);
+      const weeks = Math.ceil(totalDays / 7);
 
       return { weeks };
     };

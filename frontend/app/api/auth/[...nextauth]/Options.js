@@ -46,9 +46,6 @@ const options = {
           cookies().set("role", data.user.role, {
             expires: Date.now() + 60 * 60 * 24 * 7 * 1000,
           });
-          cookies().set("id", data.user._id, {
-            expires: Date.now() + 60 * 60 * 24 * 7 * 1000,
-          });
 
           return {
             ...data.user,

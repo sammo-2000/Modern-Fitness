@@ -12,13 +12,12 @@ interface ExerciseInfo {
   week: string;
 }
 
-interface DataProps {
-  id: {
-    name: string;
-  };
+interface WeekInfo {
+  weekNumber: number;
+  startDate: string;
+  endDate: string;
 }
 
-//const Data: React.FC<DataProps> = ({ id }) => {
 const Data = () => {
   const [programs, setPrograms] = useState<any>([]);
   const [week, setWeek] = useState("");
@@ -30,6 +29,7 @@ const Data = () => {
   const [success, setSuccess] = useState("");
   const [numberOfWeeks, setNumberOfWeeks] = useState<number[]>([]);
   const [exerciseData, setExerciseData] = useState<ExerciseInfo[]>([]);
+  const [weekData, setWeekData] = useState<WeekInfo[]>([]);
 
   const clearsForm = () => {
     setExercise("");
@@ -69,6 +69,7 @@ const Data = () => {
         setExercise(value);
         break;
     }
+    console.log("week: " + week);
   };
   //fetching workout data
   useEffect(() => {
@@ -97,106 +98,6 @@ const Data = () => {
   const handleSubmission = async (event: any) => {
     event.preventDefault();
     setError("");
-
-    // try {
-    //   // Check all fields are filled
-    //   if (!week) return setError("Select a week");
-    //   if (!exercise) return setError("Please enter exercise");
-    //   if (!sets) return setError("Please enter number of sets");
-    //   if (!reps) return setError("Please enter number of reps");
-    //   if (!loads) return setError("Please enter number of loads");
-
-    //   const user_id = "656613daba2ef7a693cc7997"; // Replace this with the actual user_id
-
-    //   if (exerciseData.length > 0) {
-    //     const WorkoutJSON = {
-    //       user_id,
-    //       logged_workout: exerciseData,
-    //     };
-    //     console.log(JSON.stringify(WorkoutJSON));
-    //     console.log(exerciseData);
-
-    //     // Fetch the user's existing data from the database
-    //     const existingDataResponse = await fetch(
-    //       `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/exercise/`,
-    //       {
-    //         method: "GET",
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //           authorization: Token,
-    //         },
-    //       },
-    //     );
-    //     const existingData = await existingDataResponse.json();
-    //     console.log(existingData.workout);
-    //     // If no matching user_id found, simply add the logged_workout object
-    //     if (!existingData) {
-    //       const APIresponse = await fetch(
-    //         `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/exercise`,
-    //         {
-    //           method: "POST",
-    //           body: JSON.stringify(WorkoutJSON),
-    //           headers: {
-    //             "Content-Type": "application/json",
-    //             authorization: Token,
-    //           },
-    //         },
-    //       );
-    //       const responseJSON = await APIresponse.json();
-    //       if (!responseJSON.success) {
-    //         setError(responseJSON.message);
-    //       } else {
-    //         console.log("Workout has been added: ", responseJSON.exercise);
-    //         setExerciseData([]);
-    //         clearsForm();
-    //       }
-    //     } else {
-    //       // If user_id found, update the exerciseData array in the existing data
-    //       //   const updatedData = {
-    //       //     ...existingData,
-    //       //     logged_workout: [...existingData.logged_workout, ...exerciseData],
-    //       //   };
-
-    //       // Retrieve the existing logged_workout array and add the new object
-
-    //       const updatedLoggedWorkout = [
-    // data.workout.map((program: any) => {
-    //     return program.logged_workout.map((workoutData: any) =>
-    //       console.log(workoutData.loads),
-    //     );
-    //   });
-    //         ...existingData.logged_workout,
-    //         ...exerciseData,
-    //       ];
-
-    //       const updatedData = {
-    //         ...existingData,
-    //         logged_workout: updatedLoggedWorkout,
-    //       };
-
-    //       const APIresponse = await fetch(
-    //         `${process.env.NEXT_PUBLIC_BACKEND_FULL_DOMAIN}/api/exercise/${user_id}`,
-    //         {
-    //           method: "PATCH",
-    //           body: JSON.stringify(updatedData),
-    //           headers: {
-    //             "Content-Type": "application/json",
-    //             authorization: Token,
-    //           },
-    //         },
-    //       );
-    //       const responseJSON = await APIresponse.json();
-    //       if (!responseJSON.success) {
-    //         setError(responseJSON.message);
-    //       } else {
-    //         setExerciseData([]);
-    //         console.log("Workout has been updated: ", responseJSON.exercise);
-    //       }
-    //     }
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
 
     try {
       // Check all fields are filled
@@ -241,8 +142,7 @@ const Data = () => {
       console.log(error);
     }
   };
-
-  const getWeeks = (startDate: string, endDate: string) => {
+  const getWeeks = (startDate: string, endDate: string): WeekInfo[] => {
     const date1 = new Date(startDate);
     const date2 = new Date(endDate);
 
@@ -252,12 +152,29 @@ const Data = () => {
     // Calculate the number of milliseconds in a day
     const oneDay = 24 * 60 * 60 * 1000;
 
-    // Calculate the total days and weeks
+    // Calculate the total days
     const totalDays = Math.round(difference / oneDay);
-    const weeks = Math.floor(totalDays / 7);
-    const remainingDays = totalDays % 7;
 
-    return { weeks, remainingDays };
+    let currentDate = new Date(startDate);
+
+    const weeksArray: any = [];
+    // Calculate weeks and their start and end dates
+    for (let i = 0; i < Math.ceil(totalDays / 7); i++) {
+      const startOfWeek = new Date(currentDate);
+      const endOfWeek = new Date(
+        currentDate.setDate(currentDate.getDate() + 6),
+      );
+
+      weeksArray.push({
+        weekNumber: i + 1,
+        startDate: startOfWeek.toISOString().split("T")[0],
+        endDate: endOfWeek.toISOString().split("T")[0],
+      });
+
+      currentDate.setDate(currentDate.getDate() + 1); // Move to the next day
+    }
+
+    return weeksArray;
   };
 
   const start = "2023-11-04";
@@ -265,17 +182,13 @@ const Data = () => {
   useEffect(() => {
     if (programs.length > 0) {
       const { date } = programs[0]; // Fetching the first date from the database
-      const { weeks } = getWeeks(start, date);
 
-      const updatedNumberOfWeeks: number[] = [];
-      for (let i = 1; i < weeks + 1; i++) {
-        updatedNumberOfWeeks.push(i);
-      }
-
-      console.log(updatedNumberOfWeeks);
-      console.log(`Program ID: ${programs[0]._id}, Total weeks: ${weeks}`);
-
-      setNumberOfWeeks(updatedNumberOfWeeks);
+      const weeksData = getWeeks(start, date);
+      setWeekData([...weeksData]);
+      console.log("Set weeks data:", weekData);
+      weekData.forEach((week: WeekInfo) => {
+        console.log("Week Number:", week.weekNumber);
+      });
     }
   }, [programs]);
   return (
@@ -298,9 +211,13 @@ const Data = () => {
                   <option value="" disabled hidden selected>
                     Select a week
                   </option>
-                  {numberOfWeeks.map((w) => (
-                    <option key={w} value={w}>
-                      Week {w}
+                  {weekData.map((week: WeekInfo) => (
+                    <option key={week.weekNumber} value={week.weekNumber}>
+                      Week{" "}
+                      <p className="ml-3 text-sm font-extrabold text-blue-600">
+                        {week.weekNumber}
+                      </p>{" "}
+                      (from {week.startDate} to {week.endDate})
                     </option>
                   ))}
                 </select>
@@ -351,18 +268,8 @@ const Data = () => {
                 />
               </div>
             </div>
-            {error && (
-              // <div className="mb-6 rounded-lg bg-red-100 px-5 py-2 text-center font-bold text-red-600">
-              //   {error}
-              // </div>
-              <Notify type="error" message={error} />
-            )}
-            {success && (
-              // <div className="mb-6 rounded-lg bg-green-100 px-5 py-2 text-center font-bold text-green-600 ">
-              //   {success}
-              // </div>
-              <Notify type="success" message={success} />
-            )}
+            {error && <Notify type="error" message={error} />}
+            {success && <Notify type="success" message={success} />}
 
             <button
               onClick={addsToList}
