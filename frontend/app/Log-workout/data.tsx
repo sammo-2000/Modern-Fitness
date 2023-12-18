@@ -192,93 +192,88 @@ const Data = () => {
     }
   }, [programs]);
   return (
-    <div>
-      <h1 className=" mb-16 text-center text-xl font-extrabold text-gray-700">
+    <div className="p-5">
+      <h1 className=" mb-16 text-center text-xl font-extrabold ">
         Log Exercise
       </h1>
       <div className=" ">
-        <div>
-          <form onSubmit={handleSubmission}>
-            <div className=" ">
-              <div className=" mb-6  ">
-                <select
-                  name="week"
-                  id="week"
-                  onChange={handleChange}
-                  value={week}
-                  className="mb-6 w-full rounded-xl border border-gray-300 bg-blue-50 px-3 py-5 focus:border-2 focus:border-blue-500 focus:outline-none"
-                >
-                  <option value="" disabled hidden selected>
-                    Select a week
+        <form onSubmit={handleSubmission}>
+          <div className=" ">
+            <div className=" mb-6  ">
+              <select
+                name="week"
+                id="week"
+                onChange={handleChange}
+                value={week}
+                className="mb-6 w-full rounded-xl border border-gray-300 bg-blue-50 px-3 py-5 focus:border-2 focus:border-blue-500 focus:outline-none"
+              >
+                <option value="" disabled hidden>
+                  Select a week
+                </option>
+                {weekData.map((week: WeekInfo) => (
+                  <option key={week.weekNumber} value={week.weekNumber}>
+                    Week {week.weekNumber} from {week.startDate} to{" "}
+                    {week.endDate}
                   </option>
-                  {weekData.map((week: WeekInfo) => (
-                    <option key={week.weekNumber} value={week.weekNumber}>
-                      Week{" "}
-                      <p className="ml-3 text-sm font-extrabold text-blue-600">
-                        {week.weekNumber}
-                      </p>{" "}
-                      (from {week.startDate} to {week.endDate})
+                ))}
+              </select>
+              <select
+                name="exercise"
+                id="exercise"
+                onChange={handleChange}
+                value={exercise}
+                className="mb-6 w-full rounded-xl border border-gray-300 bg-blue-50 px-3 py-5 focus:border-2 focus:border-blue-500 focus:outline-none"
+              >
+                <option value="" disabled hidden>
+                  Select Exercise
+                </option>
+                {programs.map((program: any) => {
+                  return program.workout.map((workoutData: any) => (
+                    <option key={workoutData._id} value={workoutData.name}>
+                      {workoutData.name}
                     </option>
-                  ))}
-                </select>
-                <select
-                  name="exercise"
-                  id="exercise"
-                  onChange={handleChange}
-                  value={exercise}
-                  className="mb-6 w-full rounded-xl border border-gray-300 bg-blue-50 px-3 py-5 focus:border-2 focus:border-blue-500 focus:outline-none"
-                >
-                  <option value="" disabled hidden selected>
-                    Select Exercise
-                  </option>
-                  {programs.map((program: any) => {
-                    return program.workout.map((workoutData: any) => (
-                      <option key={workoutData.id} value={workoutData.name}>
-                        {workoutData.name}
-                      </option>
-                    ));
-                  })}
-                </select>
-                <input
-                  id="sets"
-                  type="number"
-                  onChange={handleChange}
-                  value={sets}
-                  name="sets"
-                  placeholder="Log Sets "
-                  className="mb-4 w-1/2 rounded-xl border  border-gray-300 px-3 py-5 focus:border-2 focus:border-blue-500 focus:outline-none"
-                />
-                <input
-                  id="reps"
-                  type="number"
-                  onChange={handleChange}
-                  value={reps}
-                  name="reps"
-                  placeholder="Log Reps"
-                  className="w-1/2 rounded-xl border border-gray-300  px-3 py-5 focus:border-2 focus:border-blue-500 focus:outline-none "
-                />
-                <input
-                  id="loads"
-                  type="number"
-                  onChange={handleChange}
-                  value={loads}
-                  name="loads"
-                  placeholder="Log Loads (kg)"
-                  className="w-1/2 rounded-xl border border-gray-300  px-3 py-5 focus:border-2 focus:border-blue-500 focus:outline-none "
-                />
-              </div>
+                  ));
+                })}
+              </select>
+              <input
+                id="sets"
+                type="number"
+                onChange={handleChange}
+                value={sets}
+                name="sets"
+                placeholder="Log Sets "
+                className="mb-4 w-1/2 rounded-xl border  border-gray-300 px-3 py-5 focus:border-2 focus:border-blue-500 focus:outline-none"
+              />
+              <input
+                id="reps"
+                type="number"
+                onChange={handleChange}
+                value={reps}
+                name="reps"
+                placeholder="Log Reps"
+                className="w-1/2 rounded-xl border border-gray-300  px-3 py-5 focus:border-2 focus:border-blue-500 focus:outline-none "
+              />
+              <input
+                id="loads"
+                type="number"
+                onChange={handleChange}
+                value={loads}
+                name="loads"
+                placeholder="Log Loads (kg)"
+                className="w-1/2 rounded-xl border border-gray-300  px-3 py-5 focus:border-2 focus:border-blue-500 focus:outline-none "
+              />
             </div>
-            {error && <Notify type="error" message={error} />}
-            {success && <Notify type="success" message={success} />}
+          </div>
+          {error && <Notify type="error" message={error} />}
+          {success && <Notify type="success" message={success} />}
 
-            <button
-              onClick={addsToList}
-              className=" float-right rounded-lg bg-blue-500 px-6 py-2 font-bold text-white"
-            >
-              Add
-            </button>
-          </form>
-        </div>
+          <button
+            onClick={addsToList}
+            className=" float-right rounded-lg bg-blue-500 px-6 py-2 font-bold text-white"
+          >
+            Add
+          </button>
+        </form>
       </div>
     </div>
   );
