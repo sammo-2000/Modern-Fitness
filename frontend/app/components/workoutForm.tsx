@@ -11,7 +11,6 @@ interface Workout {
   load: string;
   reps: string;
   sets: string;
-  log: string;
 }
 
 import GetCookie from "../utils/getCookie";
@@ -31,7 +30,6 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
   const [Load, SetLoad] = useState("");
   const [Reps, SetReps] = useState("");
   const [Sets, SetSets] = useState("");
-  const [Log, SetLog] = useState("");
   const [DateTime, SetDate] = useState(new Date());
 
   const [error, setError] = useState<string>("");
@@ -48,7 +46,6 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
     SetLoad("");
     SetReps("");
     SetSets("");
-    SetLog("");
     setError("");
   };
   const addsToList = () => {
@@ -85,22 +82,11 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
     if (setsInt <= 0) {
       return setError("Workout sets must be greater than 0");
     }
-    if (Log === "") {
-      return setError("Times per week is required");
-    }
-    const logInt = parseInt(Log, 10);
-    if (Number.isNaN(logInt)) {
-      return setError("Times per week must be a number");
-    }
-    if (logInt < 1 || logInt > 7) {
-      return setError("Times per week must be between 1 and 7");
-    }
     const workout: Workout = {
       name: Name,
       load: Load,
       reps: Reps,
       sets: Sets,
-      log: Log,
     };
     setWorkoutsList((prevList) => [...prevList, workout]);
 
@@ -255,22 +241,8 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
             name="sets"
           />
         </div>
-        <div className="mb-4">
-          <label htmlFor="log" className="mb-2 block text-xl font-bold">
-            Times per week
-          </label>
-          <input
-            className="mb-3 w-full rounded-xl border border-gray-300 px-1 py-3 focus:border-2 focus:border-blue-500 focus:outline-none"
-            type="number"
-            onChange={(e) => SetLog(e.target.value)}
-            value={Log}
-            placeholder="Enter the number of sets"
-            id="log"
-            name="log"
-          />
-        </div>
-
-        <div className="mb-4 flex flex-col justify-between sm:flex-row">
+          
+          <div className="mb-4 flex flex-col justify-between sm:flex-row">
           <button
             className="mb-2 mt-6 rounded-xl border border-blue-500 bg-white px-4 py-2 text-sm font-bold text-blue-500 hover:bg-gray-100"
             type="button"

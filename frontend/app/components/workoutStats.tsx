@@ -19,9 +19,6 @@ const workoutStats: React.FC<{ workout: Workout }> = ({ workout }) => {
       <p className="m-0 text-xl text-gray-600">
         Number of sets: {workout.sets}
       </p>
-      <p className="m-0 text-xl text-gray-600">
-        Times Workout to be Completed in a Week: {workout.log}
-      </p>
 
       <Link href={`/members/${workout._id}/editWorkout`}>
         <button
