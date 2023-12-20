@@ -26,8 +26,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
   {
     /* https://stackoverflow.com/questions/57491815/how-to-reset-select-dropdown-values-in-react/57491948#57491948 */
   }
-  const defaultValue: string = "Please Select Workout Type";
-  const [Name, SetName] = useState(defaultValue);
+  const [Name, SetName] = useState("");
   const [Load, SetLoad] = useState("");
   const [Reps, SetReps] = useState("");
   const [Sets, SetSets] = useState("");
@@ -44,7 +43,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
     SetDate(new Date());
   };
   const clearWorkoutForm = () => {
-    SetName(defaultValue);
+    SetName("");
     SetLoad("");
     SetReps("");
     SetSets("");
@@ -200,7 +199,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
             id="name"
             name="name"
           >
-            <option value={defaultValue}>
+            <option value="" disabled hidden>
               Please Enter the Type of workout
             </option>
             <option value="Bicep Curl">Bicep Curl</option>
