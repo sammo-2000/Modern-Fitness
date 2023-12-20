@@ -100,7 +100,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
     event: React.MouseEvent<HTMLButtonElement>,
   ) => {
     event.stopPropagation();
-
+    // Code  line 105 -106 from https://chat.openai.com/auth/login 
     const updatingList = [...workoutsList];
     updatingList.splice(index, 1);
     setWorkoutsList(updatingList);
@@ -263,6 +263,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
           </div>
         )}
         {/* https://www.creative-tim.com/learning-lab/tailwind-starter-kit/documentation/css/buttons/small/filled */}
+        {/*code on line 267 and 273 from https://chat.openai.com/auth/login*/}
         {workoutsList.map((workout, index) => (
           <li
             key={index}
