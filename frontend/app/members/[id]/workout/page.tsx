@@ -3,8 +3,6 @@ import React, { useEffect, useState } from "react";
 import WorkoutForm from "@/app/components/workoutForm";
 import { useProgramContext } from "@/app/hooks/useProgramContext";
 import GetCookie from "@/app/utils/getCookie";
-import { useFetchedData } from "@/app/context/MemberIdContext";
-import type { Workout } from "@/app/types/workout";
 
 export const WorkoutPage = ({ params }: any) => {
   const MemberId = params.id;

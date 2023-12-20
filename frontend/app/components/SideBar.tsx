@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
@@ -8,17 +7,15 @@ import SidebarLink from "./SidebarLink";
 
 // Icons
 import { CgGym } from "react-icons/cg";
-import { BsPeopleFill } from "react-icons/bs";
 import { GiProgression } from "react-icons/gi";
 import { AiFillHome } from "react-icons/ai";
 import { BsPersonFill } from "react-icons/bs";
-import { RxHamburgerMenu } from "react-icons/rx";
 import { GoSearch } from "react-icons/go";
 import { MdOutlineSelfImprovement } from "react-icons/md";
 import { CiLogin } from "react-icons/ci";
 import { FaRegRegistered } from "react-icons/fa6";
 import { CiLogout } from "react-icons/ci";
-import { MdEventNote } from "react-icons/md";
+import { IoIosAddCircle } from "react-icons/io";
 import { IoCreateSharp } from "react-icons/io5";
 import { LiaUserPlusSolid } from "react-icons/lia";
 
@@ -66,14 +63,13 @@ export default async function SideBar() {
 
             {session ? (
               <>
-                {/* <SidebarLink
-                  href=""
+                <SidebarLink
+                  href="/progress"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                  
                 >
                   <GiProgression className=" ml-2 h-auto w-5" />
                   Progress
-                </SidebarLink> */}
+                </SidebarLink>
                 <SidebarLink
                   href="/profile"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
@@ -81,14 +77,15 @@ export default async function SideBar() {
                   <BsPersonFill className=" ml-2 h-auto w-5" />
                   Account
                 </SidebarLink>
-                {/* <SidebarLink
-                  href=""
+
+                <SidebarLink
+                  href="/Log-workout"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                  
                 >
-                  <AiFillHome className=" ml-2 h-auto w-5" />
-                  Settings
-                </SidebarLink> */}
+                  <IoIosAddCircle className=" ml-2 h-auto w-5" />
+                  Log Workout
+                </SidebarLink>
+
                 <SidebarLink
                   href="/my-programs"
                   className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
@@ -96,20 +93,6 @@ export default async function SideBar() {
                   <MdOutlineSelfImprovement className=" ml-2 h-auto w-5" />
                   My Programs
                 </SidebarLink>
-
-                {role && role.value !== "undefined" && (
-                  <div>
-                    <SidebarLink
-                      href="/events"
-                      className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                    >
-                      <MdEventNote className=" ml-2 h-auto w-5" />
-                      Events
-                    </SidebarLink>
-                  </div>
-                )}
-
-                {role?.value == "trainer" && ShowCreateEvent()}
                 {role?.value == "trainer" && ShowSearch()}
                 {role?.value == "manager" && ShowCreateEvent()}
                 {role?.value == "manager" && ShowSearch()}
@@ -120,7 +103,6 @@ export default async function SideBar() {
                       href="/createTrainer"
                       className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
                     >
-                      <BsPeopleFill />
                       <LiaUserPlusSolid className=" ml-2 h-auto w-5" />
                       Create Trainer
                     </SidebarLink>

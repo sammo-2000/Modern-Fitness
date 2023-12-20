@@ -6,7 +6,7 @@ const app = express();
 const mongoose = require("mongoose");
 
 // Check environment variables are set
-const check_env = require('./check_env.js');
+const check_env = require("./check_env.js");
 check_env();
 
 // Accept cross-origin requests from frontend
@@ -29,12 +29,14 @@ app.use((req, res, next) => {
 const auth_router = require("./routes/auth_router");
 const user_router = require("./routes/user_router");
 const program_router = require("./routes/program_router");
+const exercise_router = require("./routes/log_workout_router");
 const event_router = require("./routes/event_router");
 
 // Use routes
 app.use("/api/auth", auth_router);
 app.use("/api/", user_router);
 app.use("/api/", program_router);
+app.use("/api/", exercise_router);
 app.use("/api/", event_router);
 
 // 404

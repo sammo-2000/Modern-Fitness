@@ -25,8 +25,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
   {
     /* https://stackoverflow.com/questions/57491815/how-to-reset-select-dropdown-values-in-react/57491948#57491948 */
   }
-  const defaultValue: string = "Please Select Workout Type";
-  const [Name, SetName] = useState(defaultValue);
+  const [Name, SetName] = useState("");
   const [Load, SetLoad] = useState("");
   const [Reps, SetReps] = useState("");
   const [Sets, SetSets] = useState("");
@@ -42,7 +41,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
     SetDate(new Date());
   };
   const clearWorkoutForm = () => {
-    SetName(defaultValue);
+    SetName("");
     SetLoad("");
     SetReps("");
     SetSets("");
@@ -50,7 +49,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
   };
   const addsToList = () => {
     if (Name === "") {
-      return setError("Workout name is required");
+      return setError("Workout type is required");
     }
     if (Load === "") {
       return setError("Workout load is required");
@@ -100,7 +99,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
     event: React.MouseEvent<HTMLButtonElement>,
   ) => {
     event.stopPropagation();
-
+    // Code  line 105 -106 from https://chat.openai.com/auth/login
     const updatingList = [...workoutsList];
     updatingList.splice(index, 1);
     setWorkoutsList(updatingList);
@@ -117,6 +116,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
         user_id: user_id,
         workout: workoutsList,
         date: DateTime.toISOString().split("T")[0],
+        //add workout start date
       };
       console.log(JSON.stringify(WorkoutJSON));
       const APIresponse = await fetch(
@@ -185,7 +185,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
             id="name"
             name="name"
           >
-            <option value={defaultValue}>
+            <option value="" disabled hidden>
               Please Enter the Type of workout
             </option>
             <option value="Bicep Curl">Bicep Curl</option>
@@ -262,6 +262,7 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
           </div>
         )}
         {/* https://www.creative-tim.com/learning-lab/tailwind-starter-kit/documentation/css/buttons/small/filled */}
+        {/*code on line 267 and 273 from https://chat.openai.com/auth/login*/}
         {workoutsList.map((workout, index) => (
           <li
             key={index}
