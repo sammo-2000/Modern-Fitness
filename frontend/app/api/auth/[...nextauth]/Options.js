@@ -14,7 +14,7 @@ const options = {
           placeholder: "email / access code",
         },
         password: {
-          label: "password",
+          label: "Password",
           type: "password",
           placeholder: "your password",
         },
