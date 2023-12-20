@@ -11,7 +11,7 @@ import { GiProgression } from "react-icons/gi";
 import { AiFillHome } from "react-icons/ai";
 import { BsPersonFill } from "react-icons/bs";
 import { GoSearch } from "react-icons/go";
-import { MdOutlineSelfImprovement } from "react-icons/md";
+import { MdEventNote, MdOutlineSelfImprovement } from "react-icons/md";
 import { CiLogin } from "react-icons/ci";
 import { FaRegRegistered } from "react-icons/fa6";
 import { CiLogout } from "react-icons/ci";
@@ -93,20 +93,27 @@ export default async function SideBar() {
                   <MdOutlineSelfImprovement className=" ml-2 h-auto w-5" />
                   My Programs
                 </SidebarLink>
-                {role?.value == "trainer" && ShowSearch()}
+
+                <SidebarLink
+                  href="/events"
+                  className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                >
+                  <MdEventNote className=" ml-2 h-auto w-5" />
+                  Events
+                </SidebarLink>
+                {role?.value == "trainer" && ShowCreateEvent()}
                 {role?.value == "manager" && ShowCreateEvent()}
+                {role?.value == "trainer" && ShowSearch()}
                 {role?.value == "manager" && ShowSearch()}
 
                 {role?.value == "manager" && (
-                  <div>
-                    <SidebarLink
-                      href="/createTrainer"
-                      className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-                    >
-                      <LiaUserPlusSolid className=" ml-2 h-auto w-5" />
-                      Create Trainer
-                    </SidebarLink>
-                  </div>
+                  <SidebarLink
+                    href="/createTrainer"
+                    className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+                  >
+                    <LiaUserPlusSolid className=" ml-2 h-auto w-5" />
+                    Create Trainer
+                  </SidebarLink>
                 )}
                 <SidebarLink
                   // href="/api/auth/signout?callbackUrl=/"
@@ -165,28 +172,24 @@ export default async function SideBar() {
 
 const ShowSearch = () => {
   return (
-    <div>
-      <SidebarLink
-        href="/members"
-        className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-      >
-        <GoSearch className=" ml-2 h-auto w-5" />
-        Search Member
-      </SidebarLink>
-    </div>
+    <SidebarLink
+      href="/members"
+      className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+    >
+      <GoSearch className=" ml-2 h-auto w-5" />
+      Search Member
+    </SidebarLink>
   );
 };
 
 const ShowCreateEvent = () => {
   return (
-    <div>
-      <SidebarLink
-        href="/events/create"
-        className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
-      >
-        <IoCreateSharp className=" ml-2 h-auto w-5" />
-        Create Event
-      </SidebarLink>
-    </div>
+    <SidebarLink
+      href="/events/create"
+      className=" mb-3 flex gap-4 p-2 hover:rounded-lg hover:bg-slate-700 hover:text-white "
+    >
+      <IoCreateSharp className=" ml-2 h-auto w-5" />
+      Create Event
+    </SidebarLink>
   );
 };
