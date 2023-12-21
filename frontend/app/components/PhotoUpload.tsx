@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import picture from "public/profile.png";
+import profilePicture from "public/profile-pic.png";
 import { capitalizeFirstLetter } from "../utils/capitalize";
 
 interface Props {
@@ -14,7 +14,7 @@ function PhotoUpload(props: Props) {
     <div className="w-full min-w-[18.75rem] grow bg-white p-4 shadow-md lg:mt-24 lg:w-auto lg:self-start">
       <div className=" flex flex-col items-center">
         <Image
-          src={picture}
+          src={profilePicture}
           width={100}
           height={100}
           alt="Profile Image"

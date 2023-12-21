@@ -3,7 +3,7 @@ import React from "react";
 import { IoNotificationsSharp } from "react-icons/io5";
 import { BsPeopleFill } from "react-icons/bs";
 import Image from "next/image";
-import picture from "public/profile.png";
+import profilePicture from "public/profile-pic.png";
 import Link from "next/link";
 import Hamburger from "./Hamburger";
 
@@ -20,7 +20,7 @@ export default function Header() {
       <div className="flex items-center gap-8">
         <IoNotificationsSharp className="h-5 w-5 " />
         <Image
-          src={picture}
+          src={profilePicture}
           width={100}
           height={100}
           alt="Profile Image"

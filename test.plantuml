@@ -1,0 +1,51 @@
+@startuml test
+actor User
+participant "Web Browser" as Browser
+participant "Web Server" as Server
+database "Database" as DB
+
+User -> Browser: Open website
+activate Browser
+
+Browser -> Server: Request homepage
+activate Server
+
+Server --> Browser: Send homepage
+deactivate Server
+
+Browser -> User: Display homepage
+
+User -> Browser: Click on "Order Now"
+activate Browser
+
+Browser -> Server: Send order request
+activate Server
+
+Server -> DB: Query product availability
+activate DB
+DB --> Server: Product available
+deactivate DB
+
+Server -> Browser: Display order form
+deactivate Server
+
+Browser -> User: Fill out order form
+activate Browser
+
+User -> Browser: Click on "Submit Order"
+deactivate User
+
+Browser -> Server: Send order details
+activate Server
+
+Server -> DB: Store order in database
+activate DB
+DB --> Server: Order saved
+deactivate DB
+
+Server -> Browser: Show order confirmation
+deactivate Server
+
+Browser -> User: Display order confirmation
+deactivate Browser
+@enduml

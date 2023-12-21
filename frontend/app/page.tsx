@@ -4,8 +4,9 @@ import mainImg from "public/main-gym-img.jpg";
 import homepageImg from "public/homepage-img.png";
 import { SiOpenaccess } from "react-icons/si";
 import Link from "next/link";
-
-export default function Home() {
+import { getServerSession } from "next-auth";
+export default async function Home() {
+  const session = await getServerSession();
   return (
     <>
       <div className="relative flex items-center justify-center text-center">
@@ -24,12 +25,21 @@ export default function Home() {
           <p className="mx-auto mb-20 max-w-max rounded-full bg-black bg-opacity-60 px-4 py-2 text-center font-mono text-3xl font-bold">
             Begin Your Journey Today
           </p>
-          <Link
-            href="registration"
-            className="  rounded-2xl bg-gradient-to-r from-blue-400 to-blue-600 px-20 py-6 font-semibold hover:bg-blue-600"
-          >
-            Register
-          </Link>
+          {session ? (
+            <Link
+              href="/events"
+              className="  rounded-2xl bg-gradient-to-r from-blue-400 to-blue-600 px-20 py-6 font-semibold hover:bg-blue-600"
+            >
+              events
+            </Link>
+          ) : (
+            <Link
+              href="registration"
+              className="  rounded-2xl bg-gradient-to-r from-blue-400 to-blue-600 px-20 py-6 font-semibold hover:bg-blue-600"
+            >
+              Register
+            </Link>
+          )}
         </div>
       </div>
       <div className="mb-16 text-center">

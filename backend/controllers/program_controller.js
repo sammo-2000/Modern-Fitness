@@ -210,7 +210,7 @@ const validate_program = async (user_id, date, workout) => {
   if (workout.length == 0) throw Error("Workout is required");
 
   workout.forEach((element) => {
-    if (!element.name) throw Error("Workout name is required");
+    if (!element.name) throw Error("Workout type is required");
 
     if (!element.load) throw Error("Workout load is required");
 

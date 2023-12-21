@@ -14,7 +14,7 @@ const options = {
           placeholder: "email / access code",
         },
         password: {
-          label: "password",
+          label: "Password",
           type: "password",
           placeholder: "your password",
         },
@@ -47,7 +47,9 @@ const options = {
             expires: Date.now() + 60 * 60 * 24 * 7 * 1000,
           });
 
-          return data.user;
+          return {
+            ...data.user,
+          };
         } catch (error) {
           console.log(error);
         }
