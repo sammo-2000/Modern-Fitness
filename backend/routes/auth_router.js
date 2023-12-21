@@ -5,6 +5,6 @@ const middleware = require('../middleware/auth');
 
 router.post('/login', Auth.login)
 router.post('/signup', Auth.signup);
-router.post('/signup/:trainer', middleware.logged_on, middleware.manager, Auth.signup);
+router.post('/signup/:role', middleware.logged_on, middleware.manager, Auth.signup_staff);
 
 module.exports = router;

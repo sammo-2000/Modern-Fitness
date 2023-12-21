@@ -13,3 +13,8 @@
 .min-height-screen {
   min-height: calc(100vh - 3rem);
 }
+
+.graph-container {
+  position: relative;
+  margin: auto;
+}

@@ -94,7 +94,7 @@ export default function MemberList() {
           </li>
         ))}
         {members.length === 0 && (
-          <p className="p-4">No matching users "{input}"</p>
+          <p className="p-4">No matching users &quot;{input}&quot;</p>
         )}
       </ul>
     </div>

@@ -65,7 +65,7 @@ export default async function MemberDetails({ params }: { params: Params }) {
       {/* <AddNote myNote={member.note} /> */}
       <Link
         href={`${params.id}/workout`}
-        className="mt-6 self-end rounded-xl px-4 py-2 text-sm font-bold text-blue-500 underline"
+        className="my-6 block self-end rounded-xl px-4 py-2 text-sm font-bold text-blue-500 underline"
       >
         Create Program
       </Link>

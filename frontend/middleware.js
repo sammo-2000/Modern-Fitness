@@ -25,11 +25,25 @@ export default withAuth(
     }
 
     if (
-      req.nextUrl.pathname.startsWith("/events/edit/:id") &&
+      req.nextUrl.pathname.startsWith("/events/edit") &&
       role.value != "trainer" &&
       role.value != "manager"
     ) {
+      // Check if the path includes an ID (numeric value)
       return NextResponse.rewrite(new URL("/Denied", req.url));
+    }
+    if (
+      req.nextUrl.pathname.startsWith("/events/edit") &&
+      role.value != "trainer" &&
+      role.value != "manager"
+    ) {
+      const pathParts = req.nextUrl.pathname.split("/");
+      const lastPathSegment = pathParts[pathParts.length - 1];
+      const isNumericID = /^\d+$/.test(lastPathSegment);
+
+      if (isNumericID) {
+        return NextResponse.rewrite(new URL("/Denied", req.url));
+      }
     }
 
     if (
@@ -46,4 +60,6 @@ export default withAuth(
   },
 );
 
-export const config = { matcher: ["/members", "/createTrainer", "/events/create", "/events/edit"] };
+export const config = {
+  matcher: ["/members", "/createTrainer", "/events/create", "/events/edit"],
+};
