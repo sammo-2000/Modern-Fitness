@@ -1,55 +1,18 @@
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
+# Modern Fit Gym Managment System
 
-<a name="readme-top"></a>
+A web application for efficient gym management, designed for Modern Fit.
 
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
+## Table of Contents
 
-<!-- PROJECT LOGO -->
-<br />
-<div align="center">
-  <h3 align="center">ModernFit Gym Management System</h3>
-</div>
+- [Introduction](#introduction)
+- [Project Objectives](#project-objectives)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+- [Acknowledgments](#acknowledgments)
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#project-vision">Project Vision</a></li>
-        <li><a href="#project-objectives">Project Objectives</a></li>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#acknowledgements">Acknowledgements</a>
-    </li>
-  </ol>
-</details>
-
-<!-- ABOUT THE PROJECT -->
-
-<a name="about-the-project"></a>
-
-## About The Project
-
-<a name="project-vision"></a>
-
-### Project Vision
+## Introduction
 
 The outcome of the project is a fully functioning web app with the ability for managers, staff and members who have a membership to utilize the system to achieve their goals far more efficiently than they previously had done due to the change from paper management to paperless. An aspiration of this project is creating a user-friendly intuitive interface to complete tasks easier.
 
@@ -61,8 +24,6 @@ Staff members will also be able to create custom events such as group workout an
 
 Overall, the software will make managing the gym much easier as it will be accessible everywhere, even outside of the gym.
 
-<a name="project-objectives"></a>
-
 ### Project Objectives
 
 - Eliminate the need for ModernFit to use any other system to aid in the management of their gym.
@@ -70,86 +31,64 @@ Overall, the software will make managing the gym much easier as it will be acces
 - Make it easier for members to track their progression and log their workouts and meals so that more customers wish to register with ModernFit, thus netting them greater profits.
 - Make it easier for ModernFit’s various branches to share their data with one another as they scale up their business.
 
-<a name="built-with"></a>
-
-### Built With
-
-- [![Node][Node.js]][Node-url]
-- [![Tailwind][Tailwindcss.com]][Tailwindcss-url]
-- [![Next JS][Next.com]][Next-url]
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- GETTING STARTED -->
-
-<a name="getting-started"></a>
-
 ## Getting Started
-
-<a name="prerequisites"></a>
 
 ### Prerequisites
 
-- Node: Make sure you have at least version `18.18`, check by running
-  ```sh
-  node -v
-  ```
-- Nodemon: Install nodemon on your machine
-  ```sh
-  npm i -g nodemon
-  ```
+Please note you must have Node installed locally on your machine to be able to run this project
 
-<a name="installation"></a>
+[![Node.js](https://img.shields.io/badge/Node.js-6DA753?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
 
 ### Installation
 
-1. Clone the repo
-   ```sh
-   git clone https://github.com/sammo-2000/modernFit
-   ```
-2. Install NPM packages for backend
-   ```sh
-   cd modernFit/backend
-   npm i
-   ```
-3. Install NPM packages for frontend
+Clone `git clone https://github.com/sammo-2000/modernFit`
 
-```
-  cd ../frontend
-  npm i
-```
+Install dependinces for backend & frontend
 
-4. Add `.env` file in the same format as `.env_example`, just using the values you wish to use locally, this must be done for backend and frontend
-5. Run local server for backend [Must be inside backend folder]
-   ```sh
-   nodemon server
-   ```
-6. Run local server for frontend [Must be inside frontend folder]
+- `cd modernFit/backend`
+- `npm install`
+- `cd ../frontend`
+- `npm install`
 
-```sh
-  npm run dev
-```
+While in frontend folder
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+- `npm run build`
+- `npm start`
 
-<!-- ACKNOWLEDGMENTS -->
+In new terminal for backend folder
 
-<a name="acknowledgements"></a>
+- Install nodemon globally for future use as well `npm install -g nodemon`
+- `nodemon`
+
+## Usage
+
+This application was built as a student project for assessment purposes. Please be aware that it may contain bugs, issues, or incomplete features. We do not guarantee its functionality to work perfectly under all circumstances.
+
+### Disclaimer
+
+- This project is part of a student assessment and may not be suitable for production use.
+- Use this software at your own risk.
+- Bugs and issues may be present, and features may be incomplete.
+- We do not provide 100% guarantee of flawless functionality.
 
 ## Acknowledgments
 
-- [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
-- [Img Shields](https://shields.io)
-- [Net Ninja MERN stack](https://www.youtube.com/@NetNinja)
+### Third Party Inspiration
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+A special thanks to NetNinja for the invaluable inspiration and guidance in building a robust code structure for the backend folder and demonstrating the effective use of the MERN stack.
 
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+- [NetNinja YouTube Series (MERN Stack)](https://www.youtube.com/watch?v=98BzS5Oz5E4&list=PL4cUxeGkcC9iJ_KkrkBZWZRHVwnzLIoUE&ab_channel=NetNinja)
+- [NetNinja YouTube Series (MERN Stack Auth)](https://www.youtube.com/watch?v=WsRBmwNkv3Q&list=PL4cUxeGkcC9g8OhpOZxNdhXggFz2lOuCT&ab_channel=NetNinja)
 
-[Node.js]: https://img.shields.io/badge/Node.js-6DA753?style=for-the-badge&logo=nodedotjs&logoColor=white
-[Node-url]: https://nodejs.org/
-[Tailwindcss.com]: https://img.shields.io/badge/Tailwind-444444?style=for-the-badge&logo=tailwindcss&logoColor=62baf2
-[Tailwindcss-url]: https://tailwindcss.com/
-[Next-url]: https://nextjs.org/
-[Next.com]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
+### Libraries & Tools
+
+[![Node.js](https://img.shields.io/badge/Node.js-6DA753?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
+[![bcrypt](https://img.shields.io/badge/bcrypt-430089?style=for-the-badge&logo=bcrypt&logoColor=white)](https://www.npmjs.com/package/bcrypt)
+[![cors](https://img.shields.io/badge/cors-FF6F61?style=for-the-badge&logo=cors&logoColor=white)](https://www.npmjs.com/package/cors)
+[![dotenv](https://img.shields.io/badge/dotenv-007272?style=for-the-badge&logo=dotenv&logoColor=white)](https://www.npmjs.com/package/dotenv)
+[![express](https://img.shields.io/badge/express-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
+[![jsonwebtoken](https://img.shields.io/badge/jsonwebtoken-000000?style=for-the-badge&logo=jsonwebtoken&logoColor=white)](https://www.npmjs.com/package/jsonwebtoken)
+[![mongoose](https://img.shields.io/badge/mongoose-880000?style=for-the-badge&logo=mongoose&logoColor=white)](https://mongoosejs.com/)
+[![nodemailer](https://img.shields.io/badge/nodemailer-339933?style=for-the-badge&logo=nodemailer&logoColor=white)](https://www.npmjs.com/package/nodemailer)
+[![validator](https://img.shields.io/badge/validator-302C2D?style=for-the-badge&logo=validator&logoColor=E74856)](https://www.npmjs.com/package/validator)
