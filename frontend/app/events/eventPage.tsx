@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 // Components
 import Button from "../components/Button";
@@ -83,6 +84,7 @@ const CustomCard = ({ event }: { event: EventPageProps }) => {
               <li>{trainer.name}</li>
             </ul>
           ))}
+        I
       </div>
       <div className="mt-auto flex flex-col gap-2 p-4">
         <Button name="View" isLink={true} linkTo={`/events/${event._id}`} />

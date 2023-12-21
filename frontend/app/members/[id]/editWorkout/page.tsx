@@ -1,13 +1,13 @@
 "use client";
-import React from 'react'
-import EditWorkoutForm from '@/app/components/EditProgram';
+import React from "react";
+import EditWorkoutForm from "@/app/components/EditProgram";
 import { useProgramContext } from "@/app/hooks/useProgramContext";
 import { useEffect } from "react";
 import GetCookie from "@/app/utils/getCookie";
 import { useFetchedData } from "@/app/context/MemberIdContext";
 import type { Workout } from "@/app/types/workout";
 
-export const EditWorkout = ({ params }: any) => {
+const EditWorkout = ({ params }: any) => {
   const MemberId = params.id;
 
   const { programs, dispatch } = useProgramContext();
