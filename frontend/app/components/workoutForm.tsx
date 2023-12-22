@@ -58,8 +58,8 @@ export const WorkoutForm = ({ user_id }: { user_id: any }) => {
     if (Number.isNaN(loadInt)) {
       return setError("Workout load must be a number");
     }
-    if (loadInt <= 0) {
-      return setError("Workout load must be greater than 0");
+    if (loadInt < 0) {
+      return setError("Workout load must be greater than or equal to 0");
     }
     if (Reps === "") {
       return setError("Workout reps is required");

@@ -218,7 +218,8 @@ const validate_program = async (user_id, date, workout) => {
     if (!validator.isNumeric(load))
       throw Error("Workout load must only contain numbers");
 
-    if (Number(load) <= 0) throw Error("Workout load must be greater than 0");
+    if (Number(load) < 0)
+      throw Error("Workout load must be greater than or equal to 0");
 
     if (!element.reps) throw Error("Workout reps is required");
 
