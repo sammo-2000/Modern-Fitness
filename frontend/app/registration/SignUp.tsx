@@ -131,7 +131,10 @@ export default function SignUp() {
         <h1 className="mb-2 text-2xl font-bold">Register</h1>
         <p>
           Already have an account?{" "}
-          <Link href="login" className="text-blue-500 hover:underline">
+          <Link
+            href="/api/auth/signin"
+            className="text-blue-500 hover:underline"
+          >
             Log in
           </Link>
         </p>

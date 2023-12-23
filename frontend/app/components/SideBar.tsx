@@ -159,7 +159,7 @@ export default async function SideBar() {
             className=" mb-4 rounded-xl px-2"
           />
           <Link
-            href=""
+            href="/events"
             className="mx-2 flex justify-center rounded-lg bg-blue-500 px-3 py-2 text-sm font-bold text-white hover:bg-blue-600"
           >
             Check It Out
