@@ -6,7 +6,7 @@ import type { Program } from "../types/program";
 interface ProgramsState {
   programs: Program[] | null;
 }
-
+// Code on Line 10-13 and 26-41 from https://chat.openai.com/auth/login
 type ProgramsAction =
   | { type: "SET_PROGRAM"; payload: Program[] }
   | { type: "CREATE_PROGRAM"; payload: Program };
