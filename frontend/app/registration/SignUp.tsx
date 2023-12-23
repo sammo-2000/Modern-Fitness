@@ -177,6 +177,12 @@ export default function SignUp() {
               className="mb-6 w-full rounded-xl border border-gray-300 bg-blue-50 px-3 py-5 focus:border-2 focus:border-blue-500 focus:outline-none"
               required
             />
+            <label
+              htmlFor="dob"
+              className="block text-xs font-bold text-gray-400"
+            >
+              Date of Birth
+            </label>
             <input
               id="dob"
               type="date"
@@ -195,7 +201,7 @@ export default function SignUp() {
               required
             >
               <option value="" disabled hidden selected>
-                Select
+                Gender
               </option>
               <option value={"male"}>Male</option>
               <option value={"female"}>Female</option>
