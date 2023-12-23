@@ -58,10 +58,14 @@ export default function Account() {
           setRole(fetchedMembers.user.role);
           setGoal(fetchedMembers.user.goal ? fetchedMembers.user.goal : "");
           setHeight(
-            fetchedMembers.user.height ? fetchedMembers.user.height : "",
+            fetchedMembers.user.height
+              ? String(fetchedMembers.user.height)
+              : "",
           );
           setWeight(
-            fetchedMembers.user.weight ? fetchedMembers.user.weight : "",
+            fetchedMembers.user.weight
+              ? String(fetchedMembers.user.weight)
+              : "",
           );
           setAllergy(
             fetchedMembers.user.allergy ? fetchedMembers.user.allergy : "",
