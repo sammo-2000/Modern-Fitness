@@ -97,33 +97,39 @@ const ChartData = () => {
         updatedNumberOfWeeks.push(i);
 
         // Fetching data per week based on the first date
-        const loadsForWeekOne = workout
-          .flatMap((program: any) =>
-            program.logged_workout.filter(
-              (workoutData: any) => workoutData.week === str,
-            ),
-          )
-          .map((workoutData: any) => workoutData.loads);
+        const loadsForWeekOne =
+          workout &&
+          workout
+            .flatMap((program: any) =>
+              program.logged_workout.filter(
+                (workoutData: any) => workoutData.week === str,
+              ),
+            )
+            .map((workoutData: any) => workoutData.loads);
 
         loadsPerWeek.push(loadsForWeekOne);
 
-        const setForWeek = workout
-          .flatMap((program: any) =>
-            program.logged_workout.filter(
-              (workoutData: any) => workoutData.week === str,
-            ),
-          )
-          .map((workoutData: any) => workoutData.sets);
+        const setForWeek =
+          workout &&
+          workout
+            .flatMap((program: any) =>
+              program.logged_workout.filter(
+                (workoutData: any) => workoutData.week === str,
+              ),
+            )
+            .map((workoutData: any) => workoutData.sets);
 
         setsPerWeek.push(setForWeek);
 
-        const repsForWeek = workout
-          .flatMap((program: any) =>
-            program.logged_workout.filter(
-              (workoutData: any) => workoutData.week === str,
-            ),
-          )
-          .map((workoutData: any) => workoutData.reps);
+        const repsForWeek =
+          workout &&
+          workout
+            .flatMap((program: any) =>
+              program.logged_workout.filter(
+                (workoutData: any) => workoutData.week === str,
+              ),
+            )
+            .map((workoutData: any) => workoutData.reps);
 
         RepsPerWeek.push(repsForWeek);
       }
@@ -141,10 +147,12 @@ const ChartData = () => {
       const totalLoads: number[] = [];
 
       loadsForWeek.forEach((loadsForSingleWeek: string[]) => {
-        const sum = loadsForSingleWeek.reduce(
-          (acc: number, load: string) => acc + parseInt(load, 10),
-          0,
-        );
+        const sum =
+          loadsForSingleWeek &&
+          loadsForSingleWeek.reduce(
+            (acc: number, load: string) => acc + parseInt(load, 10),
+            0,
+          );
         totalLoads.push(sum);
       });
 
@@ -159,13 +167,16 @@ const ChartData = () => {
     const calculateTotalSets = () => {
       const totalSets: number[] = [];
 
-      setForWeek.forEach((setsForSingleWeek: string[]) => {
-        const sum = setsForSingleWeek.reduce(
-          (acc: number, set: string) => acc + parseInt(set, 10),
-          0,
-        );
-        totalSets.push(sum);
-      });
+      setForWeek &&
+        setForWeek.forEach((setsForSingleWeek: string[]) => {
+          const sum =
+            setsForSingleWeek &&
+            setsForSingleWeek.reduce(
+              (acc: number, set: string) => acc + parseInt(set, 10),
+              0,
+            );
+          totalSets.push(sum);
+        });
 
       setTotalSetPerWeek(totalSets);
       console.log("sets" + totalSetPerWeek);
@@ -178,13 +189,16 @@ const ChartData = () => {
     const calculateTotalReps = () => {
       const totalReps: number[] = [];
 
-      repsForWeek.forEach((repsForSingleWeek: string[]) => {
-        const sum = repsForSingleWeek.reduce(
-          (acc: number, reps: string) => acc + parseInt(reps, 10),
-          0,
-        );
-        totalReps.push(sum);
-      });
+      repsForWeek &&
+        repsForWeek.forEach((repsForSingleWeek: string[]) => {
+          const sum =
+            repsForSingleWeek &&
+            repsForSingleWeek.reduce(
+              (acc: number, reps: string) => acc + parseInt(reps, 10),
+              0,
+            );
+          totalReps.push(sum);
+        });
 
       setTotalRepsPerWeek(totalReps);
       console.log("reps" + totalRepsPerWeek);
@@ -215,13 +229,14 @@ const ChartData = () => {
     const setsArray: string[] = [];
     const loadArray: string[] = [];
 
-    programs.forEach((program: any) => {
-      program.workout.forEach((workoutData: any) => {
-        repsArray.push(workoutData.reps);
-        setsArray.push(workoutData.sets);
-        loadArray.push(workoutData.load);
+    programs &&
+      programs.forEach((program: any) => {
+        program.workout.forEach((workoutData: any) => {
+          repsArray.push(workoutData.reps);
+          setsArray.push(workoutData.sets);
+          loadArray.push(workoutData.load);
+        });
       });
-    });
 
     // Convert strings in the arrays to numbers
     const convertedReps: number[] = repsArray.map((reps: string) =>
