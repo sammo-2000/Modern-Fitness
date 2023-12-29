@@ -180,7 +180,7 @@ const Data = () => {
   const start = "2023-11-04";
 
   useEffect(() => {
-    if (programs.length > 0) {
+    if (programs && programs.length > 0) {
       const { date } = programs[0]; // Fetching the first date from the database
 
       const weeksData = getWeeks(start, date);
@@ -225,13 +225,14 @@ const Data = () => {
               <option value="" disabled hidden>
                 Select Exercise
               </option>
-              {programs.map((program: any) => {
-                return program.workout.map((workoutData: any) => (
-                  <option key={workoutData._id} value={workoutData.name}>
-                    {workoutData.name}
-                  </option>
-                ));
-              })}
+              {programs &&
+                programs.map((program: any) => {
+                  return program.workout.map((workoutData: any) => (
+                    <option key={workoutData._id} value={workoutData.name}>
+                      {workoutData.name}
+                    </option>
+                  ));
+                })}
             </select>
             <div className="flex flex-wrap justify-end gap-4">
               <input

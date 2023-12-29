@@ -9,7 +9,12 @@ const Denied = () => {
           Unauthorized to view
         </h1>
         <p className="text-2xl font-extrabold text-red-700 lg:text-3xl">401</p>
-        <Image src="/no-access.png" alt="Access denised page" />
+        <Image
+          src="/no-access.png"
+          width={400}
+          height={400}
+          alt="Access denised page"
+        />
       </div>
     </div>
   );

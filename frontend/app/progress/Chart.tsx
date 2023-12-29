@@ -129,6 +129,7 @@ const LineChart: React.FC<LineChartProps> = ({
       {/* <h1 className="mb-6 mt-10 text-center text-3xl font-bold text-gray-500">
         Live update of workout progress
       </h1> */}
+
       <div className=" mb-12 flex w-full flex-wrap justify-center gap-3 shadow-lg">
         <div className=" m-2 min-w-[16rem] flex-grow rounded-lg border border-x-2 border-y-2 p-4 shadow-lg">
           <div className="mt-3 text-center">

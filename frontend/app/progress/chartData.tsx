@@ -88,7 +88,7 @@ const ChartData = () => {
     const setsPerWeek: string[][] = [];
     const RepsPerWeek: string[][] = [];
 
-    if (programs.length > 0) {
+    if (programs && programs.length > 0) {
       const { date } = programs[0]; // Fetching the first date from the database
       const { weeks } = getWeeks(start, date);
 
