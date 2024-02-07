@@ -41,11 +41,11 @@ Please note you must have Node installed locally on your machine to be able to r
 
 ### Installation
 
-Clone `git clone https://github.com/sammo-2000/modernFit`
+Clone `git clone https://github.com/sammo-2000/modern-fit`
 
 Install dependinces for backend & frontend
 
-- `cd modernFit/backend`
+- `cd modern-fit/backend`
 - `npm install`
 - `cd ../frontend`
 - `npm install`
